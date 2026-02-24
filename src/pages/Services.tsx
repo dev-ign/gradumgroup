@@ -3,33 +3,13 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../components/ui/PageTransition';
 import { Button } from '../components/ui/Button';
 import { useModal } from '../context/ModalContext';
+import { useTranslation } from '../i18n/useTranslation';
 
-const PRACTICE_AREAS = [
-  {
-    name: 'Accounting & Finance',
-    tagline: 'Financial structure and operational clarity.',
-    desc: 'We provide structured financial coordination, compliance oversight, and planning support to strengthen internal controls and executive decision-making.',
-    to: '/services/accounting-finance',
-    cta: 'Explore Accounting & Finance',
-  },
-  {
-    name: 'Marketing & Media',
-    tagline: 'Brand discipline and structured execution.',
-    desc: 'We support positioning, digital management, and campaign coordination — ensuring communication systems align with business strategy and operational priorities.',
-    to: '/services/marketing-media',
-    cta: 'Explore Marketing & Media',
-  },
-];
-
-const ENGAGEMENT_STEPS = [
-  { num: '01', title: 'Assessment', desc: 'Clarifying priorities and performance objectives.' },
-  { num: '02', title: 'Scope Alignment', desc: 'Defining deliverables, timelines, and ownership.' },
-  { num: '03', title: 'Structured Execution', desc: 'Delivering against defined milestones.' },
-  { num: '04', title: 'Ongoing Advisory', desc: 'Sustaining performance through disciplined oversight.' },
-];
+const PRACTICE_AREA_ROUTES = ['/services/accounting-finance', '/services/marketing-media'] as const;
 
 export function Services() {
   const { openModal } = useModal();
+  const { t } = useTranslation();
 
   return (
     <PageTransition>
@@ -53,15 +33,15 @@ export function Services() {
             transition={{ duration: 0.5 }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">Gradum Services</p>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('services.hero.label')}</p>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-white mb-8">
-              Operational Advisory<br />
-              <span className="text-[#AEE37B]">for Disciplined Execution.</span>
+              {t('services.hero.title1')}<br />
+              <span className="text-[#AEE37B]">{t('services.hero.title2')}</span>
             </h1>
             <p className="text-base text-[#94b5b0] leading-relaxed mb-10 max-w-2xl">
-              Gradum Services provides operational infrastructure support within defined financial and brand governance mandates.
+              {t('services.hero.description')}
             </p>
-            <Button onClick={openModal} size="lg">Strengthen Your Operations</Button>
+            <Button onClick={openModal} size="lg">{t('services.hero.cta')}</Button>
           </motion.div>
         </div>
       </section>
@@ -76,14 +56,10 @@ export function Services() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Overview</p>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('services.overview.label')}</p>
               <div className="space-y-4 text-sm text-[var(--text-secondary)] leading-relaxed">
-                <p>
-                  We partner with organizations requiring structured financial governance and controlled brand infrastructure.
-                </p>
-                <p>
-                  Engagements operate under mandate-based workflows, compliance standards, and measurable reporting structures aligned to business objectives.
-                </p>
+                <p>{t('services.overview.p1')}</p>
+                <p>{t('services.overview.p2')}</p>
               </div>
             </motion.div>
           </div>
@@ -100,14 +76,14 @@ export function Services() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Practice Areas</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">Service Divisions</h2>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('services.practiceAreas.label')}</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">{t('services.practiceAreas.heading')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {PRACTICE_AREAS.map((area, i) => (
+            {[0, 1].map((i) => (
               <motion.div
-                key={area.name}
+                key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -117,14 +93,14 @@ export function Services() {
               >
                 <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#AEE37B] group-hover:w-full transition-all duration-500" />
                 <span className="block text-3xl font-black text-[#AEE37B] opacity-25 mb-4">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="text-xl font-black tracking-tight text-[var(--text-primary)] mb-2">{area.name}</h3>
-                <p className="text-sm font-semibold text-[#AEE37B] mb-4">{area.tagline}</p>
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-8">{area.desc}</p>
+                <h3 className="text-xl font-black tracking-tight text-[var(--text-primary)] mb-2">{t(`services.practiceAreas.areas.${i}.name`)}</h3>
+                <p className="text-sm font-semibold text-[#AEE37B] mb-4">{t(`services.practiceAreas.areas.${i}.tagline`)}</p>
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-8">{t(`services.practiceAreas.areas.${i}.desc`)}</p>
                 <Link
-                  to={area.to}
+                  to={PRACTICE_AREA_ROUTES[i]}
                   className="mt-auto inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#AEE37B] hover:gap-4 transition-all duration-200"
                 >
-                  {area.cta} <span>→</span>
+                  {t(`services.practiceAreas.areas.${i}.cta`)} <span>→</span>
                 </Link>
               </motion.div>
             ))}
@@ -142,14 +118,14 @@ export function Services() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Methodology</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">Engagement Model</h2>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('services.engagement.label')}</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">{t('services.engagement.heading')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {ENGAGEMENT_STEPS.map((step, i) => (
+            {[0, 1, 2, 3].map((i) => (
               <motion.div
-                key={step.title}
+                key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -157,9 +133,9 @@ export function Services() {
                 className="p-8"
                 style={{ backgroundColor: 'var(--bg-secondary)' }}
               >
-                <span className="block text-4xl font-black text-[#AEE37B] opacity-30 mb-4">{step.num}</span>
-                <h3 className="text-sm font-black tracking-tight text-[var(--text-primary)] mb-2">{step.title}</h3>
-                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{step.desc}</p>
+                <span className="block text-4xl font-black text-[#AEE37B] opacity-30 mb-4">{t(`services.engagement.steps.${i}.num`)}</span>
+                <h3 className="text-sm font-black tracking-tight text-[var(--text-primary)] mb-2">{t(`services.engagement.steps.${i}.title`)}</h3>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{t(`services.engagement.steps.${i}.desc`)}</p>
               </motion.div>
             ))}
           </div>
@@ -176,12 +152,12 @@ export function Services() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-6">
-              Strengthen Your Operations
+              {t('services.cta.heading')}
             </h2>
             <p className="text-sm text-[#94b5b0] leading-relaxed mb-10 max-w-md mx-auto">
-              Mandate-based execution frameworks aligned to your business objectives.
+              {t('services.cta.description')}
             </p>
-            <Button onClick={openModal} size="lg">Strengthen Your Operations</Button>
+            <Button onClick={openModal} size="lg">{t('services.hero.cta')}</Button>
           </motion.div>
         </div>
       </section>

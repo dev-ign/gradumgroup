@@ -1,25 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useModal } from '../../context/ModalContext';
+import { useTranslation } from '../../i18n/useTranslation';
 import { Button } from './Button';
-
-const INQUIRY_TYPES = [
-  'Consulting Inquiry',
-  'Construction Project',
-  'Accounting & Finance',
-  'Marketing & Media',
-  'Accelerator Program',
-  'General Inquiry',
-];
-
-const COUNTRIES = [
-  'United States', 'Dominican Republic', 'Colombia', 'Mexico',
-  'Panama', 'Puerto Rico', 'Canada', 'Other',
-];
 
 export function ContactModal() {
   const { isOpen, closeModal } = useModal();
+  const { t, tArray } = useTranslation();
   const [submitted, setSubmitted] = useState(false);
+  const inquiryTypes = tArray('modal.inquiryTypes');
+  const countries = tArray('modal.countries');
   const [form, setForm] = useState({
     name: '', company: '', email: '', phone: '',
     country: '', inquiryType: '', message: '',
@@ -89,15 +79,15 @@ export function ContactModal() {
             <div className="flex items-start justify-between p-6 border-b border-[var(--border-color)]">
               <div>
                 <h2 id="modal-title" className="text-xl font-bold tracking-tight text-[var(--text-primary)]">
-                  Request a Consultation
+                  {t('modal.title')}
                 </h2>
                 <p className="text-xs text-[var(--text-secondary)] mt-1 tracking-wide">
-                  A member of our team will contact you shortly.
+                  {t('modal.subtitle')}
                 </p>
               </div>
               <button
                 onClick={closeModal}
-                aria-label="Close modal"
+                aria-label={t('modal.closeLabel')}
                 className="ml-4 mt-0.5 text-[var(--text-secondary)] hover:text-[#AEE37B] transition-colors duration-200 text-2xl leading-none"
               >
                 &times;
@@ -113,78 +103,78 @@ export function ContactModal() {
                   className="text-center py-10"
                 >
                   <div className="text-4xl mb-4">✓</div>
-                  <p className="text-[#AEE37B] font-semibold tracking-wide text-lg mb-2">Message Received</p>
+                  <p className="text-[#AEE37B] font-semibold tracking-wide text-lg mb-2">{t('modal.messageReceived')}</p>
                   <p className="text-[var(--text-secondary)] text-sm">
-                    Thank you. A member of our team will contact you shortly.
+                    {t('modal.thankYou')}
                   </p>
                   <Button onClick={closeModal} variant="outline" size="sm" className="mt-8">
-                    Close
+                    {t('common.close')}
                   </Button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className={labelClass}>Name *</label>
+                      <label htmlFor="name" className={labelClass}>{t('modal.name')}</label>
                       <input ref={firstInputRef} id="name" name="name" type="text" required
                         value={form.name} onChange={handleChange}
-                        placeholder="Full name" className={inputClass} />
+                        placeholder={t('modal.namePlaceholder')} className={inputClass} />
                     </div>
                     <div>
-                      <label htmlFor="company" className={labelClass}>Company</label>
+                      <label htmlFor="company" className={labelClass}>{t('modal.company')}</label>
                       <input id="company" name="company" type="text"
                         value={form.company} onChange={handleChange}
-                        placeholder="Organization" className={inputClass} />
+                        placeholder={t('modal.companyPlaceholder')} className={inputClass} />
                     </div>
                     <div>
-                      <label htmlFor="email" className={labelClass}>Email *</label>
+                      <label htmlFor="email" className={labelClass}>{t('modal.email')}</label>
                       <input id="email" name="email" type="email" required
                         value={form.email} onChange={handleChange}
-                        placeholder="you@company.com" className={inputClass} />
+                        placeholder={t('modal.emailPlaceholder')} className={inputClass} />
                     </div>
                     <div>
-                      <label htmlFor="phone" className={labelClass}>Phone</label>
+                      <label htmlFor="phone" className={labelClass}>{t('modal.phone')}</label>
                       <input id="phone" name="phone" type="tel"
                         value={form.phone} onChange={handleChange}
-                        placeholder="+1 (000) 000-0000" className={inputClass} />
+                        placeholder={t('modal.phonePlaceholder')} className={inputClass} />
                     </div>
                     <div>
-                      <label htmlFor="country" className={labelClass}>Country</label>
+                      <label htmlFor="country" className={labelClass}>{t('modal.country')}</label>
                       <select id="country" name="country"
                         value={form.country} onChange={handleChange}
                         className={`${inputClass} appearance-none`}
                         style={{ backgroundColor: 'var(--bg-primary)' }}
                       >
-                        <option value="">Select country</option>
-                        {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
+                        <option value="">{t('modal.selectCountry')}</option>
+                        {countries.map(c => <option key={c} value={c}>{c}</option>)}
                       </select>
                     </div>
                     <div>
-                      <label htmlFor="inquiryType" className={labelClass}>Inquiry Type</label>
+                      <label htmlFor="inquiryType" className={labelClass}>{t('modal.inquiryType')}</label>
                       <select id="inquiryType" name="inquiryType"
                         value={form.inquiryType} onChange={handleChange}
                         className={`${inputClass} appearance-none`}
                         style={{ backgroundColor: 'var(--bg-primary)' }}
                       >
-                        <option value="">Select type</option>
-                        {INQUIRY_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+                        <option value="">{t('modal.selectType')}</option>
+                        {inquiryTypes.map(type => <option key={type} value={type}>{type}</option>)}
                       </select>
                     </div>
                     <div className="sm:col-span-2">
-                      <label htmlFor="message" className={labelClass}>Message *</label>
+                      <label htmlFor="message" className={labelClass}>{t('modal.message')}</label>
                       <textarea id="message" name="message" rows={4} required
                         value={form.message} onChange={handleChange}
-                        placeholder="Briefly describe your project or inquiry..."
+                        placeholder={t('modal.messagePlaceholder')}
                         className={`${inputClass} resize-none`} />
                     </div>
                   </div>
                   <div className="mt-6 flex items-center justify-between gap-4">
                     <button type="button" onClick={closeModal}
                       className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200 tracking-wide">
-                      Cancel
+                      {t('common.cancel')}
                     </button>
                     <Button type="submit" variant="primary" size="md">
-                      Submit Inquiry
+                      {t('common.submitInquiry')}
                     </Button>
                   </div>
                 </form>

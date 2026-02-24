@@ -2,52 +2,20 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../../components/ui/PageTransition';
 import { Button } from '../../components/ui/Button';
 import { useModal } from '../../context/ModalContext';
-
-const DELIVERABLES = [
-  {
-    title: 'Financial Reporting & Control',
-    items: [
-      'Bookkeeping execution and supervisory review',
-      'Monthly financial statement preparation and validation',
-      'Reporting alignment and documentation control',
-      'Reconciliation management and monitoring',
-    ],
-  },
-  {
-    title: 'Compliance & Administrative Execution',
-    items: [
-      'Payroll processing and coordination',
-      'Tax compliance and filing execution',
-      'Regulatory reporting support',
-      'Vendor payment administration and controls',
-    ],
-  },
-  {
-    title: 'Planning & Financial Structure',
-    items: [
-      'Budget framework development',
-      'Cash flow forecasting and oversight',
-      'Financial planning coordination',
-      'Operational finance structuring',
-    ],
-  },
-];
-
-const WHO_ITS_FOR = [
-  'Founder-led, scaling, and mid-market operating businesses in the Dominican Republic',
-  'Growing organizations requiring internal accounting infrastructure',
-  'Regulated operators requiring local compliance management',
-  'International businesses with Dominican Republic operations',
-];
-
-const TIERS = [
-  { name: 'Essential', desc: 'Core accounting execution and compliance management.' },
-  { name: 'Growth', desc: 'Enhanced reporting visibility, structured budgeting, and financial alignment.' },
-  { name: 'Enterprise', desc: 'Comprehensive oversight, internal control frameworks, and multi-entity coordination.' },
-];
+import { useTranslation } from '../../i18n/useTranslation';
 
 export function AccountingFinance() {
   const { openModal } = useModal();
+  const { t, tArray } = useTranslation();
+  const whoItsForItems = tArray('accountingFinance.whoItsFor.items');
+  const deliverables = [0, 1, 2].map((i) => ({
+    title: t(`accountingFinance.deliverables.items.${i}.title`),
+    items: tArray(`accountingFinance.deliverables.items.${i}.list`),
+  }));
+  const tiers = [0, 1, 2].map((i) => ({
+    name: t(`accountingFinance.engagement.tiers.${i}.name`),
+    desc: t(`accountingFinance.engagement.tiers.${i}.desc`),
+  }));
 
   return (
     <PageTransition>
@@ -70,16 +38,16 @@ export function AccountingFinance() {
             transition={{ duration: 0.5 }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-2">Gradum Services</p>
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#94b5b0] mb-6">Accounting & Finance</p>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-2">{t('accountingFinance.hero.label')}</p>
+            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#94b5b0] mb-6">{t('accountingFinance.hero.sublabel')}</p>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-white mb-8">
-              Financial Structure.<br />
-              <span className="text-[#AEE37B]">Operational Clarity.</span>
+              {t('accountingFinance.hero.title1')}<br />
+              <span className="text-[#AEE37B]">{t('accountingFinance.hero.title2')}</span>
             </h1>
             <p className="text-base text-[#94b5b0] leading-relaxed mb-10 max-w-2xl">
-              Gradum delivers structured financial infrastructure and internal accounting execution designed to strengthen reporting integrity, regulatory alignment, and disciplined financial control.
+              {t('accountingFinance.hero.description')}
             </p>
-            <Button onClick={openModal} size="lg">Request a Consultation</Button>
+            <Button onClick={openModal} size="lg">{t('accountingFinance.hero.cta')}</Button>
           </motion.div>
         </div>
       </section>
@@ -94,9 +62,9 @@ export function AccountingFinance() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Overview</p>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('accountingFinance.overview.label')}</p>
               <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                Gradum supports organizations operating in the Dominican Republic requiring reliable reporting, regulatory alignment, and structured financial governance. Our internal accounting team operates under defined workflows, supervisory controls, and measurable reporting standards — ensuring financial visibility and operational discipline at every stage.
+                {t('accountingFinance.overview.description')}
               </p>
             </motion.div>
           </div>
@@ -113,14 +81,14 @@ export function AccountingFinance() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Deliverables</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">What We Deliver</h2>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('accountingFinance.deliverables.label')}</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">{t('accountingFinance.deliverables.heading')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {DELIVERABLES.map((del, i) => (
+            {deliverables.map((del, i) => (
               <motion.div
-                key={del.title}
+                key={i}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -131,8 +99,8 @@ export function AccountingFinance() {
                 <div className="w-6 h-0.5 bg-[#AEE37B] mb-5" />
                 <h3 className="text-sm font-black tracking-tight text-[var(--text-primary)] mb-4">{del.title}</h3>
                 <ul className="space-y-2">
-                  {del.items.map(item => (
-                    <li key={item} className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
+                  {del.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
                       <span className="w-1 h-1 rounded-full bg-[#AEE37B] flex-shrink-0 mt-1.5" />
                       {item}
                     </li>
@@ -154,10 +122,10 @@ export function AccountingFinance() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Target</p>
-              <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)] mb-8">Who It's For</h2>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('accountingFinance.whoItsFor.label')}</p>
+              <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)] mb-8">{t('accountingFinance.whoItsFor.heading')}</h2>
               <ul className="space-y-3">
-                {WHO_ITS_FOR.map((item, i) => (
+                {whoItsForItems.map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#AEE37B] flex-shrink-0 mt-1.5" />
                     {item}
@@ -172,11 +140,11 @@ export function AccountingFinance() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.15 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Engagement</p>
-              <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)] mb-8">Engagement Structure</h2>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('accountingFinance.engagement.label')}</p>
+              <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)] mb-8">{t('accountingFinance.engagement.heading')}</h2>
               <div className="space-y-px" style={{ backgroundColor: 'var(--border-color)' }}>
-                {TIERS.map((tier, i) => (
-                  <div key={tier.name} className="p-6" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                {tiers.map((tier, i) => (
+                  <div key={i} className="p-6" style={{ backgroundColor: 'var(--bg-secondary)' }}>
                     <div className="flex items-start gap-4">
                       <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-1 bg-[#AEE37B]/10 text-[#AEE37B] flex-shrink-0">
                         {String(i + 1).padStart(2, '0')}
@@ -204,9 +172,9 @@ export function AccountingFinance() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-6">
-              Strengthen Your Financial Infrastructure
+              {t('accountingFinance.cta.heading')}
             </h2>
-            <Button onClick={openModal} size="lg">Request a Consultation</Button>
+            <Button onClick={openModal} size="lg">{t('accountingFinance.cta.button')}</Button>
           </motion.div>
         </div>
       </section>

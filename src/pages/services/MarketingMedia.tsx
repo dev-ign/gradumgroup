@@ -2,49 +2,20 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../../components/ui/PageTransition';
 import { Button } from '../../components/ui/Button';
 import { useModal } from '../../context/ModalContext';
-
-const DELIVERABLES = [
-  {
-    title: 'Brand & Positioning',
-    items: [
-      'Brand architecture coordination',
-      'Messaging alignment and narrative structure',
-      'Strategic positioning development',
-    ],
-  },
-  {
-    title: 'Digital Presence',
-    items: [
-      'Website governance and optimization oversight',
-      'Digital platform coordination',
-      'Content system architecture',
-    ],
-  },
-  {
-    title: 'Campaign Execution',
-    items: [
-      'Campaign strategy and planning',
-      'Launch execution management',
-      'Performance measurement and reporting',
-    ],
-  },
-];
-
-const WHO_ITS_FOR = [
-  'Scaling and mid-market businesses requiring disciplined brand infrastructure',
-  'Professional service firms',
-  'Organizations entering new markets',
-  'Companies requiring disciplined digital coordination',
-];
-
-const TIERS = [
-  { name: 'Essential', desc: 'Core brand coordination and digital execution.' },
-  { name: 'Growth', desc: 'Enhanced campaign planning, content systems, and performance reporting.' },
-  { name: 'Enterprise', desc: 'Comprehensive brand structuring, multi-channel oversight, and strategic leadership.' },
-];
+import { useTranslation } from '../../i18n/useTranslation';
 
 export function MarketingMedia() {
   const { openModal } = useModal();
+  const { t, tArray } = useTranslation();
+  const whoItsForItems = tArray('marketingMedia.whoItsFor.items');
+  const deliverables = [0, 1, 2].map((i) => ({
+    title: t(`marketingMedia.deliverables.items.${i}.title`),
+    items: tArray(`marketingMedia.deliverables.items.${i}.list`),
+  }));
+  const tiers = [0, 1, 2].map((i) => ({
+    name: t(`marketingMedia.engagement.tiers.${i}.name`),
+    desc: t(`marketingMedia.engagement.tiers.${i}.desc`),
+  }));
 
   return (
     <PageTransition>
@@ -68,16 +39,16 @@ export function MarketingMedia() {
             transition={{ duration: 0.5 }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-2">Gradum Services</p>
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#94b5b0] mb-6">Marketing & Media</p>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-2">{t('marketingMedia.hero.label')}</p>
+            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#94b5b0] mb-6">{t('marketingMedia.hero.sublabel')}</p>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-white mb-8">
-              Brand Discipline.<br />
-              <span className="text-[#AEE37B]">Structured Execution.</span>
+              {t('marketingMedia.hero.title1')}<br />
+              <span className="text-[#AEE37B]">{t('marketingMedia.hero.title2')}</span>
             </h1>
             <p className="text-base text-[#94b5b0] leading-relaxed mb-10 max-w-2xl">
-              Structured brand governance and execution infrastructure designed to strengthen positioning, messaging alignment, and digital performance.
+              {t('marketingMedia.hero.description')}
             </p>
-            <Button onClick={openModal} size="lg">Request a Consultation</Button>
+            <Button onClick={openModal} size="lg">{t('marketingMedia.hero.cta')}</Button>
           </motion.div>
         </div>
       </section>
@@ -92,14 +63,10 @@ export function MarketingMedia() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Overview</p>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('marketingMedia.overview.label')}</p>
               <div className="space-y-4 text-sm text-[var(--text-secondary)] leading-relaxed">
-                <p>
-                  Gradum supports organizations in building disciplined brand systems and structured marketing execution frameworks aligned with business strategy.
-                </p>
-                <p>
-                  Our focus is clarity in positioning, consistency in communication, and measurable alignment between brand strategy and operational goals.
-                </p>
+                <p>{t('marketingMedia.overview.p1')}</p>
+                <p>{t('marketingMedia.overview.p2')}</p>
               </div>
             </motion.div>
           </div>
@@ -116,14 +83,14 @@ export function MarketingMedia() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Deliverables</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">What We Deliver</h2>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('marketingMedia.deliverables.label')}</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">{t('marketingMedia.deliverables.heading')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {DELIVERABLES.map((del, i) => (
+            {deliverables.map((del, i) => (
               <motion.div
-                key={del.title}
+                key={i}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -134,8 +101,8 @@ export function MarketingMedia() {
                 <div className="w-6 h-0.5 bg-[#AEE37B] mb-5" />
                 <h3 className="text-sm font-black tracking-tight text-[var(--text-primary)] mb-4">{del.title}</h3>
                 <ul className="space-y-2">
-                  {del.items.map(item => (
-                    <li key={item} className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
+                  {del.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
                       <span className="w-1 h-1 rounded-full bg-[#AEE37B] flex-shrink-0 mt-1.5" />
                       {item}
                     </li>
@@ -157,10 +124,10 @@ export function MarketingMedia() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Target</p>
-              <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)] mb-8">Who It's For</h2>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('marketingMedia.whoItsFor.label')}</p>
+              <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)] mb-8">{t('marketingMedia.whoItsFor.heading')}</h2>
               <ul className="space-y-3">
-                {WHO_ITS_FOR.map((item, i) => (
+                {whoItsForItems.map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#AEE37B] flex-shrink-0 mt-1.5" />
                     {item}
@@ -175,11 +142,11 @@ export function MarketingMedia() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.15 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Engagement</p>
-              <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)] mb-8">Engagement Structure</h2>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('marketingMedia.engagement.label')}</p>
+              <h2 className="text-3xl font-black tracking-tight text-[var(--text-primary)] mb-8">{t('marketingMedia.engagement.heading')}</h2>
               <div className="space-y-px" style={{ backgroundColor: 'var(--border-color)' }}>
-                {TIERS.map((tier, i) => (
-                  <div key={tier.name} className="p-6" style={{ backgroundColor: 'var(--bg-secondary)' }}>
+                {tiers.map((tier, i) => (
+                  <div key={i} className="p-6" style={{ backgroundColor: 'var(--bg-secondary)' }}>
                     <div className="flex items-start gap-4">
                       <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-1 bg-[#AEE37B]/10 text-[#AEE37B] flex-shrink-0">
                         {String(i + 1).padStart(2, '0')}
@@ -207,9 +174,9 @@ export function MarketingMedia() {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-6">
-              Strengthen Your Brand Infrastructure
+              {t('marketingMedia.cta.heading')}
             </h2>
-            <Button onClick={openModal} size="lg">Request a Consultation</Button>
+            <Button onClick={openModal} size="lg">{t('marketingMedia.cta.button')}</Button>
           </motion.div>
         </div>
       </section>

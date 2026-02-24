@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../components/ui/PageTransition';
 import { Button } from '../components/ui/Button';
 import { useModal } from '../context/ModalContext';
+import { useTranslation } from '../i18n/useTranslation';
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -13,42 +14,12 @@ const stagger = {
   animate: { transition: { staggerChildren: 0.1 } },
 };
 
-const DIVISIONS = [
-  {
-    name: 'Gradum Consulting',
-    tagline: 'Engineering & Technology Advisory for performance-driven industries.',
-    to: '/consulting',
-    available: true,
-  },
-  {
-    name: 'Gradum Construction',
-    tagline: 'Architectural and structural execution.',
-    to: '/construction',
-    available: true,
-  },
-  {
-    name: 'Gradum Services',
-    tagline: 'Financial Governance & Brand Execution Infrastructure.',
-    to: '/services',
-    available: true,
-  },
-  {
-    name: 'Gradum Accelerator',
-    tagline: 'Venture development platform.',
-    to: '/accelerator',
-    available: false,
-  },
-];
-
-const HOW_WE_WORK = [
-  { num: '01', title: 'Assessment', desc: 'Clarifying objectives and operational constraints.' },
-  { num: '02', title: 'Scope Alignment', desc: 'Defining deliverables, milestones, and accountability.' },
-  { num: '03', title: 'Structured Execution', desc: 'Delivering against measurable targets.' },
-  { num: '04', title: 'Ongoing Advisory', desc: 'Sustaining performance through disciplined oversight.' },
-];
+const DIVISION_ROUTES = ['/consulting', '/construction', '/services', '/accelerator'] as const;
+const DIVISION_AVAILABLE = [true, true, true, false] as const;
 
 export function Home() {
   const { openModal } = useModal();
+  const { t } = useTranslation();
 
   return (
     <PageTransition>
@@ -76,33 +47,33 @@ export function Home() {
             variants={stagger}
             initial="initial"
             animate="animate"
-            className="max-w-4xl"
+            className="max-w-4xl mx-auto text-center"
           >
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.5 }}
               className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6"
             >
-              Engineering-Led Advisory Platform
+              {t('home.hero.tagline')}
             </motion.p>
             <motion.h1
               variants={fadeUp}
               transition={{ duration: 0.5 }}
               className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-[0.95] text-[var(--text-primary)] mb-8"
             >
-              Structured<br />Advisory.<br />
-              <span className="text-[#AEE37B]">Engineered</span><br />Execution.
+              {t('home.hero.title1')}<br />{t('home.hero.title2')}<br />
+              <span className="text-[#AEE37B]">{t('home.hero.title3')}</span><br />{t('home.hero.title4')}.
             </motion.h1>
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.5 }}
-              className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl leading-relaxed mb-10"
+              className="text-base sm:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed mb-10"
             >
-              Gradum is an engineering-led advisory and execution platform structured to address technical, operational, and infrastructure complexity across performance-critical environments. We partner with mid-market enterprises and regional leaders operating in engineering-intensive, regulated, and infrastructure-critical industries.
+              {t('home.hero.description')}
             </motion.p>
             <motion.div variants={fadeUp} transition={{ duration: 0.5 }}>
               <Button onClick={openModal} size="lg">
-                Request a Consultation
+                {t('common.requestConsultation')}
               </Button>
             </motion.div>
           </motion.div>
@@ -119,19 +90,19 @@ export function Home() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Our Platform</p>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('home.platform.label')}</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[var(--text-primary)] max-w-2xl leading-tight">
-              Integrated advisory and execution architecture.
+              {t('home.platform.heading')}
             </h2>
             <p className="text-sm text-[var(--text-secondary)] mt-4 max-w-xl leading-relaxed">
-              Platform divisions operate under defined mandate frameworks and integrate within a unified advisory and execution architecture designed for multi-functional and multi-entity environments.
+              {t('home.platform.intro')}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {DIVISIONS.map((div, i) => (
+            {DIVISION_ROUTES.map((to, i) => (
               <motion.div
-                key={div.name}
+                key={to}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -150,24 +121,24 @@ export function Home() {
                     <span className="text-xs font-bold tracking-widest uppercase text-[var(--text-secondary)]">
                       {String(i + 1).padStart(2, '0')}
                     </span>
-                    {!div.available && (
+                    {!DIVISION_AVAILABLE[i] && (
                       <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-1 border border-[var(--border-color)] text-[var(--text-secondary)]">
-                        Coming Soon
+                        {t('common.comingSoon')}
                       </span>
                     )}
                   </div>
                   <h3 className="text-xl font-black tracking-tight text-[var(--text-primary)] mb-2 group-hover:text-[#AEE37B] transition-colors duration-300">
-                    {div.name}
+                    {t(`home.divisions.${i}.name`)}
                   </h3>
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{div.tagline}</p>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{t(`home.divisions.${i}.tagline`)}</p>
                 </div>
 
-                {div.available && (
+                {DIVISION_AVAILABLE[i] && (
                   <Link
-                    to={div.to}
+                    to={to}
                     className="mt-8 inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#AEE37B] hover:gap-4 transition-all duration-200"
                   >
-                    Learn More
+                    {t('common.learnMore')}
                     <span>→</span>
                   </Link>
                 )}
@@ -187,16 +158,16 @@ export function Home() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Methodology</p>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('home.howWeWork.label')}</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[var(--text-primary)]">
-              How We Work
+              {t('home.howWeWork.heading')}
             </h2>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {HOW_WE_WORK.map((step, i) => (
+            {[0, 1, 2, 3].map((i) => (
               <motion.div
-                key={step.title}
+                key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -204,9 +175,9 @@ export function Home() {
                 className="p-8"
                 style={{ backgroundColor: 'var(--bg-primary)' }}
               >
-                <span className="block text-5xl font-black text-[#AEE37B] opacity-30 mb-4">{step.num}</span>
-                <h3 className="text-base font-black tracking-tight text-[var(--text-primary)] mb-2">{step.title}</h3>
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{step.desc}</p>
+                <span className="block text-5xl font-black text-[#AEE37B] opacity-30 mb-4">{t(`home.howWeWork.steps.${i}.num`)}</span>
+                <h3 className="text-base font-black tracking-tight text-[var(--text-primary)] mb-2">{t(`home.howWeWork.steps.${i}.title`)}</h3>
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{t(`home.howWeWork.steps.${i}.desc`)}</p>
               </motion.div>
             ))}
           </div>
@@ -230,15 +201,15 @@ export function Home() {
             transition={{ duration: 0.5 }}
             className="max-w-2xl"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Client Coordination</p>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('home.cta.label')}</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white mb-6 leading-tight">
-              Structured Client Coordination
+              {t('home.cta.heading')}
             </h2>
             <p className="text-sm text-[#94b5b0] leading-relaxed mb-10 max-w-lg">
-              All engagements are managed through the Gradum Client Portal, ensuring secure collaboration, defined project stages, and centralized documentation.
+              {t('home.cta.description')}
             </p>
             <Button onClick={openModal} variant="primary" size="lg">
-              Request a Consultation
+              {t('common.requestConsultation')}
             </Button>
           </motion.div>
         </div>

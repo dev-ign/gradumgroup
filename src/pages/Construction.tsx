@@ -2,39 +2,15 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../components/ui/PageTransition';
 import { Button } from '../components/ui/Button';
 import { useModal } from '../context/ModalContext';
-
-const SERVICES = [
-  {
-    title: 'Structural Engineering & Floorplans',
-    items: ['Structural system design', 'Reinforcement detailing', 'Load and performance analysis', 'Technical plan development'],
-  },
-  {
-    title: 'Geotechnical Investigation',
-    items: ['Soil evaluation coordination', 'Geotechnical analysis', 'Foundation recommendations', 'Site risk assessment'],
-  },
-  {
-    title: 'Budgeting & Cost Planning',
-    items: ['Budget framework development', 'Cost estimation and control', 'Resource allocation planning', 'Stakeholder financial coordination'],
-  },
-  {
-    title: 'Architectural Design',
-    items: ['Conceptual design development', 'Technical drawing preparation', 'Regulatory alignment', 'Construction documentation'],
-  },
-  {
-    title: 'Interior Design',
-    items: ['Functional layout planning', 'Material and finish selection', 'Implementation oversight'],
-  },
-];
-
-const PROJECT_MODEL = [
-  { num: '01', title: 'Site & Structural Assessment' },
-  { num: '02', title: 'Design & Technical Planning' },
-  { num: '03', title: 'Budget Alignment' },
-  { num: '04', title: 'Coordinated Execution' },
-];
+import { useTranslation } from '../i18n/useTranslation';
 
 export function Construction() {
   const { openModal } = useModal();
+  const { t, tArray } = useTranslation();
+  const serviceItems = [0, 1, 2, 3, 4].map((i) => ({
+    title: t(`construction.services.items.${i}.title`),
+    items: tArray(`construction.services.items.${i}.list`),
+  }));
 
   return (
     <PageTransition>
@@ -58,15 +34,15 @@ export function Construction() {
             transition={{ duration: 0.5 }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">Gradum Construction</p>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('construction.hero.label')}</p>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-white mb-8">
-              Engineered Development<br />
-              <span className="text-[#AEE37B]">for the Dominican Republic.</span>
+              {t('construction.hero.title1')}<br />
+              <span className="text-[#AEE37B]">{t('construction.hero.title2')}</span>
             </h1>
             <p className="text-base text-[#94b5b0] leading-relaxed mb-10 max-w-2xl">
-              Structural, architectural, and planning services delivered with technical rigor and engineering discipline.
+              {t('construction.hero.description')}
             </p>
-            <Button onClick={openModal} size="lg">Discuss a Project</Button>
+            <Button onClick={openModal} size="lg">{t('construction.hero.cta')}</Button>
           </motion.div>
         </div>
       </section>
@@ -81,20 +57,14 @@ export function Construction() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Overview</p>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('construction.overview.label')}</p>
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)] mb-6">
-                Governed Engineering Execution
+                {t('construction.overview.heading')}
               </h2>
               <div className="space-y-4 text-sm text-[var(--text-secondary)] leading-relaxed">
-                <p>
-                  Gradum Construction delivers project-based architectural and engineering services across the Dominican Republic, operating under licensed engineering standards and governed execution models.
-                </p>
-                <p>
-                  Our approach integrates structural design, soil analysis, cost planning, and coordinated execution — ensuring safety, regulatory compliance, and long-term structural performance in a region where engineering precision is critical.
-                </p>
-                <p>
-                  Projects are executed under licensed local engineering supervision and regulatory alignment.
-                </p>
+                <p>{t('construction.overview.p1')}</p>
+                <p>{t('construction.overview.p2')}</p>
+                <p>{t('construction.overview.p3')}</p>
               </div>
             </motion.div>
           </div>
@@ -111,14 +81,14 @@ export function Construction() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Services</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">Core Services</h2>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('construction.services.label')}</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">{t('construction.services.heading')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {SERVICES.map((svc, i) => (
+            {serviceItems.map((svc, i) => (
               <motion.div
-                key={svc.title}
+                key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -129,8 +99,8 @@ export function Construction() {
                 <span className="block text-3xl font-black text-[#AEE37B] opacity-25 mb-4">{String(i + 1).padStart(2, '0')}</span>
                 <h3 className="text-base font-black tracking-tight text-[var(--text-primary)] mb-4">{svc.title}</h3>
                 <ul className="space-y-2">
-                  {svc.items.map(item => (
-                    <li key={item} className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
+                  {svc.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
                       <span className="w-1 h-1 rounded-full bg-[#AEE37B] flex-shrink-0 mt-1.5" />
                       {item}
                     </li>
@@ -156,24 +126,24 @@ export function Construction() {
               <div className="w-6 h-6 rounded-full bg-[#AEE37B]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                 <div className="w-2 h-2 rounded-full bg-[#AEE37B]" />
               </div>
-              <span className="text-xs font-bold tracking-widest uppercase text-[#AEE37B]">In Development</span>
+              <span className="text-xs font-bold tracking-widest uppercase text-[#AEE37B]">{t('construction.seismic.badge')}</span>
             </div>
             <h3 className="text-2xl font-black tracking-tight text-[var(--text-primary)] mb-4">
-              Seismic & Soil-Focused Engineering
+              {t('construction.seismic.heading')}
             </h3>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
-              In response to the structural and seismic realities of the Dominican Republic, Gradum is developing an engineering-focused analytical platform to support:
+              {t('construction.seismic.intro')}
             </p>
             <ul className="space-y-2 mb-4">
-              {['Advanced soil studies', 'Seismic analysis', 'Structural risk modeling'].map(item => (
-                <li key={item} className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+              {tArray('construction.seismic.list').map((item, i) => (
+                <li key={i} className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
                   <span className="w-1 h-1 rounded-full bg-[#AEE37B]" />
                   {item}
                 </li>
               ))}
             </ul>
             <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-              This initiative reflects our long-term commitment to safety, structural validation, and engineering precision in local development.
+              {t('construction.seismic.closing')}
             </p>
           </motion.div>
         </div>
@@ -189,14 +159,14 @@ export function Construction() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Methodology</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">Project Model</h2>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('construction.projectModel.label')}</p>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">{t('construction.projectModel.heading')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: '#1b6259' }}>
-            {PROJECT_MODEL.map((step, i) => (
+            {[0, 1, 2, 3].map((i) => (
               <motion.div
-                key={step.title}
+                key={i}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -204,8 +174,8 @@ export function Construction() {
                 className="p-8"
                 style={{ backgroundColor: '#0A2924' }}
               >
-                <span className="block text-4xl font-black text-[#AEE37B] opacity-30 mb-4">{step.num}</span>
-                <h3 className="text-sm font-bold tracking-tight text-white">{step.title}</h3>
+                <span className="block text-4xl font-black text-[#AEE37B] opacity-30 mb-4">{t(`construction.projectModel.steps.${i}.num`)}</span>
+                <h3 className="text-sm font-bold tracking-tight text-white">{t(`construction.projectModel.steps.${i}.title`)}</h3>
               </motion.div>
             ))}
           </div>
@@ -217,7 +187,7 @@ export function Construction() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-16 text-center"
           >
-            <Button onClick={openModal} size="lg">Discuss Your Development Mandate</Button>
+            <Button onClick={openModal} size="lg">{t('construction.projectModel.cta')}</Button>
           </motion.div>
         </div>
       </section>

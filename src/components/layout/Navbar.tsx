@@ -1,26 +1,93 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { useModal } from '../../context/ModalContext';
+import { useLanguage, type Language } from '../../context/LanguageContext';
+import { useTranslation } from '../../i18n/useTranslation';
+
+const LANGUAGES: { code: Language; labelKey: string }[] = [
+  { code: 'en', labelKey: 'nav.english' },
+  { code: 'es', labelKey: 'nav.spanish' },
+];
+
+function LanguageSelector() {
+  const { lang, setLang } = useLanguage();
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(o => !o)}
+        aria-label={t('nav.selectLanguage')}
+        className="flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase text-[var(--text-primary)] hover:text-[#AEE37B] transition-colors duration-200"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        </svg>
+        {lang.toUpperCase()}
+        <svg width="8" height="5" viewBox="0 0 10 6" fill="currentColor" className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
+          <path d="M0 0l5 6 5-6H0z" />
+        </svg>
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.15 }}
+            className="absolute top-full right-0 mt-2 w-36 py-2"
+            style={{ backgroundColor: 'var(--nav-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(12px)' }}
+          >
+            {LANGUAGES.map(({ code, labelKey }) => (
+              <li key={code}>
+                <button
+                  onClick={() => { setLang(code); setOpen(false); }}
+                  className={`w-full text-left px-4 py-2.5 text-xs font-semibold tracking-widest uppercase transition-colors duration-150 ${
+                    lang === code ? 'text-[#AEE37B] bg-[#AEE37B]/5' : 'text-[var(--text-primary)] hover:text-[#AEE37B] hover:bg-[#AEE37B]/5'
+                  }`}
+                >
+                  {t(labelKey)}
+                </button>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 const NAV_LINKS = [
-  { label: 'Home', to: '/' },
+  { labelKey: 'nav.home', to: '/' },
   {
-    label: 'Platform',
+    labelKey: 'nav.platform',
     dropdown: [
-      { label: 'Consulting', to: '/consulting' },
-      { label: 'Construction', to: '/construction' },
-      { label: 'Services', to: '/services' },
-      { label: 'Accelerator', to: '/accelerator' },
+      { labelKey: 'common.consulting', to: '/consulting' },
+      { labelKey: 'common.construction', to: '/construction' },
+      { labelKey: 'common.services', to: '/services' },
+      { labelKey: 'common.accelerator', to: '/accelerator' },
     ],
   },
-  { label: 'About', to: '/about' },
-  { label: 'Contact', action: 'modal' as const },
+  { labelKey: 'nav.about', to: '/about' },
+  { labelKey: 'nav.contact', action: 'modal' as const },
 ];
 
 export function Navbar() {
   const { openModal } = useModal();
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [platformOpen, setPlatformOpen] = useState(false);
@@ -65,13 +132,13 @@ export function Navbar() {
         {/* Desktop Nav */}
         <ul className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((item) => (
-            <li key={item.label} className="relative">
+            <li key={item.labelKey} className="relative">
               {item.action === 'modal' ? (
                 <button
                   onClick={openModal}
                   className="text-xs font-semibold tracking-widest uppercase text-[var(--text-primary)] hover:text-[#AEE37B] transition-colors duration-200"
                 >
-                  {item.label}
+                  {t(item.labelKey)}
                 </button>
               ) : item.dropdown ? (
                 <div
@@ -80,7 +147,7 @@ export function Navbar() {
                   onMouseLeave={() => setPlatformOpen(false)}
                 >
                   <button className="flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase text-[var(--text-primary)] hover:text-[#AEE37B] transition-colors duration-200">
-                    {item.label}
+                    {t(item.labelKey)}
                     <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor" className={`transition-transform duration-200 ${platformOpen ? 'rotate-180' : ''}`}>
                       <path d="M0 0l5 6 5-6H0z" />
                     </svg>
@@ -96,7 +163,7 @@ export function Navbar() {
                         style={{ backgroundColor: 'var(--nav-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(12px)' }}
                       >
                         {item.dropdown.map((sub) => (
-                          <li key={sub.label}>
+                          <li key={sub.labelKey}>
                             <NavLink
                               to={sub.to}
                               onClick={() => setPlatformOpen(false)}
@@ -106,7 +173,7 @@ export function Navbar() {
                                 }`
                               }
                             >
-                              {sub.label}
+                              {t(sub.labelKey)}
                             </NavLink>
                           </li>
                         ))}
@@ -116,7 +183,7 @@ export function Navbar() {
                 </div>
               ) : (
                 <NavLink to={item.to!} end={item.to === '/'} className={navLinkClass}>
-                  {item.label}
+                  {t(item.labelKey)}
                 </NavLink>
               )}
             </li>
@@ -125,17 +192,19 @@ export function Navbar() {
 
         {/* Right actions */}
         <div className="hidden md:flex items-center gap-5">
+          <LanguageSelector />
           <ThemeToggle />
           <button
             onClick={openModal}
             className="text-xs font-bold tracking-widest uppercase px-5 py-2.5 bg-[#AEE37B] text-[#0A2924] hover:bg-[#9dd468] transition-colors duration-200"
           >
-            Client Access
+            {t('common.requestConsultation')}
           </button>
         </div>
 
         {/* Mobile hamburger */}
         <div className="md:hidden flex items-center gap-4">
+          <LanguageSelector />
           <ThemeToggle />
           <button
             onClick={() => setMobileOpen(o => !o)}
@@ -174,32 +243,32 @@ export function Navbar() {
           >
             <ul className="px-6 py-4 flex flex-col gap-4">
               <li>
-                <NavLink to="/" end className={navLinkClass} onClick={() => setMobileOpen(false)}>Home</NavLink>
+                <NavLink to="/" end className={navLinkClass} onClick={() => setMobileOpen(false)}>{t('nav.home')}</NavLink>
               </li>
               <li>
-                <span className="text-xs font-semibold tracking-widest uppercase text-[var(--text-secondary)]">Platform</span>
+                <span className="text-xs font-semibold tracking-widest uppercase text-[var(--text-secondary)]">{t('nav.platform')}</span>
                 <ul className="mt-2 pl-4 flex flex-col gap-2">
                   {[
-                    { label: 'Consulting', to: '/consulting' },
-                    { label: 'Construction', to: '/construction' },
-                    { label: 'Services', to: '/services' },
-                    { label: 'Accelerator', to: '/accelerator' },
+                    { labelKey: 'common.consulting', to: '/consulting' },
+                    { labelKey: 'common.construction', to: '/construction' },
+                    { labelKey: 'common.services', to: '/services' },
+                    { labelKey: 'common.accelerator', to: '/accelerator' },
                   ].map(s => (
-                    <li key={s.label}>
-                      <NavLink to={s.to} className={navLinkClass} onClick={() => setMobileOpen(false)}>{s.label}</NavLink>
+                    <li key={s.labelKey}>
+                      <NavLink to={s.to} className={navLinkClass} onClick={() => setMobileOpen(false)}>{t(s.labelKey)}</NavLink>
                     </li>
                   ))}
                 </ul>
               </li>
               <li>
-                <NavLink to="/about" className={navLinkClass} onClick={() => setMobileOpen(false)}>About</NavLink>
+                <NavLink to="/about" className={navLinkClass} onClick={() => setMobileOpen(false)}>{t('nav.about')}</NavLink>
               </li>
               <li>
                 <button
                   onClick={() => { setMobileOpen(false); openModal(); }}
                   className="text-xs font-semibold tracking-widest uppercase text-[var(--text-primary)] hover:text-[#AEE37B] transition-colors duration-200"
                 >
-                  Contact
+                  {t('nav.contact')}
                 </button>
               </li>
               <li className="pt-2">
@@ -207,7 +276,7 @@ export function Navbar() {
                   onClick={() => { setMobileOpen(false); openModal(); }}
                   className="w-full text-xs font-bold tracking-widest uppercase px-5 py-3 bg-[#AEE37B] text-[#0A2924] hover:bg-[#9dd468] transition-colors duration-200"
                 >
-                  Client Access
+                  {t('common.clientAccess')}
                 </button>
               </li>
             </ul>

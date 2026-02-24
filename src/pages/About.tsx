@@ -1,40 +1,12 @@
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/ui/PageTransition';
-
-const DIVISIONS = [
-  {
-    name: 'Gradum Consulting',
-    desc: 'Engineering & Technology advisory focused on system architecture, digital infrastructure, and performance-critical operations. We provide executive-level engineering strategy and disciplined technical oversight across complex technical ecosystems.',
-  },
-  {
-    name: 'Gradum Construction',
-    desc: 'Project-based architectural and structural execution in the Dominican Republic.',
-  },
-  {
-    name: 'Gradum Services',
-    desc: 'Financial governance and brand execution infrastructure supporting operational performance.',
-  },
-  {
-    name: 'Gradum Accelerator',
-    desc: 'A selective initiative launching in a future phase as part of Gradum\'s disciplined regional expansion.',
-  },
-];
-
-const PRINCIPLES = [
-  'Discipline over noise.',
-  'Structure over improvisation.',
-  'Execution over abstraction.',
-  'Precision over volume.',
-];
-
-const ENGAGEMENT_PRINCIPLES = [
-  'Clear scope before action',
-  'Established ownership and accountability',
-  'Transparent coordination',
-  'Measurable operational impact',
-];
+import { useTranslation } from '../i18n/useTranslation';
 
 export function About() {
+  const { t, tArray } = useTranslation();
+  const overviewParagraphs = tArray('about.overview');
+  const principles = tArray('about.philosophy.principles');
+  const engagementItems = tArray('about.engagement.items');
   return (
     <PageTransition>
       {/* Hero */}
@@ -46,12 +18,12 @@ export function About() {
             transition={{ duration: 0.5 }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">About</p>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('about.hero.label')}</p>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-[var(--text-primary)] mb-8">
-              Engineered for<br /><span className="text-[#AEE37B]">Precision.</span>
+              {t('about.hero.title1')}<br /><span className="text-[#AEE37B]">{t('about.hero.title2')}</span>
             </h1>
             <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
-              Gradum is an engineering-led advisory and execution platform structured across focused verticals.
+              {t('about.hero.intro')}
             </p>
           </motion.div>
         </div>
@@ -68,15 +40,9 @@ export function About() {
               transition={{ duration: 0.5 }}
               className="space-y-6 text-[var(--text-secondary)] text-sm leading-relaxed"
             >
-              <p>
-                We partner with organizations seeking operational clarity, technical rigor, and measurable performance across complex environments.
-              </p>
-              <p>
-                Engagements typically involve cross-functional coordination, regulated operating environments, and executive-level accountability structures.
-              </p>
-              <p>
-                Initial operations are anchored in the Dominican Republic, with expansion across Latin America and North America.
-              </p>
+              {overviewParagraphs.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
             </motion.div>
           </div>
         </div>
@@ -92,16 +58,16 @@ export function About() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">Our Platform</p>
+            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('about.platform.label')}</p>
             <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">
-              Focused Verticals
+              {t('about.platform.heading')}
             </h2>
           </motion.div>
 
           <div className="space-y-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {DIVISIONS.map((div, i) => (
+            {[0, 1, 2, 3].map((i) => (
               <motion.div
-                key={div.name}
+                key={i}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -110,10 +76,10 @@ export function About() {
                 style={{ backgroundColor: 'var(--bg-primary)' }}
               >
                 <div className="sm:w-1/3">
-                  <h3 className="text-base font-black tracking-tight text-[var(--text-primary)]">{div.name}</h3>
+                  <h3 className="text-base font-black tracking-tight text-[var(--text-primary)]">{t(`about.divisions.${i}.name`)}</h3>
                 </div>
                 <div className="sm:w-2/3">
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{div.desc}</p>
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{t(`about.divisions.${i}.desc`)}</p>
                 </div>
               </motion.div>
             ))}
@@ -131,14 +97,14 @@ export function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">Philosophy</p>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('about.philosophy.label')}</p>
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-10">
-                Execution Philosophy
+                {t('about.philosophy.heading')}
               </h2>
               <ul className="space-y-4">
-                {PRINCIPLES.map((p, i) => (
+                {principles.map((p, i) => (
                   <motion.li
-                    key={p}
+                    key={i}
                     initial={{ opacity: 0, x: -16 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -151,7 +117,7 @@ export function About() {
                 ))}
               </ul>
               <p className="text-sm text-[#94b5b0] leading-relaxed mt-8">
-                Sustainable performance is built through defined scope, accountable ownership, and controlled delivery — not reactive decision-making.
+                {t('about.philosophy.closing')}
               </p>
             </motion.div>
 
@@ -161,15 +127,15 @@ export function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.15 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">Principles</p>
+              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('about.engagement.label')}</p>
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-10">
-                Engagement Principles
+                {t('about.engagement.heading')}
               </h2>
-              <p className="text-sm text-[#94b5b0] leading-relaxed mb-8">Every engagement prioritizes:</p>
+              <p className="text-sm text-[#94b5b0] leading-relaxed mb-8">{t('about.engagement.intro')}</p>
               <ul className="space-y-4">
-                {ENGAGEMENT_PRINCIPLES.map((p, i) => (
+                {engagementItems.map((p, i) => (
                   <motion.li
-                    key={p}
+                    key={i}
                     initial={{ opacity: 0, x: -16 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -183,8 +149,8 @@ export function About() {
               </ul>
               <div className="mt-12 pt-8 border-t border-[#1b6259]">
                 <p className="text-base font-bold text-white leading-tight">
-                  Gradum is not built for volume.<br />
-                  <span className="text-[#AEE37B]">It is engineered for precision.</span>
+                  {t('about.engagement.closing1')}<br />
+                  <span className="text-[#AEE37B]">{t('about.engagement.closing2')}</span>
                 </p>
               </div>
             </motion.div>
