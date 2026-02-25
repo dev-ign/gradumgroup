@@ -75,8 +75,9 @@ function LanguageSelector() {
 type FlyoutItem = { labelKey: string; to: string };
 
 type DropdownItem =
-  | { labelKey: string; to: string; flyout?: undefined }
-  | { labelKey: string; to?: undefined; flyout: FlyoutItem[]; activePrefix: string };
+  | { labelKey: string; to: string; flyout?: undefined; featured?: false }
+  | { labelKey: string; to?: undefined; flyout: FlyoutItem[]; activePrefix: string; featured?: false }
+  | { labelKey: string; to: string; flyout?: undefined; featured: true };
 
 type NavItem =
   | { labelKey: string; to: string; dropdown?: undefined; action?: undefined }
@@ -100,7 +101,7 @@ const NAV_LINKS: NavItem[] = [
           { labelKey: 'nav.marketingMedia', to: '/services/marketing-media' },
         ],
       },
-      { labelKey: 'common.accelerator', to: '/accelerator' },
+      { labelKey: 'common.accelerator', to: '/accelerator', featured: true },
     ],
   },
   { labelKey: 'nav.about', to: '/about' },
@@ -218,7 +219,7 @@ export function Navbar() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 6 }}
                         transition={{ duration: 0.12 }}
-                        className="absolute top-full left-0 mt-2 w-44 py-1.5"
+                        className="absolute top-full left-0 mt-2 w-48 py-1.5"
                         style={panelStyle}
                       >
                         {item.dropdown.map((sub) => (
@@ -236,7 +237,6 @@ export function Navbar() {
                                 )}
                               >
                                 <span className="flex-1">{t(sub.labelKey)}</span>
-                                {/* Right chevron */}
                                 <svg width="5" height="9" viewBox="0 0 6 10" fill="currentColor" className="opacity-60">
                                   <path d="M0 0l6 5-6 5V0z" />
                                 </svg>
@@ -264,8 +264,6 @@ export function Navbar() {
                                         </NavLink>
                                       </li>
                                     ))}
-
-                                    {/* Separator + overview link */}
                                     <li>
                                       <div className="mx-4 my-1" style={{ height: '1px', backgroundColor: 'var(--border-color)' }} />
                                     </li>
@@ -289,6 +287,39 @@ export function Navbar() {
                                   </motion.ul>
                                 )}
                               </AnimatePresence>
+                            </li>
+
+                          ) : sub.featured ? (
+                            /* Accelerator — featured item */
+                            <li key={sub.labelKey}>
+                              {/* Separator */}
+                              <div className="mx-4 mb-1" style={{ height: '1px', backgroundColor: 'var(--border-color)' }} />
+                              <NavLink
+                                to={sub.to}
+                                onClick={() => setPlatformOpen(false)}
+                                className={({ isActive }) =>
+                                  `relative flex items-center gap-2.5 w-full px-4 py-2.5 transition-all duration-200 overflow-hidden ${
+                                    isActive ? 'bg-[#AEE37B]/10' : 'hover:bg-[#AEE37B]/8'
+                                  }`
+                                }
+                                style={{ background: 'linear-gradient(90deg, rgba(174,227,123,0.09) 0%, rgba(174,227,123,0.03) 100%)' }}
+                              >
+                                {/* Live pulse indicator */}
+                                <span className="relative flex-shrink-0 w-2 h-2">
+                                  <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-60" />
+                                  <span className="relative block w-2 h-2 rounded-full bg-[#AEE37B]" />
+                                </span>
+                                {/* Label */}
+                                <span className="flex-1 text-xs font-semibold tracking-widest uppercase text-[#AEE37B]">
+                                  {t(sub.labelKey)}
+                                </span>
+                                {/* SOON badge */}
+                                <span className="text-[9px] font-bold tracking-[0.15em] uppercase px-1.5 py-0.5 text-[#AEE37B]"
+                                  style={{ border: '1px solid rgba(174,227,123,0.35)', backgroundColor: 'rgba(174,227,123,0.08)' }}
+                                >
+                                  SOON
+                                </span>
+                              </NavLink>
                             </li>
 
                           ) : (
@@ -385,7 +416,6 @@ export function Navbar() {
                   {[
                     { labelKey: 'common.consulting', to: '/consulting' },
                     { labelKey: 'common.construction', to: '/construction' },
-                    { labelKey: 'common.accelerator', to: '/accelerator' },
                   ].map(s => (
                     <li key={s.labelKey}>
                       <NavLink
@@ -419,6 +449,34 @@ export function Navbar() {
                         </li>
                       ))}
                     </ul>
+                  </li>
+
+                  {/* Accelerator — featured */}
+                  <li className="pt-1">
+                    <div style={{ height: '1px', backgroundColor: 'var(--border-color)', marginBottom: '6px' }} />
+                    <NavLink
+                      to="/accelerator"
+                      onClick={() => setMobileOpen(false)}
+                      className={({ isActive }) =>
+                        `flex items-center gap-2.5 py-1 transition-colors duration-150 ${
+                          isActive ? 'opacity-100' : 'opacity-90 hover:opacity-100'
+                        }`
+                      }
+                    >
+                      <span className="relative flex-shrink-0 w-2 h-2">
+                        <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-60" />
+                        <span className="relative block w-2 h-2 rounded-full bg-[#AEE37B]" />
+                      </span>
+                      <span className="text-xs font-semibold tracking-widest uppercase text-[#AEE37B]">
+                        {t('common.accelerator')}
+                      </span>
+                      <span
+                        className="text-[9px] font-bold tracking-[0.15em] uppercase px-1.5 py-0.5 text-[#AEE37B]"
+                        style={{ border: '1px solid rgba(174,227,123,0.35)', backgroundColor: 'rgba(174,227,123,0.08)' }}
+                      >
+                        SOON
+                      </span>
+                    </NavLink>
                   </li>
                 </ul>
               </li>

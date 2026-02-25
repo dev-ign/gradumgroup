@@ -102,30 +102,58 @@ export function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
             {DIVISION_ROUTES.map((to, i) => {
               const isAvailable = DIVISION_AVAILABLE[i];
+              const isAccelerator = to === '/accelerator';
               const cardClassName = 'flex flex-col justify-between min-h-[220px] p-10';
               const linkClassName = isAvailable
                 ? `${cardClassName} cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#AEE37B] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-secondary)]`
                 : cardClassName;
               const cardContent = (
                 <>
-                  {/* hover accent */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ backgroundColor: '#AEE37B', opacity: 0 }}
-                  />
-                  <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#AEE37B] group-hover:w-full transition-all duration-500 pointer-events-none" />
+                  {/* hover accent — only for available cards */}
+                  {isAvailable && (
+                    <>
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                        style={{ backgroundColor: '#AEE37B', opacity: 0 }}
+                      />
+                      <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#AEE37B] group-hover:w-full transition-all duration-500 pointer-events-none" />
+                    </>
+                  )}
+                  {/* Accelerator featured: subtle gradient glow */}
+                  {isAccelerator && (
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(174,227,123,0.12) 0%, rgba(174,227,123,0.04) 50%, transparent 100%)',
+                        borderLeft: '3px solid rgba(174,227,123,0.5)',
+                      }}
+                    />
+                  )}
 
                   <div>
                     <div className="flex items-start justify-between mb-4">
-                      <span className="text-xs font-bold tracking-widest uppercase text-[var(--text-secondary)]">
+                      <span className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[var(--text-secondary)]">
+                        {isAccelerator && (
+                          <span className="relative flex-shrink-0 w-2 h-2">
+                            <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-60" />
+                            <span className="relative block w-2 h-2 rounded-full bg-[#AEE37B]" />
+                          </span>
+                        )}
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       {!isAvailable && (
-                        <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-1 border border-[var(--border-color)] text-[var(--text-secondary)]">
-                          {t('common.comingSoon')}
+                        <span
+                          className="text-[9px] font-bold tracking-[0.15em] uppercase px-1.5 py-0.5 text-[#AEE37B]"
+                          style={{ border: '1px solid rgba(174,227,123,0.35)', backgroundColor: 'rgba(174,227,123,0.08)' }}
+                        >
+                          {t('common.comingSoon').toUpperCase()}
                         </span>
                       )}
                     </div>
-                    <h3 className="text-xl font-black tracking-tight text-[var(--text-primary)] mb-2 group-hover:text-[#AEE37B] transition-colors duration-300">
+                    <h3
+                      className={`text-xl font-black tracking-tight mb-2 transition-colors duration-300 ${
+                        isAccelerator ? 'text-[#AEE37B]' : 'text-[var(--text-primary)] group-hover:text-[#AEE37B]'
+                      }`}
+                    >
                       {t(`home.divisions.${i}.name`)}
                     </h3>
                     <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{t(`home.divisions.${i}.tagline`)}</p>
@@ -137,6 +165,11 @@ export function Home() {
                       <span>→</span>
                     </span>
                   )}
+                  {isAccelerator && (
+                    <p className="mt-6 text-[10px] font-semibold tracking-[0.2em] uppercase text-[#AEE37B]/80">
+                      {t('common.comingSoon')} — {t('nav.platform')}
+                    </p>
+                  )}
                 </>
               );
               return (
@@ -147,7 +180,10 @@ export function Home() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
                   className="group relative"
-                  style={{ backgroundColor: 'var(--bg-secondary)' }}
+                  style={{
+                    backgroundColor: 'var(--bg-secondary)',
+                    ...(isAccelerator && { boxShadow: 'inset 0 0 0 1px rgba(174,227,123,0.15)' }),
+                  }}
                 >
                   {isAvailable ? (
                     <Link to={to} className={linkClassName}>
