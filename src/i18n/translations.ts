@@ -26,6 +26,7 @@ export function getByPath(obj: Record<string, unknown>, path: string): unknown {
 const en = {
   common: {
     requestConsultation: 'Request Consultation',
+    consultation: 'Consultation',
     clientAccess: 'Client Access',
     privacyPolicy: 'Privacy Policy',
     terms: 'Terms',
@@ -411,6 +412,7 @@ const en = {
 const es: typeof en = {
   common: {
     requestConsultation: 'Solicitar Consultoría',
+    consultation: 'Consultación',
     clientAccess: 'Acceso al cliente',
     privacyPolicy: 'Política de privacidad',
     terms: 'Términos',

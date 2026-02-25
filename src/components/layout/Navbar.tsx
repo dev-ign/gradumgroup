@@ -357,7 +357,7 @@ export function Navbar() {
             onClick={openModal}
             className="text-xs font-bold tracking-widest uppercase px-5 py-2.5 bg-[#AEE37B] text-[#0A2924] hover:bg-[#9dd468] transition-colors duration-200"
           >
-            {t('common.requestConsultation')}
+            {t('common.consultation')}
           </button>
         </div>
 
