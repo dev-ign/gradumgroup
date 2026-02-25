@@ -58,6 +58,9 @@ const en = {
     selectLanguage: 'Select language',
     english: 'English',
     spanish: 'Español',
+    accountingFinance: 'Accounting & Finance',
+    marketingMedia: 'Marketing & Media',
+    viewAllServices: 'View All Services',
   },
   modal: {
     title: 'Request a Consultation',
@@ -440,6 +443,9 @@ const es: typeof en = {
     selectLanguage: 'Seleccionar idioma',
     english: 'English',
     spanish: 'Español',
+    accountingFinance: 'Contabilidad y finanzas',
+    marketingMedia: 'Marketing y medios',
+    viewAllServices: 'Ver todos los servicios',
   },
   modal: {
     title: 'Solicitar una consultoría',

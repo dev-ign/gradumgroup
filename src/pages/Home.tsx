@@ -62,7 +62,7 @@ export function Home() {
               className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tight leading-[0.95] text-[var(--text-primary)] mb-8"
             >
               {t('home.hero.title1')}<br />{t('home.hero.title2')}<br />
-              <span className="text-[#AEE37B]">{t('home.hero.title3')}</span><br />{t('home.hero.title4')}.
+              <span className="text-[#AEE37B]">{t('home.hero.title3')}</span><br />{t('home.hero.title4')}
             </motion.h1>
             <motion.p
               variants={fadeUp}
@@ -100,50 +100,67 @@ export function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {DIVISION_ROUTES.map((to, i) => (
-              <motion.div
-                key={to}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="group relative p-10 flex flex-col justify-between min-h-[220px]"
-                style={{ backgroundColor: 'var(--bg-secondary)' }}
-              >
-                {/* hover accent */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ backgroundColor: '#AEE37B', opacity: 0 }}
-                />
-                <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#AEE37B] group-hover:w-full transition-all duration-500" />
+            {DIVISION_ROUTES.map((to, i) => {
+              const isAvailable = DIVISION_AVAILABLE[i];
+              const cardClassName = 'flex flex-col justify-between min-h-[220px] p-10';
+              const linkClassName = isAvailable
+                ? `${cardClassName} cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#AEE37B] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-secondary)]`
+                : cardClassName;
+              const cardContent = (
+                <>
+                  {/* hover accent */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                    style={{ backgroundColor: '#AEE37B', opacity: 0 }}
+                  />
+                  <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#AEE37B] group-hover:w-full transition-all duration-500 pointer-events-none" />
 
-                <div>
-                  <div className="flex items-start justify-between mb-4">
-                    <span className="text-xs font-bold tracking-widest uppercase text-[var(--text-secondary)]">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    {!DIVISION_AVAILABLE[i] && (
-                      <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-1 border border-[var(--border-color)] text-[var(--text-secondary)]">
-                        {t('common.comingSoon')}
+                  <div>
+                    <div className="flex items-start justify-between mb-4">
+                      <span className="text-xs font-bold tracking-widest uppercase text-[var(--text-secondary)]">
+                        {String(i + 1).padStart(2, '0')}
                       </span>
-                    )}
+                      {!isAvailable && (
+                        <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-1 border border-[var(--border-color)] text-[var(--text-secondary)]">
+                          {t('common.comingSoon')}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-xl font-black tracking-tight text-[var(--text-primary)] mb-2 group-hover:text-[#AEE37B] transition-colors duration-300">
+                      {t(`home.divisions.${i}.name`)}
+                    </h3>
+                    <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{t(`home.divisions.${i}.tagline`)}</p>
                   </div>
-                  <h3 className="text-xl font-black tracking-tight text-[var(--text-primary)] mb-2 group-hover:text-[#AEE37B] transition-colors duration-300">
-                    {t(`home.divisions.${i}.name`)}
-                  </h3>
-                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{t(`home.divisions.${i}.tagline`)}</p>
-                </div>
 
-                {DIVISION_AVAILABLE[i] && (
-                  <Link
-                    to={to}
-                    className="mt-8 inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#AEE37B] hover:gap-4 transition-all duration-200"
-                  >
-                    {t('common.learnMore')}
-                    <span>→</span>
-                  </Link>
-                )}
-              </motion.div>
-            ))}
+                  {isAvailable && (
+                    <span className="mt-8 inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#AEE37B] group-hover:gap-4 transition-all duration-200">
+                      {t('common.learnMore')}
+                      <span>→</span>
+                    </span>
+                  )}
+                </>
+              );
+              return (
+                <motion.div
+                  key={to}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className="group relative"
+                  style={{ backgroundColor: 'var(--bg-secondary)' }}
+                >
+                  {isAvailable ? (
+                    <Link to={to} className={linkClassName}>
+                      {cardContent}
+                    </Link>
+                  ) : (
+                    <div className={cardClassName}>
+                      {cardContent}
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
