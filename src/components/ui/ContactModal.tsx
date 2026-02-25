@@ -8,6 +8,8 @@ export function ContactModal() {
   const { isOpen, closeModal } = useModal();
   const { t, tArray } = useTranslation();
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const inquiryTypes = tArray('modal.inquiryTypes');
   const countries = tArray('modal.countries');
   const [form, setForm] = useState({
@@ -26,6 +28,10 @@ export function ContactModal() {
       setSubmitted(false);
       setForm({ name: '', company: '', email: '', phone: '', country: '', inquiryType: '', message: '' });
     }
+    if (!isOpen) {
+      setLoading(false);
+      setError(null);
+    }
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
@@ -43,9 +49,30 @@ export function ContactModal() {
     setForm(f => ({ ...f, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json() as { success?: boolean; error?: string };
+
+      if (!res.ok) {
+        throw new Error(data.error ?? 'Something went wrong. Please try again.');
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass = 'w-full bg-transparent border border-[var(--border-color)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] px-4 py-3 text-sm focus:outline-none focus:border-[#AEE37B] transition-colors duration-200';
@@ -168,13 +195,30 @@ export function ContactModal() {
                         className={`${inputClass} resize-none`} />
                     </div>
                   </div>
+                  {error && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-4 px-4 py-2.5 text-xs font-semibold tracking-wide text-red-400 border border-red-400/30 bg-red-400/5"
+                    >
+                      {error}
+                    </motion.p>
+                  )}
+
                   <div className="mt-6 flex items-center justify-between gap-4">
-                    <button type="button" onClick={closeModal}
-                      className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200 tracking-wide">
+                    <button type="button" onClick={closeModal} disabled={loading}
+                      className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200 tracking-wide disabled:opacity-40">
                       {t('common.cancel')}
                     </button>
-                    <Button type="submit" variant="primary" size="md">
-                      {t('common.submitInquiry')}
+                    <Button type="submit" variant="primary" size="md" disabled={loading}>
+                      {loading ? (
+                        <span className="flex items-center gap-2">
+                          <svg className="animate-spin" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                          </svg>
+                          Sending…
+                        </span>
+                      ) : t('common.submitInquiry')}
                     </Button>
                   </div>
                 </form>
