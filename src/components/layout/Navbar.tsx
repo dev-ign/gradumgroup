@@ -128,11 +128,13 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handler);
   }, []);
 
-  useEffect(() => {
+  const [prevPathname, setPrevPathname] = useState(location.pathname);
+  if (prevPathname !== location.pathname) {
+    setPrevPathname(location.pathname);
     setMobileOpen(false);
     setPlatformOpen(false);
     setServicesOpen(false);
-  }, [location.pathname]);
+  }
 
   const isPlatformActive =
     location.pathname.startsWith('/consulting') ||
