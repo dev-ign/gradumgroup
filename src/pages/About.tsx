@@ -18,11 +18,11 @@ export function About() {
             transition={{ duration: 0.5 }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('about.hero.label')}</p>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-[var(--text-primary)] mb-8">
+            <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-6">{t('about.hero.label')}</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] text-[var(--text-primary)] mb-8">
               {t('about.hero.title1')}<br /><span className="text-[#AEE37B]">{t('about.hero.title2')}</span>
             </h1>
-            <p className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed">
+            <p className="text-base text-[var(--text-secondary)] leading-relaxed">
               {t('about.hero.intro')}
             </p>
           </motion.div>
@@ -88,7 +88,7 @@ export function About() {
       </section>
 
       {/* Execution Philosophy */}
-      <section className="py-24" style={{ backgroundColor: '#0A2924' }}>
+      <section className="py-24" style={{ backgroundColor: 'var(--bg-dark-section)' }}>
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <motion.div
@@ -97,8 +97,8 @@ export function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('about.philosophy.label')}</p>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-10">
+              <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-6">{t('about.philosophy.label')}</p>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white mb-10">
                 {t('about.philosophy.heading')}
               </h2>
               <ul className="space-y-4">
@@ -111,12 +111,12 @@ export function About() {
                     transition={{ duration: 0.4, delay: i * 0.08 }}
                     className="flex items-center gap-4"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#AEE37B] flex-shrink-0" />
-                    <span className="text-base font-semibold text-white">{p}</span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#AEE37B] shrink-0" />
+                    <span className="text-sm font-medium text-white/80">{p}</span>
                   </motion.li>
                 ))}
               </ul>
-              <p className="text-sm text-[#94b5b0] leading-relaxed mt-8">
+              <p className="text-sm text-white/40 leading-relaxed mt-8">
                 {t('about.philosophy.closing')}
               </p>
             </motion.div>
@@ -127,11 +127,11 @@ export function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.15 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('about.engagement.label')}</p>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-10">
+              <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-6">{t('about.engagement.label')}</p>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white mb-10">
                 {t('about.engagement.heading')}
               </h2>
-              <p className="text-sm text-[#94b5b0] leading-relaxed mb-8">{t('about.engagement.intro')}</p>
+              <p className="text-sm text-white/40 leading-relaxed mb-8">{t('about.engagement.intro')}</p>
               <ul className="space-y-4">
                 {engagementItems.map((p, i) => (
                   <motion.li
@@ -142,13 +142,13 @@ export function About() {
                     transition={{ duration: 0.4, delay: i * 0.08 }}
                     className="flex items-center gap-4"
                   >
-                    <span className="text-[#AEE37B] font-bold">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="text-sm text-white font-medium">{p}</span>
+                    <span className="text-[#AEE37B] font-semibold text-sm">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="text-sm text-white/80 font-medium">{p}</span>
                   </motion.li>
                 ))}
               </ul>
-              <div className="mt-12 pt-8 border-t border-[#1b6259]">
-                <p className="text-base font-bold text-white leading-tight">
+              <div className="mt-12 pt-8" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                <p className="text-base font-semibold text-white leading-tight">
                   {t('about.engagement.closing1')}<br />
                   <span className="text-[#AEE37B]">{t('about.engagement.closing2')}</span>
                 </p>

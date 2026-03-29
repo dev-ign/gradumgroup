@@ -16,16 +16,8 @@ export function Services() {
       {/* Hero */}
       <section
         className="relative py-28 lg:py-40 overflow-hidden"
-        style={{ backgroundColor: '#0A2924' }}
+        style={{ backgroundColor: 'var(--bg-dark-section)' }}
       >
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: 'linear-gradient(rgba(174,227,123,1) 1px, transparent 1px), linear-gradient(90deg, rgba(174,227,123,1) 1px, transparent 1px)',
-            backgroundSize: '80px 80px',
-          }}
-        />
-        <div className="absolute top-1/2 right-0 w-80 h-80 rounded-full blur-3xl opacity-10" style={{ backgroundColor: '#AEE37B' }} />
         <div className="max-w-7xl mx-auto px-6 relative">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -33,15 +25,15 @@ export function Services() {
             transition={{ duration: 0.5 }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('services.hero.label')}</p>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-white mb-8">
+            <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-6">{t('services.hero.label')}</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] text-white mb-8">
               {t('services.hero.title1')}<br />
               <span className="text-[#AEE37B]">{t('services.hero.title2')}</span>
             </h1>
-            <p className="text-base text-[#94b5b0] leading-relaxed mb-10 max-w-2xl">
+            <p className="text-base text-white/50 leading-relaxed mb-10 max-w-2xl">
               {t('services.hero.description')}
             </p>
-            <Button onClick={openModal} size="lg">{t('services.hero.cta')}</Button>
+            <Button onClick={openModal} size="lg" variant="pill">{t('services.hero.cta')}</Button>
           </motion.div>
         </div>
       </section>
@@ -56,7 +48,7 @@ export function Services() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('services.overview.label')}</p>
+              <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-4">{t('services.overview.label')}</p>
               <div className="space-y-4 text-sm text-[var(--text-secondary)] leading-relaxed">
                 <p>{t('services.overview.p1')}</p>
                 <p>{t('services.overview.p2')}</p>
@@ -76,8 +68,8 @@ export function Services() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('services.practiceAreas.label')}</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">{t('services.practiceAreas.heading')}</h2>
+            <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-4">{t('services.practiceAreas.label')}</p>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)]">{t('services.practiceAreas.heading')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
@@ -92,13 +84,13 @@ export function Services() {
                 style={{ backgroundColor: 'var(--bg-primary)' }}
               >
                 <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-[#AEE37B] group-hover:w-full transition-all duration-500" />
-                <span className="block text-3xl font-black text-[#AEE37B] opacity-25 mb-4">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="text-xl font-black tracking-tight text-[var(--text-primary)] mb-2">{t(`services.practiceAreas.areas.${i}.name`)}</h3>
-                <p className="text-sm font-semibold text-[#AEE37B] mb-4">{t(`services.practiceAreas.areas.${i}.tagline`)}</p>
+                <span className="block text-3xl font-bold text-[#AEE37B] opacity-25 mb-4">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="text-lg font-semibold tracking-tight text-[var(--text-primary)] mb-2">{t(`services.practiceAreas.areas.${i}.name`)}</h3>
+                <p className="text-sm font-medium text-[#AEE37B] mb-4">{t(`services.practiceAreas.areas.${i}.tagline`)}</p>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-8">{t(`services.practiceAreas.areas.${i}.desc`)}</p>
                 <Link
                   to={PRACTICE_AREA_ROUTES[i]}
-                  className="mt-auto inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#AEE37B] hover:gap-4 transition-all duration-200"
+                  className="mt-auto inline-flex items-center gap-2 text-xs font-medium text-[#AEE37B] hover:gap-4 transition-all duration-200"
                 >
                   {t(`services.practiceAreas.areas.${i}.cta`)} <span>→</span>
                 </Link>
@@ -118,8 +110,8 @@ export function Services() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('services.engagement.label')}</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">{t('services.engagement.heading')}</h2>
+            <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-4">{t('services.engagement.label')}</p>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)]">{t('services.engagement.heading')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
@@ -133,8 +125,8 @@ export function Services() {
                 className="p-8"
                 style={{ backgroundColor: 'var(--bg-secondary)' }}
               >
-                <span className="block text-4xl font-black text-[#AEE37B] opacity-30 mb-4">{t(`services.engagement.steps.${i}.num`)}</span>
-                <h3 className="text-sm font-black tracking-tight text-[var(--text-primary)] mb-2">{t(`services.engagement.steps.${i}.title`)}</h3>
+                <span className="block text-4xl font-bold text-[#AEE37B] opacity-30 mb-4">{t(`services.engagement.steps.${i}.num`)}</span>
+                <h3 className="text-sm font-semibold tracking-tight text-[var(--text-primary)] mb-2">{t(`services.engagement.steps.${i}.title`)}</h3>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{t(`services.engagement.steps.${i}.desc`)}</p>
               </motion.div>
             ))}
@@ -143,7 +135,7 @@ export function Services() {
       </section>
 
       {/* CTA */}
-      <section className="py-24" style={{ backgroundColor: '#0A2924' }}>
+      <section className="py-24" style={{ backgroundColor: 'var(--bg-dark-section)' }}>
         <div className="max-w-7xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -151,13 +143,13 @@ export function Services() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-6">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-6">
               {t('services.cta.heading')}
             </h2>
-            <p className="text-sm text-[#94b5b0] leading-relaxed mb-10 max-w-md mx-auto">
+            <p className="text-sm text-white/40 leading-relaxed mb-10 max-w-md mx-auto">
               {t('services.cta.description')}
             </p>
-            <Button onClick={openModal} size="lg">{t('services.hero.cta')}</Button>
+            <Button onClick={openModal} size="lg" variant="pill">{t('services.hero.cta')}</Button>
           </motion.div>
         </div>
       </section>

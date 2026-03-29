@@ -14,16 +14,8 @@ export function Accelerator() {
       {/* Hero */}
       <section
         className="relative min-h-[80vh] flex items-center overflow-hidden"
-        style={{ backgroundColor: '#0A2924' }}
+        style={{ backgroundColor: 'var(--bg-dark-section)' }}
       >
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: 'linear-gradient(rgba(174,227,123,1) 1px, transparent 1px), linear-gradient(90deg, rgba(174,227,123,1) 1px, transparent 1px)',
-            backgroundSize: '80px 80px',
-          }}
-        />
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl opacity-10" style={{ backgroundColor: '#AEE37B' }} />
         <div className="max-w-7xl mx-auto px-6 py-24 relative">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -32,19 +24,20 @@ export function Accelerator() {
             className="max-w-3xl"
           >
             <div className="flex items-center gap-3 mb-6">
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B]">{t('accelerator.hero.label')}</p>
-              <span className="text-[10px] font-bold tracking-widest uppercase px-2.5 py-1 border border-[#AEE37B]/30 text-[#AEE37B]/70">
+              <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B]">{t('accelerator.hero.label')}</p>
+              <span className="text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1 text-[#AEE37B]/70"
+                style={{ border: '1px solid rgba(174,227,123,0.25)' }}>
                 {t('accelerator.hero.badge')}
               </span>
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-white mb-8">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] text-white mb-8">
               {t('accelerator.hero.title1')}<br />{t('accelerator.hero.title2')}<br />
               <span className="text-[#AEE37B]">{t('accelerator.hero.title3')}</span>
             </h1>
-            <p className="text-base text-[#94b5b0] leading-relaxed mb-10 max-w-2xl">
+            <p className="text-base text-white/50 leading-relaxed mb-10 max-w-2xl">
               {t('accelerator.hero.description')}
             </p>
-            <Button onClick={openModal} size="lg" variant="outline">{t('accelerator.hero.cta')}</Button>
+            <Button onClick={openModal} size="lg" variant="pill">{t('accelerator.hero.cta')}</Button>
           </motion.div>
         </div>
       </section>
@@ -59,8 +52,8 @@ export function Accelerator() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('accelerator.overview.label')}</p>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)] mb-6">
+              <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-4">{t('accelerator.overview.label')}</p>
+              <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)] mb-6">
                 {t('accelerator.overview.heading')}
               </h2>
               <div className="space-y-4 text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -78,13 +71,13 @@ export function Accelerator() {
               className="flex flex-col justify-center"
             >
               <div
-                className="p-10 border border-[var(--border-color)]"
-                style={{ backgroundColor: 'var(--bg-primary)' }}
+                className="p-10"
+                style={{ backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-color)' }}
               >
                 <div className="space-y-6">
                   {modelItems.map((item, i) => (
                     <div key={i} className="flex flex-col gap-1">
-                      <span className="text-[10px] font-bold tracking-widest uppercase text-[var(--text-secondary)]">{item.label}</span>
+                      <span className="text-[10px] font-medium tracking-widest uppercase text-[var(--text-secondary)]">{item.label}</span>
                       <span className="text-sm font-semibold text-[var(--text-primary)]">{item.value}</span>
                     </div>
                   ))}
@@ -96,7 +89,7 @@ export function Accelerator() {
       </section>
 
       {/* CTA */}
-      <section className="py-24" style={{ backgroundColor: '#0A2924' }}>
+      <section className="py-24" style={{ backgroundColor: 'var(--bg-dark-section)' }}>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -105,13 +98,13 @@ export function Accelerator() {
             transition={{ duration: 0.5 }}
             className="max-w-xl"
           >
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-4">
               {t('accelerator.cta.heading')}
             </h2>
-            <p className="text-sm text-[#94b5b0] leading-relaxed mb-8">
+            <p className="text-sm text-white/40 leading-relaxed mb-8">
               {t('accelerator.cta.description')}
             </p>
-            <Button onClick={openModal} size="lg">{t('accelerator.cta.button')}</Button>
+            <Button onClick={openModal} size="lg" variant="pill">{t('accelerator.cta.button')}</Button>
           </motion.div>
         </div>
       </section>

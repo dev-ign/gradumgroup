@@ -17,16 +17,8 @@ export function Construction() {
       {/* Hero */}
       <section
         className="relative py-28 lg:py-40 overflow-hidden"
-        style={{ backgroundColor: '#0A2924' }}
+        style={{ backgroundColor: 'var(--bg-dark-section)' }}
       >
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage: 'linear-gradient(rgba(174,227,123,1) 1px, transparent 1px), linear-gradient(90deg, rgba(174,227,123,1) 1px, transparent 1px)',
-            backgroundSize: '80px 80px',
-          }}
-        />
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 rounded-full blur-3xl opacity-10" style={{ backgroundColor: '#AEE37B' }} />
         <div className="max-w-7xl mx-auto px-6 relative">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -34,15 +26,15 @@ export function Construction() {
             transition={{ duration: 0.5 }}
             className="max-w-3xl"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-6">{t('construction.hero.label')}</p>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[0.95] text-white mb-8">
+            <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-6">{t('construction.hero.label')}</p>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] text-white mb-8">
               {t('construction.hero.title1')}<br />
               <span className="text-[#AEE37B]">{t('construction.hero.title2')}</span>
             </h1>
-            <p className="text-base text-[#94b5b0] leading-relaxed mb-10 max-w-2xl">
+            <p className="text-base text-white/50 leading-relaxed mb-10 max-w-2xl">
               {t('construction.hero.description')}
             </p>
-            <Button onClick={openModal} size="lg">{t('construction.hero.cta')}</Button>
+            <Button onClick={openModal} size="lg" variant="pill">{t('construction.hero.cta')}</Button>
           </motion.div>
         </div>
       </section>
@@ -57,8 +49,8 @@ export function Construction() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('construction.overview.label')}</p>
-              <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)] mb-6">
+              <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-4">{t('construction.overview.label')}</p>
+              <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)] mb-6">
                 {t('construction.overview.heading')}
               </h2>
               <div className="space-y-4 text-sm text-[var(--text-secondary)] leading-relaxed">
@@ -81,8 +73,8 @@ export function Construction() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('construction.services.label')}</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-[var(--text-primary)]">{t('construction.services.heading')}</h2>
+            <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-4">{t('construction.services.label')}</p>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)]">{t('construction.services.heading')}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
@@ -96,12 +88,12 @@ export function Construction() {
                 className="p-8"
                 style={{ backgroundColor: 'var(--bg-primary)' }}
               >
-                <span className="block text-3xl font-black text-[#AEE37B] opacity-25 mb-4">{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="text-base font-black tracking-tight text-[var(--text-primary)] mb-4">{svc.title}</h3>
+                <span className="block text-3xl font-bold text-[#AEE37B] opacity-25 mb-4">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="text-base font-semibold tracking-tight text-[var(--text-primary)] mb-4">{svc.title}</h3>
                 <ul className="space-y-2">
                   {svc.items.map((item, j) => (
                     <li key={j} className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
-                      <span className="w-1 h-1 rounded-full bg-[#AEE37B] flex-shrink-0 mt-1.5" />
+                      <span className="w-1 h-1 rounded-full bg-[#AEE37B] shrink-0 mt-1.5" />
                       {item}
                     </li>
                   ))}
@@ -120,15 +112,16 @@ export function Construction() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="border border-[#AEE37B]/30 p-10 max-w-3xl"
+            className="p-10 max-w-3xl"
+            style={{ border: '1px solid rgba(174,227,123,0.25)' }}
           >
             <div className="flex items-start gap-4 mb-4">
-              <div className="w-6 h-6 rounded-full bg-[#AEE37B]/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div className="w-6 h-6 rounded-full bg-[#AEE37B]/15 flex items-center justify-center shrink-0 mt-0.5">
                 <div className="w-2 h-2 rounded-full bg-[#AEE37B]" />
               </div>
-              <span className="text-xs font-bold tracking-widest uppercase text-[#AEE37B]">{t('construction.seismic.badge')}</span>
+              <span className="text-xs font-medium tracking-widest uppercase text-[#AEE37B]">{t('construction.seismic.badge')}</span>
             </div>
-            <h3 className="text-2xl font-black tracking-tight text-[var(--text-primary)] mb-4">
+            <h3 className="text-xl font-semibold tracking-tight text-[var(--text-primary)] mb-4">
               {t('construction.seismic.heading')}
             </h3>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
@@ -150,7 +143,7 @@ export function Construction() {
       </section>
 
       {/* Project Model */}
-      <section className="py-24" style={{ backgroundColor: '#0A2924' }}>
+      <section className="py-24" style={{ backgroundColor: 'var(--bg-dark-section)' }}>
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -159,11 +152,11 @@ export function Construction() {
             transition={{ duration: 0.5 }}
             className="mb-16"
           >
-            <p className="text-xs font-bold tracking-[0.4em] uppercase text-[#AEE37B] mb-4">{t('construction.projectModel.label')}</p>
-            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-white">{t('construction.projectModel.heading')}</h2>
+            <p className="text-xs font-medium tracking-widest uppercase text-[#AEE37B] mb-4">{t('construction.projectModel.label')}</p>
+            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white">{t('construction.projectModel.heading')}</h2>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: '#1b6259' }}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: 'rgba(255,255,255,0.06)' }}>
             {[0, 1, 2, 3].map((i) => (
               <motion.div
                 key={i}
@@ -172,10 +165,10 @@ export function Construction() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
                 className="p-8"
-                style={{ backgroundColor: '#0A2924' }}
+                style={{ backgroundColor: 'var(--bg-dark-section)' }}
               >
-                <span className="block text-4xl font-black text-[#AEE37B] opacity-30 mb-4">{t(`construction.projectModel.steps.${i}.num`)}</span>
-                <h3 className="text-sm font-bold tracking-tight text-white">{t(`construction.projectModel.steps.${i}.title`)}</h3>
+                <span className="block text-4xl font-bold text-[#AEE37B] opacity-30 mb-4">{t(`construction.projectModel.steps.${i}.num`)}</span>
+                <h3 className="text-sm font-medium text-white/80">{t(`construction.projectModel.steps.${i}.title`)}</h3>
               </motion.div>
             ))}
           </div>
@@ -187,7 +180,7 @@ export function Construction() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-16 text-center"
           >
-            <Button onClick={openModal} size="lg">{t('construction.projectModel.cta')}</Button>
+            <Button onClick={openModal} size="lg" variant="pill">{t('construction.projectModel.cta')}</Button>
           </motion.div>
         </div>
       </section>

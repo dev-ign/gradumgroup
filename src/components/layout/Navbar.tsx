@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { LogoMark } from '../ui/LogoMark';
 import { useModal } from '../../context/ModalContext';
 import { useLanguage, type Language } from '../../context/LanguageContext';
 import { useTranslation } from '../../i18n/useTranslation';
@@ -30,9 +31,10 @@ function LanguageSelector() {
       <button
         onClick={() => setOpen(o => !o)}
         aria-label={t('nav.selectLanguage')}
-        className="flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase text-[var(--text-primary)] hover:text-[#AEE37B] transition-colors duration-200"
+        className="flex items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+        style={{ fontFamily: 'var(--font-ui)' }}
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <circle cx="12" cy="12" r="10" />
           <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
         </svg>
@@ -48,16 +50,17 @@ function LanguageSelector() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 6 }}
             transition={{ duration: 0.12 }}
-            className="absolute top-full right-0 mt-2 w-36 py-1.5"
+            className="absolute top-full right-0 mt-2 w-32 py-1.5"
             style={{ backgroundColor: 'var(--nav-bg)', border: '1px solid var(--border-color)', backdropFilter: 'blur(16px)' }}
           >
             {LANGUAGES.map(({ code, labelKey }) => (
               <li key={code}>
                 <button
                   onClick={() => { setLang(code); setOpen(false); }}
-                  className={`w-full text-left px-4 py-2 text-xs font-semibold tracking-widest uppercase transition-colors duration-150 ${
+                  className={`w-full text-left px-4 py-2 text-xs font-medium transition-colors duration-150 ${
                     lang === code ? 'text-[#AEE37B]' : 'text-[var(--text-primary)] hover:text-[#AEE37B]'
                   }`}
+                  style={{ fontFamily: 'var(--font-ui)' }}
                 >
                   {t(labelKey)}
                 </button>
@@ -125,14 +128,12 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handler);
   }, []);
 
-  // Close everything on route change
   useEffect(() => {
     setMobileOpen(false);
     setPlatformOpen(false);
     setServicesOpen(false);
   }, [location.pathname]);
 
-  // Platform button is active on any of its sub-routes
   const isPlatformActive =
     location.pathname.startsWith('/consulting') ||
     location.pathname.startsWith('/construction') ||
@@ -140,12 +141,12 @@ export function Navbar() {
     location.pathname.startsWith('/accelerator');
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `text-xs font-semibold tracking-widest uppercase transition-colors duration-200 ${
-      isActive ? 'text-[#AEE37B]' : 'text-[var(--text-primary)] hover:text-[#AEE37B]'
+    `text-sm font-medium transition-colors duration-200 ${
+      isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
     }`;
 
   const dropdownItemClass = (active: boolean) =>
-    `flex items-center w-full px-4 py-2.5 text-xs font-semibold tracking-widest uppercase transition-colors duration-150 ${
+    `flex items-center w-full px-4 py-2.5 text-sm font-medium transition-colors duration-150 ${
       active ? 'text-[#AEE37B]' : 'text-[var(--text-primary)] hover:text-[#AEE37B]'
     }`;
 
@@ -153,6 +154,7 @@ export function Navbar() {
     backgroundColor: 'var(--nav-bg)',
     border: '1px solid var(--border-color)',
     backdropFilter: 'blur(16px)',
+    fontFamily: 'var(--font-ui)',
   };
 
   return (
@@ -164,54 +166,57 @@ export function Navbar() {
         borderBottom: scrolled ? '1px solid var(--border-color)' : '1px solid transparent',
       }}
     >
-      <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <nav
+        className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between"
+        style={{ fontFamily: 'var(--font-ui)' }}
+      >
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group" aria-label="Gradum Group home">
-          <span className="text-lg font-black tracking-tight text-[var(--text-primary)] group-hover:text-[#AEE37B] transition-colors duration-200">
-            GRADUM
-          </span>
-          <span className="text-[10px] font-semibold tracking-[0.3em] text-[var(--text-secondary)] uppercase self-end pb-0.5">
-            GROUP
-          </span>
+        <Link to="/" className="flex items-center gap-2.5 group" aria-label="Gradum Group home">
+          <LogoMark size="xs" glow={false} />
+          <div className="flex flex-col leading-none">
+            <span className="text-sm font-semibold text-[var(--text-primary)] tracking-tight group-hover:text-[#AEE37B] transition-colors duration-200">
+              Gradum
+            </span>
+            <span className="text-[10px] font-medium text-[var(--text-secondary)] tracking-widest uppercase group-hover:text-[#AEE37B] transition-colors duration-200">
+              Group
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Nav */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-7">
           {NAV_LINKS.map((item) => (
             <li key={item.labelKey} className="relative">
 
               {item.action === 'modal' ? (
                 <button
                   onClick={openModal}
-                  className="text-xs font-semibold tracking-widest uppercase text-[var(--text-primary)] hover:text-[#AEE37B] transition-colors duration-200"
+                  className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
                 >
                   {t(item.labelKey)}
                 </button>
 
               ) : item.dropdown ? (
-                /* Platform dropdown */
                 <div
                   className="relative"
                   onMouseEnter={() => setPlatformOpen(true)}
                   onMouseLeave={() => { setPlatformOpen(false); setServicesOpen(false); }}
                 >
-                  {/* Platform trigger button */}
                   <button
-                    className={`flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase transition-colors duration-200 ${
-                      isPlatformActive || platformOpen ? 'text-[#AEE37B]' : 'text-[var(--text-primary)] hover:text-[#AEE37B]'
+                    className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${
+                      isPlatformActive || platformOpen ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                     }`}
                   >
                     {t(item.labelKey)}
                     <svg
                       width="9" height="5" viewBox="0 0 10 6" fill="currentColor"
-                      className={`transition-transform duration-200 ${platformOpen ? 'rotate-180' : ''}`}
+                      className={`transition-transform duration-200 opacity-50 ${platformOpen ? 'rotate-180' : ''}`}
                     >
                       <path d="M0 0l5 6 5-6H0z" />
                     </svg>
                   </button>
 
-                  {/* Platform dropdown panel */}
                   <AnimatePresence>
                     {platformOpen && (
                       <motion.ul
@@ -224,25 +229,18 @@ export function Navbar() {
                       >
                         {item.dropdown.map((sub) => (
                           sub.flyout ? (
-                            /* Services item — flyout trigger */
                             <li
                               key={sub.labelKey}
                               className="relative"
                               onMouseEnter={() => setServicesOpen(true)}
                               onMouseLeave={() => setServicesOpen(false)}
                             >
-                              <div
-                                className={dropdownItemClass(
-                                  location.pathname.startsWith(sub.activePrefix) || servicesOpen
-                                )}
-                              >
+                              <div className={dropdownItemClass(location.pathname.startsWith(sub.activePrefix) || servicesOpen)}>
                                 <span className="flex-1">{t(sub.labelKey)}</span>
-                                <svg width="5" height="9" viewBox="0 0 6 10" fill="currentColor" className="opacity-60">
+                                <svg width="5" height="9" viewBox="0 0 6 10" fill="currentColor" className="opacity-40">
                                   <path d="M0 0l6 5-6 5V0z" />
                                 </svg>
                               </div>
-
-                              {/* Services flyout panel */}
                               <AnimatePresence>
                                 {servicesOpen && (
                                   <motion.ul
@@ -273,7 +271,7 @@ export function Navbar() {
                                         end
                                         onClick={() => { setPlatformOpen(false); setServicesOpen(false); }}
                                         className={({ isActive }) =>
-                                          `flex items-center gap-1.5 px-4 py-2 text-[10px] font-semibold tracking-widest uppercase transition-colors duration-150 ${
+                                          `flex items-center gap-1.5 px-4 py-2 text-xs font-medium transition-colors duration-150 ${
                                             isActive ? 'text-[#AEE37B]' : 'text-[var(--text-secondary)] hover:text-[#AEE37B]'
                                           }`
                                         }
@@ -290,31 +288,25 @@ export function Navbar() {
                             </li>
 
                           ) : sub.featured ? (
-                            /* Accelerator — featured item */
                             <li key={sub.labelKey}>
-                              {/* Separator */}
                               <div className="mx-4 mb-1" style={{ height: '1px', backgroundColor: 'var(--border-color)' }} />
                               <NavLink
                                 to={sub.to}
                                 onClick={() => setPlatformOpen(false)}
                                 className={({ isActive }) =>
-                                  `relative flex items-center gap-2.5 w-full px-4 py-2.5 transition-all duration-200 overflow-hidden ${
+                                  `relative flex items-center gap-2.5 w-full px-4 py-2.5 transition-all duration-200 ${
                                     isActive ? 'bg-[#AEE37B]/10' : 'hover:bg-[#AEE37B]/8'
                                   }`
                                 }
-                                style={{ background: 'linear-gradient(90deg, rgba(174,227,123,0.09) 0%, rgba(174,227,123,0.03) 100%)' }}
                               >
-                                {/* Live pulse indicator */}
                                 <span className="relative flex-shrink-0 w-2 h-2">
                                   <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-60" />
                                   <span className="relative block w-2 h-2 rounded-full bg-[#AEE37B]" />
                                 </span>
-                                {/* Label */}
-                                <span className="flex-1 text-xs font-semibold tracking-widest uppercase text-[#AEE37B]">
+                                <span className="flex-1 text-sm font-medium text-[#AEE37B]">
                                   {t(sub.labelKey)}
                                 </span>
-                                {/* SOON badge */}
-                                <span className="text-[9px] font-bold tracking-[0.15em] uppercase px-1.5 py-0.5 text-[#AEE37B]"
+                                <span className="text-[9px] font-semibold tracking-[0.12em] uppercase px-1.5 py-0.5 text-[#AEE37B]"
                                   style={{ border: '1px solid rgba(174,227,123,0.35)', backgroundColor: 'rgba(174,227,123,0.08)' }}
                                 >
                                   SOON
@@ -323,7 +315,6 @@ export function Navbar() {
                             </li>
 
                           ) : (
-                            /* Regular dropdown item */
                             <li key={sub.labelKey}>
                               <NavLink
                                 to={sub.to}
@@ -355,9 +346,10 @@ export function Navbar() {
           <ThemeToggle />
           <button
             onClick={openModal}
-            className="text-xs font-bold tracking-widest uppercase px-5 py-2.5 bg-[#AEE37B] text-[#0A2924] hover:bg-[#9dd468] transition-colors duration-200"
+            className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+            style={{ fontFamily: 'var(--font-ui)' }}
           >
-            {t('common.consultation')}
+            {t('common.clientAccess')} ›
           </button>
         </div>
 
@@ -398,7 +390,7 @@ export function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
             className="md:hidden overflow-hidden border-t border-[var(--border-color)]"
-            style={{ backgroundColor: 'var(--nav-bg)', backdropFilter: 'blur(16px)' }}
+            style={{ backgroundColor: 'var(--nav-bg)', backdropFilter: 'blur(16px)', fontFamily: 'var(--font-ui)' }}
           >
             <ul className="px-6 py-4 flex flex-col gap-4">
               <li>
@@ -407,9 +399,8 @@ export function Navbar() {
                 </NavLink>
               </li>
 
-              {/* Platform section */}
               <li>
-                <span className="text-[10px] font-bold tracking-[0.35em] uppercase text-[var(--text-secondary)]">
+                <span className="text-[10px] font-semibold tracking-[0.3em] uppercase text-[var(--text-secondary)]">
                   {t('nav.platform')}
                 </span>
                 <ul className="mt-2 flex flex-col gap-1">
@@ -418,21 +409,16 @@ export function Navbar() {
                     { labelKey: 'common.construction', to: '/construction' },
                   ].map(s => (
                     <li key={s.labelKey}>
-                      <NavLink
-                        to={s.to}
-                        className={navLinkClass}
-                        onClick={() => setMobileOpen(false)}
-                      >
+                      <NavLink to={s.to} className={navLinkClass} onClick={() => setMobileOpen(false)}>
                         {t(s.labelKey)}
                       </NavLink>
                     </li>
                   ))}
 
-                  {/* Services sub-section */}
                   <li className="pt-1">
                     <span
-                      className={`text-xs font-semibold tracking-widest uppercase ${
-                        location.pathname.startsWith('/services') ? 'text-[#AEE37B]' : 'text-[var(--text-primary)]'
+                      className={`text-sm font-medium ${
+                        location.pathname.startsWith('/services') ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'
                       }`}
                     >
                       {t('common.services')}
@@ -451,7 +437,6 @@ export function Navbar() {
                     </ul>
                   </li>
 
-                  {/* Accelerator — featured */}
                   <li className="pt-1">
                     <div style={{ height: '1px', backgroundColor: 'var(--border-color)', marginBottom: '6px' }} />
                     <NavLink
@@ -467,11 +452,8 @@ export function Navbar() {
                         <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-60" />
                         <span className="relative block w-2 h-2 rounded-full bg-[#AEE37B]" />
                       </span>
-                      <span className="text-xs font-semibold tracking-widest uppercase text-[#AEE37B]">
-                        {t('common.accelerator')}
-                      </span>
-                      <span
-                        className="text-[9px] font-bold tracking-[0.15em] uppercase px-1.5 py-0.5 text-[#AEE37B]"
+                      <span className="text-sm font-medium text-[#AEE37B]">{t('common.accelerator')}</span>
+                      <span className="text-[9px] font-semibold tracking-[0.12em] uppercase px-1.5 py-0.5 text-[#AEE37B]"
                         style={{ border: '1px solid rgba(174,227,123,0.35)', backgroundColor: 'rgba(174,227,123,0.08)' }}
                       >
                         SOON
@@ -489,17 +471,17 @@ export function Navbar() {
               <li>
                 <button
                   onClick={() => { setMobileOpen(false); openModal(); }}
-                  className="text-xs font-semibold tracking-widest uppercase text-[var(--text-primary)] hover:text-[#AEE37B] transition-colors duration-200"
+                  className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
                 >
                   {t('nav.contact')}
                 </button>
               </li>
-              <li className="pt-2">
+              <li className="pt-2 border-t border-[var(--border-color)]">
                 <button
                   onClick={() => { setMobileOpen(false); openModal(); }}
-                  className="w-full text-xs font-bold tracking-widest uppercase px-5 py-3 bg-[#AEE37B] text-[#0A2924] hover:bg-[#9dd468] transition-colors duration-200"
+                  className="w-full text-sm font-medium py-3 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200 text-left"
                 >
-                  {t('common.clientAccess')}
+                  {t('common.clientAccess')} ›
                 </button>
               </li>
             </ul>
