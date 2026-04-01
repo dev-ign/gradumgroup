@@ -2,11 +2,9 @@ import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PageTransition } from '../components/ui/PageTransition';
-import { Button } from '../components/ui/Button';
 import { LogoMark } from '../components/ui/LogoMark';
 import { useTranslation } from '../i18n/useTranslation';
 import { useModal } from '../context/ModalContext';
-import { useLanguage } from '../context/LanguageContext';
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -24,6 +22,7 @@ const DIVISIONS = [
     taglineKey: 'home.divisions.0.tagline',
     subtitleKey: 'home.divisions.0.subtitle',
     dark: false,
+    imgId: '1573164713988-8665fc963095',
   },
   {
     to: '/construction',
@@ -31,6 +30,7 @@ const DIVISIONS = [
     taglineKey: 'home.divisions.1.tagline',
     subtitleKey: 'home.divisions.1.subtitle',
     dark: false,
+    imgId: '1486406146926-c627a92ad1ab',
   },
   {
     to: '/services',
@@ -38,6 +38,7 @@ const DIVISIONS = [
     taglineKey: 'home.divisions.2.tagline',
     subtitleKey: 'home.divisions.2.subtitle',
     dark: false,
+    imgId: '1460925895917-afdab827c52f',
   },
   {
     to: '/accelerator',
@@ -46,6 +47,7 @@ const DIVISIONS = [
     subtitleKey: 'home.divisions.3.subtitle',
     dark: true,
     featured: true,
+    imgId: '1677442135703-1787eea5ce01',
   },
 ];
 
@@ -84,97 +86,55 @@ const COLLAGE_IMAGES = [
   { id: '1522071820081-009f0129c71c', left: '80%', top: '73%', w: 'calc(20% + 1px)', h: 'calc(27% + 1px)' }, // office space
 ] as const;
 
-// Flat logo mark for the Accelerator card — same pixel footprint as the other icons
-function FlatLogoIcon() {
-  const L =
-    'M87.21 5.73L87.21 60.97C87.21 62.49 86.61 63.94 85.53 65.02' +
-    'L12.01 138.24C10.93 139.31 10.33 140.77 10.33 142.29' +
-    'L10.33 147.02C10.33 150.17 12.89 152.73 16.04 152.73' +
-    'L81.49 152.73C84.64 152.73 87.2 155.29 87.2 158.44' +
-    'L87.2 200.75C87.2 203.9 84.64 206.46 81.49 206.46' +
-    'L40.85 206.46C39.29 206.46 37.8 205.82 36.73 204.7' +
-    'L1.59 168.02C0.57 166.96 0 165.54 0 164.07' +
-    'L0 81.52C0 80.01 0.6 78.55 1.67 77.48' +
-    'L77.46 1.69C81.06-1.91 87.21 0.64 87.21 5.73Z';
-  const R =
-    'M0 5.73L0 60.97C0 62.49 0.6 63.94 1.68 65.02' +
-    'L75.19 138.24C76.27 139.31 76.87 140.77 76.87 142.29' +
-    'L76.87 147.02C76.87 150.17 74.31 152.73 71.16 152.73' +
-    'L5.71 152.73C2.56 152.73 0 155.29 0 158.44' +
-    'L0 200.75C0 203.9 2.56 206.46 5.71 206.46' +
-    'L46.35 206.46C47.91 206.46 49.4 205.82 50.47 204.7' +
-    'L85.62 168.03C86.64 166.97 87.21 165.55 87.21 164.08' +
-    'L87.21 81.53C87.21 80.02 86.61 78.56 85.54 77.49' +
-    'L9.75 1.69C6.15-1.91 0 0.64 0 5.73Z';
-  return (
-    <svg width={22} height={23} viewBox="0 0 197.51 206.45" fill="none" aria-hidden="true">
-      <path d={L} fill="var(--text-secondary)" fillOpacity="0.7" />
-      <g transform="translate(110.3,0)">
-        <path d={R} fill="var(--text-secondary)" fillOpacity="0.7" />
-      </g>
-    </svg>
-  );
-}
-
-// Division-specific outlined icons
-// Stroke uses var(--text-secondary) so it auto-adapts to light and dark mode.
-function CardIcon({ index, featured }: { index: number; isDark: boolean; featured?: boolean }) {
-  if (featured) return <FlatLogoIcon />;
-
-  const sw = 1.45;
-
-  const icons = [
-    // 0 — Consulting: briefcase
-    <svg key="consulting" width={22} height={22} viewBox="0 0 22 22" fill="none" aria-hidden="true">
-      <path
-        d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h3A1.5 1.5 0 0 1 14 5.5V7"
-        stroke="var(--text-secondary)" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"
-      />
-      <rect x="3" y="7" width="16" height="11" rx="1.6"
-        stroke="var(--text-secondary)" strokeWidth={sw}
-      />
-      <line x1="3" y1="13" x2="19" y2="13"
-        stroke="var(--text-secondary)" strokeWidth={sw * 0.7} strokeLinecap="round"
-      />
-    </svg>,
-
-    // 1 — Construction: stacked layers (foundations / build-up)
-    <svg key="construction" width={22} height={22} viewBox="0 0 22 22" fill="none" aria-hidden="true">
-      <rect x="7"   y="3.5" width="8"  height="3.5" rx="1"
-        stroke="var(--text-secondary)" strokeWidth={sw}
-      />
-      <rect x="4.5" y="9"   width="13" height="3.5" rx="1"
-        stroke="var(--text-secondary)" strokeWidth={sw}
-      />
-      <rect x="2"   y="14.5" width="18" height="3.5" rx="1"
-        stroke="var(--text-secondary)" strokeWidth={sw}
-      />
-    </svg>,
-
-    // 2 — Services: 2×2 app grid
-    <svg key="services" width={22} height={22} viewBox="0 0 22 22" fill="none" aria-hidden="true">
-      <rect x="3"  y="3"  width="7" height="7" rx="1.5"
-        stroke="var(--text-secondary)" strokeWidth={sw}
-      />
-      <rect x="12" y="3"  width="7" height="7" rx="1.5"
-        stroke="var(--text-secondary)" strokeWidth={sw}
-      />
-      <rect x="3"  y="12" width="7" height="7" rx="1.5"
-        stroke="var(--text-secondary)" strokeWidth={sw}
-      />
-      <rect x="12" y="12" width="7" height="7" rx="1.5"
-        stroke="var(--text-secondary)" strokeWidth={sw}
-      />
-    </svg>,
+// Brand SVG icons — paths inlined from src/assets/*.svg, fill="currentColor" for theme adaptability
+function CardIcon({ index }: { index: number }) {
+  const ICONS: { vb: string; paths: string[] }[] = [
+    // 0 — Consulting
+    {
+      vb: '0 0 440.28 432.01',
+      paths: [
+        'M428.57,253.1h-86.8c-6.47,0-11.71,5.24-11.71,11.71v134.29c0,6.47-5.24,11.71-11.71,11.71h-9.73c-3.12,0-6.11-1.25-8.31-3.46l-7.19-7.25-50.79-50.99c-12.23-12.28-32.12-12.28-44.36,0l-50.78,50.99-7.23,7.26c-2.2,2.21-5.18,3.45-8.3,3.45h-9.7c-6.47,0-11.71-5.24-11.71-11.71v-134.29c0-6.47-5.24-11.71-11.71-11.71H11.72C5.25,253.1,0,258.34,0,264.81v83.37c0,3.21,1.3,6.26,3.61,8.46l75.26,72.11c2.18,2.09,5.09,3.26,8.11,3.26h96.97s72.38,0,72.38,0h97c3.02,0,5.91-1.17,8.11-3.26l75.24-72.11c2.3-2.21,3.6-5.26,3.6-8.45v-83.39c0-6.47-5.24-11.71-11.71-11.71Z',
+        'M436.68,75.37L361.41,3.26C359.24,1.17,356.32,0,353.3,0h-96.97s-72.38,0-72.38,0h-97c-3.02,0-5.91,1.17-8.11,3.26L3.61,75.37C1.3,77.57,0,80.62,0,83.83v83.38c0,6.47,5.24,11.71,11.71,11.71h86.8c6.47,0,11.71-5.24,11.71-11.71V32.92c0-6.47,5.24-11.71,11.71-11.71h9.74c3.11,0,6.09,1.24,8.28,3.45l7.21,7.26,50.78,50.98c12.23,12.28,32.12,12.28,44.36,0l50.78-50.98,7.23-7.26c2.2-2.21,5.18-3.45,8.3-3.45h9.7c6.47,0,11.71,5.24,11.71,11.71v134.29c0,6.47,5.24,11.71,11.71,11.71h86.82c6.47,0,11.71-5.24,11.71-11.71v-83.38c0-3.21-1.3-6.25-3.6-8.45Z',
+      ],
+    },
+    // 1 — Construction
+    {
+      vb: '0 0 595.3 341.98',
+      paths: [
+        'M9.91,151.01h73.25c5.47,0,9.91-4.44,9.91-9.91V27.75c0-5.39,4.36-9.83,9.83-9.83h8.24c2.62,0,5.15,1.03,6.98,2.85l119.78,120.34,6.98,6.98c1.9,1.82,4.36,2.93,6.98,2.93h69.12c5.47,0,9.91-4.44,9.91-9.91V27.75c0-5.39,4.44-9.83,9.91-9.83h8.17c2.62,0,5.15,1.03,6.98,2.85l126.84,127.31c1.82,1.82,4.36,2.93,6.98,2.93h95.6c8.88,0,13.24-10.7,7.06-16.89L461.13,2.93c-1.82-1.9-4.36-2.93-6.98-2.93h-142.93c-2.54,0-5,.95-6.82,2.77l-41.54,39.72h0S223.31,2.93,223.31,2.93c-1.82-1.9-4.36-2.93-6.98-2.93H73.41c-2.54,0-5,.95-6.82,2.77L3.09,63.58c-1.98,1.9-3.09,4.44-3.09,7.13v70.39c0,5.47,4.44,9.91,9.91,9.91Z',
+        'M585.35,190.97h-95.6c-2.62,0-5.15,1.03-6.98,2.93l-126.84,127.23c-1.82,1.9-4.36,2.93-6.98,2.93h-8.17c-5.47,0-9.91-4.44-9.91-9.91v-113.28c0-5.47-4.44-9.91-9.91-9.91h-69.12c-2.62,0-5.07,1.03-6.98,2.93l-6.98,6.98-119.78,120.26c-1.82,1.9-4.36,2.93-6.98,2.93h-8.24c-5.47,0-9.83-4.44-9.83-9.91v-113.28c0-5.47-4.44-9.91-9.91-9.91H9.91c-5.47,0-9.91,4.44-9.91,9.91v70.32c0,2.7,1.11,5.31,3.09,7.13l63.5,60.88c1.82,1.74,4.28,2.77,6.82,2.77h142.93c2.62,0,5.15-1.03,6.98-2.93l39.64-39.64h0l41.46,39.8c1.82,1.74,4.28,2.77,6.82,2.77h142.93c2.62,0,5.15-1.03,6.98-2.93l131.28-131.2c6.19-6.26,1.82-16.89-7.06-16.89Z',
+      ],
+    },
+    // 2 — Services
+    {
+      vb: '0 0 416.12 398.11',
+      paths: [
+        'M404.58,175.78h-111.34c-3.06,0-6-1.22-8.16-3.39L137.5,24.22c-2.16-2.17-5.1-3.39-8.16-3.39h-9.53c-6.36,0-11.51,5.15-11.51,11.51v131.93c0,6.36-5.15,11.51-11.51,11.51H11.51c-6.36,0-11.51-5.15-11.51-11.51v-81.91c0-3.14,1.28-6.14,3.55-8.31L77.47,3.2c2.14-2.05,5-3.2,7.97-3.2h166.39c3.05,0,5.98,1.21,8.14,3.37l152.76,152.76c7.25,7.25,2.12,19.65-8.14,19.65Z',
+        'M11.54,222.33h111.34c3.06,0,6,1.22,8.16,3.39l147.58,148.18c2.16,2.17,5.1,3.39,8.16,3.39h9.53c6.36,0,11.51-5.15,11.51-11.51v-131.93c0-6.36,5.15-11.51,11.51-11.51h85.28c6.36,0,11.51,5.15,11.51,11.51v81.91c0,3.14-1.28,6.14-3.55,8.31l-73.92,70.85c-2.14,2.05-5,3.2-7.97,3.2h-166.39c-3.05,0-5.98-1.21-8.14-3.37L3.39,241.98c-7.25-7.25-2.12-19.65,8.14-19.65Z',
+      ],
+    },
+    // 3 — Accelerator
+    {
+      vb: '0 0 362.16 538.34',
+      paths: [
+        'M163.91,10.76v103.83c0,2.85-1.14,5.59-3.16,7.61L22.58,259.8c-2.02,2.01-3.16,4.75-3.16,7.61v8.89c0,5.93,4.81,10.73,10.73,10.73h123.02c5.93,0,10.73,4.81,10.73,10.73v79.52c0,5.93-4.81,10.73-10.73,10.73h-76.38c-2.93,0-5.73-1.19-7.75-3.31L2.98,315.78c-1.92-2-2.98-4.66-2.98-7.43v-155.15c0-2.85,1.13-5.58,3.14-7.59L145.59,3.17c6.76-6.76,18.33-1.97,18.33,7.59Z',
+        'M198.24,527.58v-103.83c0-2.85,1.14-5.59,3.16-7.61l138.17-137.62c2.02-2.01,3.16-4.75,3.16-7.61v-8.89c0-5.93-4.81-10.73-10.73-10.73h-123.02c-5.93,0-10.73-4.81-10.73-10.73v-79.52c0-5.93,4.81-10.73,10.73-10.73h76.38c2.93,0,5.73,1.19,7.75,3.31l66.06,68.93c1.92,2,2.98,4.66,2.98,7.43v155.15c0,2.85-1.13,5.58-3.14,7.59l-142.44,142.44c-6.76,6.76-18.33,1.97-18.33-7.59Z',
+      ],
+    },
   ];
 
-  return icons[index] ?? null;
+  const icon = ICONS[index];
+  if (!icon) return null;
+  return (
+    <svg height={22} viewBox={icon.vb} fill="currentColor" aria-hidden="true" style={{ width: 'auto', flexShrink: 0 }}>
+      {icon.paths.map((d, pi) => <path key={pi} d={d} />)}
+    </svg>
+  );
 }
 
 export function Home() {
   const { t, tArray } = useTranslation();
   const { openModal } = useModal();
-  const { lang, setLang } = useLanguage();
   const [activeTab, setActiveTab] = useState(EXPERTISE_TAB_DEFS[0].id);
 
   // Cursor-reveal collage — direct DOM update, no React state, native 60fps
@@ -338,7 +298,7 @@ export function Home() {
             <motion.h1
               variants={fadeUp}
               transition={{ duration: 0.5 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-[var(--text-primary)] mb-5 whitespace-pre-line"
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-[var(--text-primary)] mb-6 whitespace-pre-line"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
               {t('home.hero.mainTitle')}
@@ -347,16 +307,20 @@ export function Home() {
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.5 }}
-              className="text-base text-[var(--text-secondary)] leading-relaxed mb-20 max-w-2xl"
+              className="text-lg text-[var(--text-secondary)] leading-relaxed mb-20 max-w-2xl"
               style={{ fontFamily: 'var(--font-body)' }}
             >
               {t('home.hero.description')}
             </motion.p>
 
             <motion.div variants={fadeUp} transition={{ duration: 0.5 }}>
-              <Button variant="pill" size="md" onClick={openModal}>
-                {t('common.scheduleDemo')} &nbsp;›
-              </Button>
+              <button
+                onClick={openModal}
+                className="inline-flex items-center justify-center rounded-full bg-[#AEE37B] text-[#0A2924] font-bold text-2xl px-10 py-4 hover:bg-[#c8f090] active:scale-[0.98] transition-all duration-300 shadow-[0_0_30px_rgba(174,227,123,0.3)] hover:shadow-[0_0_50px_rgba(174,227,123,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AEE37B] focus-visible:ring-offset-2 tracking-wide"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                {t('common.scheduleDemo')}
+              </button>
             </motion.div>
           </motion.div>
         </div>
@@ -372,27 +336,27 @@ export function Home() {
             transition={{ duration: 0.5 }}
             className="w-full"
           >
-            <p
-              className="text-xs text-[var(--text-secondary)] mb-5 tracking-wide"
-              style={{ fontFamily: 'var(--font-body)' }}
+            <h2
+              className="text-3xl sm:text-4xl font-semibold tracking-tight text-[var(--text-primary)] mb-12"
+              style={{ fontFamily: 'var(--font-ui)' }}
             >
               {t('home.innovativeSolutions.label')}
-            </p>
+            </h2>
 
             {/* Tab buttons */}
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-2.5">
               {EXPERTISE_TAB_DEFS.map((tabDef) => {
                 const isActive = activeTab === tabDef.id;
                 return (
                   <button
                     key={tabDef.id}
                     onClick={() => setActiveTab(tabDef.id)}
-                    className="px-4 py-1.5 text-xs font-medium rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AEE37B]"
+                    className="px-5 py-2 text-md font-medium rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AEE37B]"
                     style={{
                       fontFamily: 'var(--font-ui)',
-                      backgroundColor: isActive ? 'var(--text-primary)' : 'transparent',
-                      color: isActive ? 'var(--bg-primary)' : 'var(--text-secondary)',
-                      border: `1px solid ${isActive ? 'var(--text-primary)' : 'var(--border-color)'}`,
+                      backgroundColor: isActive ? 'var(--tab-active-bg)' : 'transparent',
+                      color: isActive ? 'var(--tab-active-text)' : 'var(--text-secondary)',
+                      border: `1px solid ${isActive ? 'transparent' : 'var(--border-color)'}`,
                     }}
                   >
                     {t(tabDef.labelKey)}
@@ -402,7 +366,7 @@ export function Home() {
             </div>
 
             {/* Content panel */}
-            <div className="mt-5" style={{ borderTop: '1px solid var(--border-color)' }}>
+            <div className="mt-6" style={{ borderTop: '1px solid var(--border-color)' }}>
               <AnimatePresence mode="wait">
                 {EXPERTISE_TAB_DEFS.filter(tabDef => tabDef.id === activeTab).map((tabDef) => (
                   <motion.ul
@@ -411,15 +375,15 @@ export function Home() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 4 }}
                     transition={{ duration: 0.28, ease: 'easeOut' }}
-                    className="pt-5 flex flex-wrap justify-center gap-x-8 gap-y-3"
+                    className="pt-6 flex flex-wrap justify-center gap-x-8 gap-y-3"
                   >
                     {tArray(tabDef.itemsKey).map((item) => (
                       <li
                         key={item}
-                        className="flex items-center gap-2 text-xs text-[var(--text-secondary)]"
+                        className="flex items-center gap-2 text-sm text-[var(--text-secondary)]"
                         style={{ fontFamily: 'var(--font-body)' }}
                       >
-                        <span className="w-1 h-1 rounded-full bg-[#AEE37B] flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#AEE37B] shrink-0" />
                         {item}
                       </li>
                     ))}
@@ -441,12 +405,12 @@ export function Home() {
             transition={{ duration: 0.5 }}
           >
             <h2
-              className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)] mb-4"
+              className="text-3xl sm:text-4xl font-semibold tracking-tight text-[var(--text-primary)] mb-5"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
               {t('home.builtForCompanies.heading')}
             </h2>
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-2" style={{ fontFamily: 'var(--font-body)' }}>
+            <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-2" style={{ fontFamily: 'var(--font-body)' }}>
               {t('home.builtForCompanies.description')}
             </p>
           </motion.div>
@@ -474,47 +438,62 @@ export function Home() {
               const tagColor = isDark ? 'rgba(255,255,255,0.55)' : 'var(--text-secondary)';
 
               const cardInner = (
-                <div className="relative flex flex-col justify-between min-h-[200px] p-9">
+                <div className="relative flex flex-col justify-between min-h-[240px] p-9 overflow-hidden">
+                  {/* Hover background image — feathered heavily on the left */}
+                  <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <img
+                      src={`https://images.unsplash.com/photo-${div.imgId}?w=700&auto=format&fit=crop&q=70`}
+                      alt=""
+                      className="absolute right-0 top-0 h-full w-3/5 object-cover object-left"
+                    />
+                    <div
+                      className="absolute right-0 top-0 h-full w-3/5 pointer-events-none"
+                      style={{ background: `linear-gradient(to right, ${cardBg} 0%, ${cardBg} 25%, transparent 100%)` }}
+                    />
+                  </div>
+
                   {/* Accelerator shimmer overlay */}
                   {div.featured && (
                     <div
                       className="absolute inset-0 pointer-events-none"
-                      style={{ background: 'linear-gradient(135deg, rgba(0,185,140,0.12) 0%, rgba(0,185,140,0.04) 60%, transparent 100%)' }}
+                      style={{ background: 'linear-gradient(135deg, rgba(0,185,140,0.14) 0%, rgba(0,185,140,0.05) 60%, transparent 100%)' }}
                     />
                   )}
                   <div className="relative">
-                    <div className="flex items-center gap-2.5 mb-3">
-                      <CardIcon index={i} isDark={isDark} featured={!!div.featured} />
+                    <div className="flex items-center gap-3 mb-4">
+                      <div style={{ color: isDark ? 'rgba(174,227,123,0.75)' : 'var(--text-secondary)', opacity: 0.85 }}>
+                        <CardIcon index={i} />
+                      </div>
                       <h3
-                        className="text-base font-semibold"
+                        className="text-lg font-semibold"
                         style={{ fontFamily: 'var(--font-ui)', color: titleColor }}
                       >
                         {t(div.titleKey)}
                       </h3>
                       {div.featured && (
-                        <span className="relative flex-shrink-0 w-1.5 h-1.5">
+                        <span className="relative shrink-0 w-1.5 h-1.5">
                           <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-70" />
                           <span className="relative block w-1.5 h-1.5 rounded-full bg-[#AEE37B]" />
                         </span>
                       )}
                     </div>
-                    <p className="text-sm font-medium" style={{ color: isDark ? 'rgba(255,255,255,0.8)' : 'var(--text-primary)', fontFamily: 'var(--font-ui)' }}>
+                    <p className="text-base font-medium" style={{ color: isDark ? 'rgba(255,255,255,0.8)' : 'var(--text-primary)', fontFamily: 'var(--font-ui)' }}>
                       {t(div.subtitleKey)}
                     </p>
-                    <p className="text-xs mt-2 leading-relaxed" style={{ color: tagColor, fontFamily: 'var(--font-body)' }}>
+                    <p className="text-sm mt-2 leading-relaxed" style={{ color: tagColor, fontFamily: 'var(--font-body)' }}>
                       {t(div.taglineKey)}
                     </p>
                   </div>
                   {!div.featured && (
                     <span
-                      className="text-xs font-medium text-[var(--accent-fg)] mt-6 group-hover:translate-x-1 transition-transform duration-200 inline-block"
+                      className="text-sm font-medium text-[var(--accent-fg)] mt-6 group-hover:translate-x-1 transition-transform duration-200 inline-block"
                       style={{ fontFamily: 'var(--font-ui)' }}
                     >
                       {t('common.learnMore')} →
                     </span>
                   )}
                   {div.featured && (
-                    <span className="text-[10px] font-medium tracking-widest uppercase text-[#AEE37B]/70 mt-6" style={{ fontFamily: 'var(--font-ui)' }}>
+                    <span className="text-xs font-medium tracking-widest uppercase text-[#AEE37B]/70 mt-6" style={{ fontFamily: 'var(--font-ui)' }}>
                       {t('common.comingSoon')}
                     </span>
                   )}
@@ -543,7 +522,7 @@ export function Home() {
             })}
           </div>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -557,7 +536,7 @@ export function Home() {
             >
               {t('home.builtForCompanies.exploreLink')}
             </Link>
-          </motion.div>
+          </motion.div> */}
         </div>
       </section>
 
@@ -623,7 +602,7 @@ export function Home() {
               transition={{ duration: 0.5 }}
             >
               <h2
-                className="text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight text-white mb-5"
+                className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.05] text-white mb-6"
                 style={{ fontFamily: 'var(--font-ui)' }}
               >
                 {t('home.precision.heading1')}<br />
@@ -631,13 +610,13 @@ export function Home() {
                 <span style={{ color: 'var(--accent)' }}>{t('home.precision.heading2Accent')}</span>
               </h2>
               <p
-                className="text-sm font-medium text-white/70 mb-3"
+                className="text-base font-medium text-white/70 mb-3"
                 style={{ fontFamily: 'var(--font-ui)' }}
               >
                 {t('home.precision.subtitle')}
               </p>
               <p
-                className="text-sm text-white/50 leading-relaxed"
+                className="text-base text-white/50 leading-relaxed"
                 style={{ fontFamily: 'var(--font-body)' }}
               >
                 {t('home.precision.description')}

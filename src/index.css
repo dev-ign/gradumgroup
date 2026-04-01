@@ -19,6 +19,9 @@
     --font-body:       'Satoshi', system-ui, sans-serif;
     /* accent-fg — lime text color adjusted for legibility per theme */
     --accent-fg:       #4A7A28;
+    /* tab active state */
+    --tab-active-bg:   #0A2924;
+    --tab-active-text: #B3E4C6;
     /* hero gradient fade — transparent version of bg-primary */
     --hero-fade:       rgba(255, 255, 255, 0);
     /* hero scrim — tints revealed collage images toward bg so text stays legible */
@@ -39,6 +42,8 @@
     --mint:            #4A8A6A;
     --cobalt:          #3B6FE8;
     --accent-fg:       #AEE37B;
+    --tab-active-bg:   #B3E4C6;
+    --tab-active-text: #0A2924;
     --hero-fade:       rgba(10, 41, 36, 0);
     --hero-scrim:      rgba(10, 41, 36, 0.72);
   }

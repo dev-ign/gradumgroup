@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeToggle } from '../ui/ThemeToggle';
-import { LogoMark } from '../ui/LogoMark';
+import { NavbarWordmark } from '../ui/NavbarWordmark';
 import { useModal } from '../../context/ModalContext';
 import { useLanguage, type Language } from '../../context/LanguageContext';
 import { useTranslation } from '../../i18n/useTranslation';
@@ -169,21 +169,13 @@ export function Navbar() {
       }}
     >
       <nav
-        className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between"
+        className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between"
         style={{ fontFamily: 'var(--font-ui)' }}
       >
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group" aria-label="Gradum Group home">
-          <LogoMark size="xs" glow={false} />
-          <div className="flex flex-col leading-none">
-            <span className="text-sm font-semibold text-[var(--text-primary)] tracking-tight group-hover:text-[#AEE37B] transition-colors duration-200">
-              Gradum
-            </span>
-            <span className="text-[10px] font-medium text-[var(--text-secondary)] tracking-widest uppercase group-hover:text-[#AEE37B] transition-colors duration-200">
-              Group
-            </span>
-          </div>
+        <Link to="/" className="group flex items-center" aria-label="Gradum Group home">
+          <NavbarWordmark className="h-8 w-auto transition-transform duration-200 group-hover:scale-[1.02] sm:h-9" />
         </Link>
 
         {/* Desktop Nav */}
@@ -348,7 +340,7 @@ export function Navbar() {
           <ThemeToggle />
           <button
             onClick={openModal}
-            className="text-xs font-semibold px-4 py-2 border border-[var(--border-color)] text-[var(--text-primary)] hover:border-[var(--accent-fg)] hover:text-[var(--accent-fg)] transition-all duration-200 tracking-wide"
+            className="text-xs bg-[#AEE37B] hover:bg-[#c8f090] font-semibold px-4 py-2 border border-[var(--border-color)] text-[#0A2924] hover:border-[var(--accent-fg)] transition-all duration-200 tracking-wide rounded-full"
             style={{ fontFamily: 'var(--font-ui)' }}
           >
             {t('common.scheduleDemo')}
