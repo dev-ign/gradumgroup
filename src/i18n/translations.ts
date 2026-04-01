@@ -44,6 +44,7 @@ const en = {
     cancel: 'Cancel',
     submitInquiry: 'Submit Inquiry',
     returnHome: 'Return Home →',
+    scheduleDemo: 'Schedule Demo',
     footerTagline: 'Engineering-led advisory and execution platform structured for performance-critical environments.',
     footerLegal: 'Gradum Group LLC (US)  |  Gradum Group, SRL (Dominican Republic)',
   },
@@ -89,6 +90,7 @@ const en = {
   home: {
     hero: {
       tagline: 'Engineering-Led Advisory Platform',
+      mainTitle: 'A Technology-First\nAdvisory & Execution Platform',
       title1: 'Structured',
       title2: 'Advisory.',
       title3: 'Engineered',
@@ -101,10 +103,10 @@ const en = {
       intro: 'Platform divisions operate under defined mandate frameworks and integrate within a unified advisory and execution architecture designed for multi-functional and multi-entity environments.',
     },
     divisions: [
-      { name: 'Gradum Consulting', tagline: 'Engineering & Technology Advisory for performance-driven industries.' },
-      { name: 'Gradum Construction', tagline: 'Architectural and structural execution.' },
-      { name: 'Gradum Services', tagline: 'Financial Governance & Brand Execution Infrastructure.' },
-      { name: 'Gradum Accelerator', tagline: 'Venture development platform.' },
+      { name: 'Gradum Consulting', tagline: 'Engineering & Technology Advisory for performance-driven industries.', subtitle: 'Advanced Technology & Engineering Advisory' },
+      { name: 'Gradum Construction', tagline: 'Architectural and structural execution.', subtitle: 'Engineering, Architecture & Build' },
+      { name: 'Gradum Services', tagline: 'Financial Governance & Brand Execution Infrastructure.', subtitle: 'Business Operations & Growth Services' },
+      { name: 'Gradum Accelerator', tagline: 'Venture development platform.', subtitle: 'Startup Development & Venture Growth' },
     ],
     howWeWork: {
       label: 'Methodology',
@@ -121,6 +123,42 @@ const en = {
       heading: 'Structured Client Coordination',
       description: 'All engagements are managed through the Gradum Client Portal, ensuring secure collaboration, defined project stages, and centralized documentation.',
     },
+    innovativeSolutions: {
+      label: 'Innovative Solutions for Complex Challenges',
+      tabs: [
+        {
+          label: 'Advanced Applications',
+          items: ['AI & Machine Learning', 'IoT & Smart Systems', 'Robotics & Automation', 'Data Analytics & Visualization'],
+        },
+        {
+          label: 'Engineering Methodologies',
+          items: ['Systems Engineering', 'Agile & Iterative Development', 'Model-Based Design', 'Lean Process Engineering'],
+        },
+        {
+          label: 'Industries We Support',
+          items: ['Energy & Infrastructure', 'Healthcare Technology', 'Defense & Aerospace', 'Manufacturing & Supply Chain'],
+        },
+      ],
+    },
+    builtForCompanies: {
+      heading: 'Built for Companies That Move Forward',
+      description: 'Gradum brings together technology, engineering, and business execution into a single platform. We partner with organizations to solve complex challenges and deliver scalable, real-world outcomes.',
+      platformLabel: 'One Platform. Four Capabilities.',
+      exploreLink: 'Explore Each Platform ›',
+    },
+    precision: {
+      heading1: 'Gradum is not built for volume.',
+      heading2Prefix: 'It is ',
+      heading2Accent: 'engineered for precision.',
+      subtitle: 'Where Advisory Meets Execution',
+      description: 'From tense iterations to execution margins, across industry, expertise, nerve, and more — we design, build, and continuously improve what matters.',
+    },
+    letsBuild: {
+      heading: "Let's Build What's Next",
+      description: 'Our work spans advanced domains including artificial intelligence, embedded systems, control engineering, and digital infrastructure. We apply precision, agility, and patience.',
+      techTags: ['Artificial Intelligence', 'Embedded Systems', 'Control Engineering', 'Digital Infrastructure'],
+    },
+    footerLocations: 'Miami, FL (USA)\nSanto Domingo (Dominican Republic)',
   },
   about: {
     hero: {
@@ -430,6 +468,7 @@ const es: typeof en = {
     cancel: 'Cancelar',
     submitInquiry: 'Enviar solicitud',
     returnHome: 'Volver al inicio →',
+    scheduleDemo: 'Agendar Demo',
     footerTagline: 'Plataforma de asesoría y ejecución liderada por ingeniería, estructurada para entornos de alto rendimiento.',
     footerLegal: 'Gradum Group LLC (EE. UU.)  |  Gradum Group, SRL (República Dominicana)',
   },
@@ -475,6 +514,7 @@ const es: typeof en = {
   home: {
     hero: {
       tagline: 'Plataforma de asesoría liderada por ingeniería',
+      mainTitle: 'Una Plataforma de Asesoría\ny Ejecución Tecnológica',
       title1: 'Asesoría',
       title2: 'estructurada.',
       title3: 'Ejecución',
@@ -487,10 +527,10 @@ const es: typeof en = {
       intro: 'Las divisiones de la plataforma operan bajo marcos de mandato definidos e integran una arquitectura unificada de asesoría y ejecución para entornos multifuncionales y multi-entidad.',
     },
     divisions: [
-      { name: 'Gradum Consulting', tagline: 'Asesoría en ingeniería y tecnología para industrias de alto rendimiento.' },
-      { name: 'Gradum Construction', tagline: 'Ejecución arquitectónica y estructural.' },
-      { name: 'Gradum Services', tagline: 'Gobernanza financiera e infraestructura de ejecución de marca.' },
-      { name: 'Gradum Accelerator', tagline: 'Plataforma de desarrollo de ventures.' },
+      { name: 'Gradum Consulting', tagline: 'Asesoría en ingeniería y tecnología para industrias de alto rendimiento.', subtitle: 'Asesoría Avanzada en Tecnología e Ingeniería' },
+      { name: 'Gradum Construction', tagline: 'Ejecución arquitectónica y estructural.', subtitle: 'Ingeniería, Arquitectura y Construcción' },
+      { name: 'Gradum Services', tagline: 'Gobernanza financiera e infraestructura de ejecución de marca.', subtitle: 'Operaciones Empresariales y Servicios de Crecimiento' },
+      { name: 'Gradum Accelerator', tagline: 'Plataforma de desarrollo de ventures.', subtitle: 'Desarrollo de Startups y Crecimiento de Ventures' },
     ],
     howWeWork: {
       label: 'Metodología',
@@ -507,6 +547,42 @@ const es: typeof en = {
       heading: 'Coordinación estructurada con clientes',
       description: 'Todos los compromisos se gestionan a través del Portal de Clientes Gradum, garantizando colaboración segura, etapas de proyecto definidas y documentación centralizada.',
     },
+    innovativeSolutions: {
+      label: 'Soluciones Innovadoras para Desafíos Complejos',
+      tabs: [
+        {
+          label: 'Aplicaciones Avanzadas',
+          items: ['IA & Aprendizaje Automático', 'IoT & Sistemas Inteligentes', 'Robótica & Automatización', 'Análisis & Visualización de Datos'],
+        },
+        {
+          label: 'Metodologías de Ingeniería',
+          items: ['Ingeniería de Sistemas', 'Desarrollo Ágil e Iterativo', 'Diseño Basado en Modelos', 'Ingeniería de Procesos Lean'],
+        },
+        {
+          label: 'Industrias que Apoyamos',
+          items: ['Energía e Infraestructura', 'Tecnología en Salud', 'Defensa & Aeroespacial', 'Manufactura & Cadena de Suministro'],
+        },
+      ],
+    },
+    builtForCompanies: {
+      heading: 'Construido para Empresas que Avanzan',
+      description: 'Gradum integra tecnología, ingeniería y ejecución empresarial en una sola plataforma. Trabajamos con organizaciones para resolver desafíos complejos y entregar resultados escalables y reales.',
+      platformLabel: 'Una Plataforma. Cuatro Capacidades.',
+      exploreLink: 'Explorar Cada Plataforma ›',
+    },
+    precision: {
+      heading1: 'Gradum no está construido para volumen.',
+      heading2Prefix: 'Está ',
+      heading2Accent: 'diseñado para la precisión.',
+      subtitle: 'Donde la Asesoría se Une a la Ejecución',
+      description: 'Desde iteraciones complejas hasta márgenes de ejecución, a través de industrias, experiencia y dedicación — diseñamos, construimos y mejoramos continuamente lo que importa.',
+    },
+    letsBuild: {
+      heading: 'Construyamos el Futuro',
+      description: 'Nuestro trabajo abarca dominios avanzados que incluyen inteligencia artificial, sistemas embebidos, ingeniería de control e infraestructura digital. Aplicamos precisión, agilidad y paciencia.',
+      techTags: ['Inteligencia Artificial', 'Sistemas Embebidos', 'Ingeniería de Control', 'Infraestructura Digital'],
+    },
+    footerLocations: 'Miami, FL (EE. UU.)\nSanto Domingo (República Dominicana)',
   },
   about: {
     hero: {

@@ -58,7 +58,7 @@ function LanguageSelector() {
                 <button
                   onClick={() => { setLang(code); setOpen(false); }}
                   className={`w-full text-left px-4 py-2 text-xs font-medium transition-colors duration-150 ${
-                    lang === code ? 'text-[#AEE37B]' : 'text-[var(--text-primary)] hover:text-[#AEE37B]'
+                    lang === code ? 'text-[var(--accent-fg)]' : 'text-[var(--text-primary)] hover:text-[var(--accent-fg)]'
                   }`}
                   style={{ fontFamily: 'var(--font-ui)' }}
                 >
@@ -149,7 +149,7 @@ export function Navbar() {
 
   const dropdownItemClass = (active: boolean) =>
     `flex items-center w-full px-4 py-2.5 text-sm font-medium transition-colors duration-150 ${
-      active ? 'text-[#AEE37B]' : 'text-[var(--text-primary)] hover:text-[#AEE37B]'
+      active ? 'text-[var(--accent-fg)]' : 'text-[var(--text-primary)] hover:text-[var(--accent-fg)]'
     }`;
 
   const panelStyle: React.CSSProperties = {
@@ -305,10 +305,10 @@ export function Navbar() {
                                   <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-60" />
                                   <span className="relative block w-2 h-2 rounded-full bg-[#AEE37B]" />
                                 </span>
-                                <span className="flex-1 text-sm font-medium text-[#AEE37B]">
+                                <span className="flex-1 text-sm font-medium text-[var(--accent-fg)]">
                                   {t(sub.labelKey)}
                                 </span>
-                                <span className="text-[9px] font-semibold tracking-[0.12em] uppercase px-1.5 py-0.5 text-[#AEE37B]"
+                                <span className="text-[9px] font-semibold tracking-[0.12em] uppercase px-1.5 py-0.5 text-[var(--accent-fg)]"
                                   style={{ border: '1px solid rgba(174,227,123,0.35)', backgroundColor: 'rgba(174,227,123,0.08)' }}
                                 >
                                   SOON
@@ -348,10 +348,10 @@ export function Navbar() {
           <ThemeToggle />
           <button
             onClick={openModal}
-            className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
+            className="text-xs font-semibold px-4 py-2 border border-[var(--border-color)] text-[var(--text-primary)] hover:border-[var(--accent-fg)] hover:text-[var(--accent-fg)] transition-all duration-200 tracking-wide"
             style={{ fontFamily: 'var(--font-ui)' }}
           >
-            {t('common.clientAccess')} ›
+            {t('common.scheduleDemo')}
           </button>
         </div>
 
@@ -454,8 +454,8 @@ export function Navbar() {
                         <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-60" />
                         <span className="relative block w-2 h-2 rounded-full bg-[#AEE37B]" />
                       </span>
-                      <span className="text-sm font-medium text-[#AEE37B]">{t('common.accelerator')}</span>
-                      <span className="text-[9px] font-semibold tracking-[0.12em] uppercase px-1.5 py-0.5 text-[#AEE37B]"
+                      <span className="text-sm font-medium text-[var(--accent-fg)]">{t('common.accelerator')}</span>
+                      <span className="text-[9px] font-semibold tracking-[0.12em] uppercase px-1.5 py-0.5 text-[var(--accent-fg)]"
                         style={{ border: '1px solid rgba(174,227,123,0.35)', backgroundColor: 'rgba(174,227,123,0.08)' }}
                       >
                         SOON
@@ -481,9 +481,9 @@ export function Navbar() {
               <li className="pt-2 border-t border-[var(--border-color)]">
                 <button
                   onClick={() => { setMobileOpen(false); openModal(); }}
-                  className="w-full text-sm font-medium py-3 text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200 text-left"
+                  className="w-full text-sm font-semibold py-3 text-[var(--text-primary)] hover:text-[var(--accent-fg)] transition-colors duration-200 text-left"
                 >
-                  {t('common.clientAccess')} ›
+                  {t('common.scheduleDemo')} ›
                 </button>
               </li>
             </ul>

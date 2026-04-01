@@ -11,7 +11,7 @@ export function Button({ variant = 'primary', size = 'md', children, className =
 
   const variants = {
     primary: 'bg-[#AEE37B] text-[#0A2924] hover:bg-[#9dd468] active:scale-[0.98]',
-    outline: 'border border-[#AEE37B] text-[#AEE37B] hover:bg-[#AEE37B] hover:text-[#0A2924] active:scale-[0.98]',
+    outline: 'border border-[var(--accent-fg)] text-[var(--accent-fg)] hover:bg-[#AEE37B] hover:text-[#0A2924] active:scale-[0.98]',
     ghost: 'text-[var(--text-primary)] hover:text-[#AEE37B] active:scale-[0.98]',
     pill: 'rounded-full border border-[var(--text-primary)] text-[var(--text-primary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] active:scale-[0.98]',
   };

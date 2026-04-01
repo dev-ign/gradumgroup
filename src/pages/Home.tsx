@@ -5,6 +5,8 @@ import { PageTransition } from '../components/ui/PageTransition';
 import { Button } from '../components/ui/Button';
 import { LogoMark } from '../components/ui/LogoMark';
 import { useTranslation } from '../i18n/useTranslation';
+import { useModal } from '../context/ModalContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -20,75 +22,66 @@ const DIVISIONS = [
     to: '/consulting',
     titleKey: 'home.divisions.0.name',
     taglineKey: 'home.divisions.0.tagline',
+    subtitleKey: 'home.divisions.0.subtitle',
     dark: false,
   },
   {
     to: '/construction',
     titleKey: 'home.divisions.1.name',
     taglineKey: 'home.divisions.1.tagline',
-    dark: true,
+    subtitleKey: 'home.divisions.1.subtitle',
+    dark: false,
   },
   {
     to: '/services',
     titleKey: 'home.divisions.2.name',
     taglineKey: 'home.divisions.2.tagline',
+    subtitleKey: 'home.divisions.2.subtitle',
     dark: false,
   },
   {
     to: '/accelerator',
     titleKey: 'home.divisions.3.name',
     taglineKey: 'home.divisions.3.tagline',
+    subtitleKey: 'home.divisions.3.subtitle',
     dark: true,
     featured: true,
   },
 ];
 
-const EXPERTISE_TABS = [
-  {
-    id: 'applications',
-    label: 'Advanced Applications',
-    items: ['AI & Machine Learning', 'IoT & Smart Systems', 'Robotics & Automation', 'Data Analytics & Visualization'],
-  },
-  {
-    id: 'methodologies',
-    label: 'Engineering Methodologies',
-    items: ['Systems Engineering', 'Agile & Iterative Development', 'Model-Based Design', 'Lean Process Engineering'],
-  },
-  {
-    id: 'industries',
-    label: 'Industries We Support',
-    items: ['Energy & Infrastructure', 'Healthcare Technology', 'Defense & Aerospace', 'Manufacturing & Supply Chain'],
-  },
+const EXPERTISE_TAB_DEFS = [
+  { id: 'applications',  labelKey: 'home.innovativeSolutions.tabs.0.label', itemsKey: 'home.innovativeSolutions.tabs.0.items' },
+  { id: 'methodologies', labelKey: 'home.innovativeSolutions.tabs.1.label', itemsKey: 'home.innovativeSolutions.tabs.1.items' },
+  { id: 'industries',    labelKey: 'home.innovativeSolutions.tabs.2.label', itemsKey: 'home.innovativeSolutions.tabs.2.items' },
 ];
 
-const TECH_TAGS = [
-  'Artificial Intelligence',
-  'Embedded Systems',
-  'Control Engineering',
-  'Digital Infrastructure',
-];
-
-// Full-coverage 4-column mosaic — widths/heights tile exactly, +1px prevents sub-pixel gaps
-// Col 1: 0–22%  |  Col 2: 22–48%  |  Col 3: 48–76%  |  Col 4: 76–100%
+// Full-coverage 5-column mosaic — widths/heights tile exactly, +1px prevents sub-pixel gaps
+// Col 1: 0–20%  |  Col 2: 20–40%  |  Col 3: 40–60%  |  Col 4: 60–80%  |  Col 5: 80–100%
 const COLLAGE_IMAGES = [
-  // ── Column 1 (left 22%) ─────────────────────────────────────────
-  { id: '1518770660439-4636190af475', left: '0%',   top: '0%',   w: 'calc(22% + 1px)', h: 'calc(37% + 1px)' }, // circuit / tech
-  { id: '1503387762-592deb58ef4e',   left: '0%',   top: '37%',  w: 'calc(22% + 1px)', h: 'calc(34% + 1px)' }, // construction / arch
-  { id: '1581091226825-a6a2a5aee158',left: '0%',   top: '71%',  w: 'calc(22% + 1px)', h: 'calc(29% + 1px)' }, // engineering precision
+  // ── Column 1 (left 20%) ─────────────────────────────────────────
+  { id: '1518770660439-4636190af475', left: '0%',  top: '0%',  w: 'calc(20% + 1px)', h: 'calc(35% + 1px)' }, // circuit / tech
+  { id: '1581091226825-a6a2a5aee158', left: '0%',  top: '35%', w: 'calc(20% + 1px)', h: 'calc(35% + 1px)' }, // engineer
+  { id: '1519389950473-47ba0277781c', left: '0%',  top: '70%', w: 'calc(20% + 1px)', h: 'calc(30% + 1px)' }, // developer working
 
-  // ── Column 2 (22–48%) ───────────────────────────────────────────
-  { id: '1677442135703-1787eea5ce01', left: '22%', top: '0%',   w: 'calc(26% + 1px)', h: 'calc(53% + 1px)' }, // AI / data visualization
-  { id: '1552664730-d307ca884978',   left: '22%',  top: '53%',  w: 'calc(26% + 1px)', h: 'calc(47% + 1px)' }, // consulting / strategy
+  // ── Column 2 (20–40%) ───────────────────────────────────────────
+  { id: '1677442135703-1787eea5ce01', left: '20%', top: '0%',  w: 'calc(20% + 1px)', h: 'calc(42% + 1px)' }, // AI visualization
+  { id: '1503387762-592deb58ef4e',   left: '20%',  top: '42%', w: 'calc(20% + 1px)', h: 'calc(33% + 1px)' }, // construction / arch
+  { id: '1460925895917-afdab827c52f', left: '20%', top: '75%', w: 'calc(20% + 1px)', h: 'calc(25% + 1px)' }, // laptop typing
 
-  // ── Column 3 (48–76%) ───────────────────────────────────────────
-  { id: '1461749280684-dccba630e2f6', left: '48%', top: '0%',   w: 'calc(28% + 1px)', h: 'calc(42% + 1px)' }, // code / dev
-  { id: '1558618666-fcd25c85cd64',   left: '48%',  top: '42%',  w: 'calc(28% + 1px)', h: 'calc(31% + 1px)' }, // server / infra
-  { id: '1486312338219-ce68d2c6f44d',left: '48%',  top: '73%',  w: 'calc(28% + 1px)', h: 'calc(27% + 1px)' }, // laptop / workspace
+  // ── Column 3 (40–60%) ───────────────────────────────────────────
+  { id: '1461749280684-dccba630e2f6', left: '40%', top: '0%',  w: 'calc(20% + 1px)', h: 'calc(38% + 1px)' }, // code / dev
+  { id: '1552664730-d307ca884978',   left: '40%',  top: '38%', w: 'calc(20% + 1px)', h: 'calc(32% + 1px)' }, // consulting / strategy
+  { id: '1486312338219-ce68d2c6f44d',left: '40%',  top: '70%', w: 'calc(20% + 1px)', h: 'calc(30% + 1px)' }, // laptop workspace
 
-  // ── Column 4 (76–100%) ──────────────────────────────────────────
-  { id: '1573164713988-8665fc963095', left: '76%', top: '0%',   w: 'calc(24% + 1px)', h: 'calc(36% + 1px)' }, // business meeting
-  { id: '1551288049-bebda4e38f71',   left: '76%',  top: '36%',  w: 'calc(24% + 1px)', h: 'calc(33% + 1px)' }, // data analytics
-  { id: '1486406146926-c627a92ad1ab',left: '76%',  top: '69%',  w: 'calc(24% + 1px)', h: 'calc(31% + 1px)' }, // modern architecture
+  // ── Column 4 (60–80%) ───────────────────────────────────────────
+  { id: '1573164713988-8665fc963095', left: '60%', top: '0%',  w: 'calc(20% + 1px)', h: 'calc(45% + 1px)' }, // business meeting
+  { id: '1558618666-fcd25c85cd64',   left: '60%',  top: '45%', w: 'calc(20% + 1px)', h: 'calc(30% + 1px)' }, // server / infra
+  { id: '1486406146926-c627a92ad1ab',left: '60%',  top: '75%', w: 'calc(20% + 1px)', h: 'calc(25% + 1px)' }, // modern architecture
+
+  // ── Column 5 (80–100%) ──────────────────────────────────────────
+  { id: '1551288049-bebda4e38f71',   left: '80%',  top: '0%',  w: 'calc(20% + 1px)', h: 'calc(38% + 1px)' }, // data analytics
+  { id: '1507003211169-0a1dd7228f2d', left: '80%', top: '38%', w: 'calc(20% + 1px)', h: 'calc(35% + 1px)' }, // programmer
+  { id: '1522071820081-009f0129c71c', left: '80%', top: '73%', w: 'calc(20% + 1px)', h: 'calc(27% + 1px)' }, // office space
 ] as const;
 
 // Flat logo mark for the Accelerator card — same pixel footprint as the other icons
@@ -179,8 +172,10 @@ function CardIcon({ index, featured }: { index: number; isDark: boolean; feature
 }
 
 export function Home() {
-  const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState(EXPERTISE_TABS[0].id);
+  const { t, tArray } = useTranslation();
+  const { openModal } = useModal();
+  const { lang, setLang } = useLanguage();
+  const [activeTab, setActiveTab] = useState(EXPERTISE_TAB_DEFS[0].id);
 
   // Cursor-reveal collage — direct DOM update, no React state, native 60fps
   const collageRef = useRef<HTMLDivElement>(null);
@@ -343,25 +338,24 @@ export function Home() {
             <motion.h1
               variants={fadeUp}
               transition={{ duration: 0.5 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-[var(--text-primary)] mb-5"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-[var(--text-primary)] mb-5 whitespace-pre-line"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              A Technology-First<br />
-              Advisory &amp; Execution Platform
+              {t('home.hero.mainTitle')}
             </motion.h1>
 
             <motion.p
               variants={fadeUp}
               transition={{ duration: 0.5 }}
-              className="text-base text-[var(--text-secondary)] leading-relaxed mb-20"
+              className="text-base text-[var(--text-secondary)] leading-relaxed mb-20 max-w-2xl"
               style={{ fontFamily: 'var(--font-body)' }}
             >
               {t('home.hero.description')}
             </motion.p>
 
             <motion.div variants={fadeUp} transition={{ duration: 0.5 }}>
-              <Button variant="pill" size="md">
-                Explore Platform &nbsp;›
+              <Button variant="pill" size="md" onClick={openModal}>
+                {t('common.scheduleDemo')} &nbsp;›
               </Button>
             </motion.div>
           </motion.div>
@@ -382,17 +376,17 @@ export function Home() {
               className="text-xs text-[var(--text-secondary)] mb-5 tracking-wide"
               style={{ fontFamily: 'var(--font-body)' }}
             >
-              Innovative Solutions for Complex Challenges
+              {t('home.innovativeSolutions.label')}
             </p>
 
             {/* Tab buttons */}
             <div className="flex flex-wrap justify-center gap-2">
-              {EXPERTISE_TABS.map((tab) => {
-                const isActive = activeTab === tab.id;
+              {EXPERTISE_TAB_DEFS.map((tabDef) => {
+                const isActive = activeTab === tabDef.id;
                 return (
                   <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
+                    key={tabDef.id}
+                    onClick={() => setActiveTab(tabDef.id)}
                     className="px-4 py-1.5 text-xs font-medium rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AEE37B]"
                     style={{
                       fontFamily: 'var(--font-ui)',
@@ -401,7 +395,7 @@ export function Home() {
                       border: `1px solid ${isActive ? 'var(--text-primary)' : 'var(--border-color)'}`,
                     }}
                   >
-                    {tab.label}
+                    {t(tabDef.labelKey)}
                   </button>
                 );
               })}
@@ -410,16 +404,16 @@ export function Home() {
             {/* Content panel */}
             <div className="mt-5" style={{ borderTop: '1px solid var(--border-color)' }}>
               <AnimatePresence mode="wait">
-                {EXPERTISE_TABS.filter(t => t.id === activeTab).map((tab) => (
+                {EXPERTISE_TAB_DEFS.filter(tabDef => tabDef.id === activeTab).map((tabDef) => (
                   <motion.ul
-                    key={tab.id}
+                    key={tabDef.id}
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 4 }}
                     transition={{ duration: 0.28, ease: 'easeOut' }}
                     className="pt-5 flex flex-wrap justify-center gap-x-8 gap-y-3"
                   >
-                    {tab.items.map((item) => (
+                    {tArray(tabDef.itemsKey).map((item) => (
                       <li
                         key={item}
                         className="flex items-center gap-2 text-xs text-[var(--text-secondary)]"
@@ -450,11 +444,10 @@ export function Home() {
               className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)] mb-4"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Built for Companies That Move Forward
+              {t('home.builtForCompanies.heading')}
             </h2>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-2" style={{ fontFamily: 'var(--font-body)' }}>
-              Gradum brings together technology, engineering, and business execution into a single platform.
-              We partner with organizations to solve complex challenges and deliver scalable, real-world outcomes.
+              {t('home.builtForCompanies.description')}
             </p>
           </motion.div>
         </div>
@@ -469,7 +462,7 @@ export function Home() {
             className="text-center text-sm font-medium text-[var(--text-secondary)] mb-8 tracking-wide"
             style={{ fontFamily: 'var(--font-ui)' }}
           >
-            One Platform. Four Capabilities.
+            {t('home.builtForCompanies.platformLabel')}
           </motion.p>
 
           {/* 2×2 Platform Grid */}
@@ -506,11 +499,7 @@ export function Home() {
                       )}
                     </div>
                     <p className="text-sm font-medium" style={{ color: isDark ? 'rgba(255,255,255,0.8)' : 'var(--text-primary)', fontFamily: 'var(--font-ui)' }}>
-                      {/* division subtitle from Figma */}
-                      {i === 0 && 'Advanced Technology & Engineering Advisory'}
-                      {i === 1 && 'Engineering, Architecture & Build'}
-                      {i === 2 && 'Business Operations & Growth Services'}
-                      {i === 3 && 'Startup Development & Venture Growth'}
+                      {t(div.subtitleKey)}
                     </p>
                     <p className="text-xs mt-2 leading-relaxed" style={{ color: tagColor, fontFamily: 'var(--font-body)' }}>
                       {t(div.taglineKey)}
@@ -518,7 +507,7 @@ export function Home() {
                   </div>
                   {!div.featured && (
                     <span
-                      className="text-xs font-medium text-[#AEE37B] mt-6 group-hover:translate-x-1 transition-transform duration-200 inline-block"
+                      className="text-xs font-medium text-[var(--accent-fg)] mt-6 group-hover:translate-x-1 transition-transform duration-200 inline-block"
                       style={{ fontFamily: 'var(--font-ui)' }}
                     >
                       {t('common.learnMore')} →
@@ -566,7 +555,7 @@ export function Home() {
               className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Explore Each Platform ›
+              {t('home.builtForCompanies.exploreLink')}
             </Link>
           </motion.div>
         </div>
@@ -574,105 +563,87 @@ export function Home() {
 
       {/* ── Engineered for Precision ─────────────────────────────────────────── */}
       <section
-        className="relative overflow-hidden"
+        className="relative overflow-hidden min-h-[520px] lg:min-h-[580px]"
         style={{ backgroundColor: 'var(--bg-dark-section)' }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left text */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2
-              className="text-3xl sm:text-4xl font-semibold leading-tight text-white mb-5"
-              style={{ fontFamily: 'var(--font-ui)' }}
+        {/* Background image — bleeds from right, feathered into text */}
+        <div className="absolute inset-y-0 right-0 w-full lg:w-[88%] pointer-events-none">
+          <img
+            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&auto=format&fit=crop&q=80"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ opacity: 0.9 }}
+          />
+          {/* Mobile scrim — keeps text readable on small screens */}
+          <div
+            className="absolute inset-0 lg:hidden pointer-events-none"
+            style={{ background: 'var(--bg-dark-section)', opacity: 0.88 }}
+          />
+          {/* Desktop left feather — wide bleed into text column */}
+          <div
+            className="absolute inset-y-0 left-0 pointer-events-none hidden lg:block"
+            style={{
+              width: '68%',
+              background: 'linear-gradient(to right, var(--bg-dark-section) 0%, var(--bg-dark-section) 8%, transparent 100%)',
+            }}
+          />
+          {/* Top feather */}
+          <div
+            className="absolute inset-x-0 top-0 h-1/2 pointer-events-none"
+            style={{ background: 'linear-gradient(to bottom, var(--bg-dark-section) 0%, transparent 100%)' }}
+          />
+          {/* Bottom feather */}
+          <div
+            className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none"
+            style={{ background: 'linear-gradient(to top, var(--bg-dark-section) 0%, transparent 100%)' }}
+          />
+          {/* Right feather */}
+          <div
+            className="absolute inset-y-0 right-0 w-1/5 pointer-events-none"
+            style={{ background: 'linear-gradient(to left, var(--bg-dark-section) 0%, transparent 100%)' }}
+          />
+          {/* Teal brand tint */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: 'radial-gradient(ellipse 80% 70% at 65% 45%, rgba(0,185,140,0.12) 0%, transparent 75%)',
+              mixBlendMode: 'screen',
+            }}
+          />
+        </div>
+
+        {/* Text content — sits above image */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 lg:py-32">
+          <div className="max-w-lg">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
             >
-              Gradum is not built for volume.<br />
-              It is{' '}
-              <span style={{ color: 'var(--accent)' }}>engineered for precision.</span>
-            </h2>
-            <p
-              className="text-sm font-medium text-white/70 mb-3"
-              style={{ fontFamily: 'var(--font-ui)' }}
-            >
-              Where Advisory Meets Execution
-            </p>
-            <p
-              className="text-sm text-white/50 leading-relaxed"
-              style={{ fontFamily: 'var(--font-body)' }}
-            >
-              From tense iterations to execution margins, across industry, expertise, nerve, and more —
-              we design, build, and continuously improve what matters.
-            </p>
-          </motion.div>
-
-          {/* Right image */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative"
-          >
-            {/* Image + feathered overlay stack */}
-            <div className="relative w-full aspect-4/3 overflow-hidden">
-              {/* Photo */}
-              <img
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&auto=format&fit=crop&q=80"
-                alt="Engineer at work"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ opacity: 0.75 }}
-              />
-
-              {/* Feather left — bleeds into the text column */}
-              <div
-                className="absolute inset-y-0 left-0 w-2/5 pointer-events-none"
-                style={{
-                  background:
-                    'linear-gradient(to right, var(--bg-dark-section) 0%, transparent 100%)',
-                }}
-              />
-
-              {/* Feather top */}
-              <div
-                className="absolute inset-x-0 top-0 h-1/3 pointer-events-none"
-                style={{
-                  background:
-                    'linear-gradient(to bottom, var(--bg-dark-section) 0%, transparent 100%)',
-                }}
-              />
-
-              {/* Feather bottom */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-2/5 pointer-events-none"
-                style={{
-                  background:
-                    'linear-gradient(to top, var(--bg-dark-section) 0%, transparent 100%)',
-                }}
-              />
-
-              {/* Feather right */}
-              <div
-                className="absolute inset-y-0 right-0 w-1/4 pointer-events-none"
-                style={{
-                  background:
-                    'linear-gradient(to left, var(--bg-dark-section) 0%, transparent 100%)',
-                }}
-              />
-
-              {/* Subtle teal tint overlay — ties photo into brand palette */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background:
-                    'radial-gradient(ellipse 80% 70% at 60% 40%, rgba(0,185,140,0.10) 0%, transparent 75%)',
-                  mixBlendMode: 'screen',
-                }}
-              />
-            </div>
-          </motion.div>
+              <h2
+                className="text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight text-white mb-5"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                {t('home.precision.heading1')}<br />
+                {t('home.precision.heading2Prefix')}
+                <span style={{ color: 'var(--accent)' }}>{t('home.precision.heading2Accent')}</span>
+              </h2>
+              <p
+                className="text-sm font-medium text-white/70 mb-3"
+                style={{ fontFamily: 'var(--font-ui)' }}
+              >
+                {t('home.precision.subtitle')}
+              </p>
+              <p
+                className="text-sm text-white/50 leading-relaxed"
+                style={{ fontFamily: 'var(--font-body)' }}
+              >
+                {t('home.precision.description')}
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -689,12 +660,12 @@ export function Home() {
               className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)] mb-8"
               style={{ fontFamily: 'var(--font-ui)' }}
             >
-              Let's Build What's Next
+              {t('home.letsBuild.heading')}
             </h2>
 
             {/* Tech tag chips */}
             <div className="flex flex-wrap justify-center gap-2.5 mb-8">
-              {TECH_TAGS.map(tag => (
+              {tArray('home.letsBuild.techTags').map(tag => (
                 <span
                   key={tag}
                   className="inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-1.5 rounded-full text-[var(--text-secondary)]"
@@ -710,66 +681,11 @@ export function Home() {
               className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-lg mx-auto"
               style={{ fontFamily: 'var(--font-body)' }}
             >
-              Our work spans advanced domains including artificial intelligence, embedded systems, control engineering,
-              and digital infrastructure. We apply precision, agility, and patience.
+              {t('home.letsBuild.description')}
             </p>
           </motion.div>
         </div>
       </section>
-
-      {/* ── Footer ──────────────────────────────────────────────────────────── */}
-      <footer
-        className="py-14"
-        style={{ backgroundColor: 'var(--bg-dark-section)', borderTop: '1px solid rgba(255,255,255,0.06)' }}
-      >
-        <div className="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
-          {/* Left */}
-          <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <LogoMark size="sm" glow={false} />
-              <span
-                className="text-base font-semibold text-white"
-                style={{ fontFamily: 'var(--font-ui)' }}
-              >
-                Gradum Group
-              </span>
-            </div>
-            <p className="text-xs text-white/40 leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>
-              Miami, FL (USA)<br />
-              Santo Domingo (Dominican Republic)
-            </p>
-          </div>
-
-          {/* Right */}
-          <div className="flex flex-col items-start sm:items-end gap-3">
-            {/* Language links */}
-            <div className="flex items-center gap-3 text-xs font-medium text-white/40" style={{ fontFamily: 'var(--font-ui)' }}>
-              <button className="hover:text-white transition-colors duration-200">ES</button>
-              <span>|</span>
-              <button className="hover:text-white transition-colors duration-200">EN</button>
-            </div>
-            {/* Social icons */}
-            <div className="flex items-center gap-3">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-                className="text-white/40 hover:text-white transition-colors duration-200">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
-                </svg>
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
-                className="text-white/40 hover:text-white transition-colors duration-200">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="2" />
-                  <path d="M8 11v5M8 8v.5M12 16v-5M12 11a3 3 0 0 1 6 0v5M18 11v5" />
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
-
     </PageTransition>
   );
 }
