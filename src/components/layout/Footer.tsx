@@ -26,9 +26,9 @@ export function Footer() {
                 GROUP
               </span>
             </Link>
-            <p className="text-xs text-[var(--text-secondary)] leading-relaxed max-w-xs">
+            {/* <p className="text-xs text-[var(--text-secondary)] leading-relaxed max-w-xs">
               {t('common.footerTagline')}
-            </p>
+            </p> */}
           </div>
 
           {/* Platform */}
