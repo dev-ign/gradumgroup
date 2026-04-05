@@ -19,7 +19,7 @@ export function Button({ variant = 'primary', size = 'md', children, className =
   const sizes = {
     sm: 'text-xs px-4 py-2 rounded',
     md: 'text-sm px-6 py-3 rounded-sm',
-    lg: 'text-sm px-7 py-3 rounded-sm',
+    lg: 'text-base px-7 py-3 rounded-sm',
   };
 
   // pill variant always uses rounded-full regardless of size

@@ -15,7 +15,7 @@
     --mint:            #A8D5B5;
     --cobalt:          #1B4FD8;
     --font-display:    'Anton', sans-serif;
-    --font-ui:         'Space Grotesk', sans-serif;
+    --font-ui:         'Hanken Grotesk', sans-serif;
     --font-body:       'Satoshi', system-ui, sans-serif;
     /* accent-fg — lime text color adjusted for legibility per theme */
     --accent-fg:       #4A7A28;
@@ -71,6 +71,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-ui);
+    letter-spacing: 0.02em;
   }
 
   a {
