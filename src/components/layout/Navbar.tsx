@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { NavbarWordmark } from '../ui/NavbarWordmark';
@@ -73,91 +73,19 @@ function LanguageSelector() {
   );
 }
 
-// ─── Type definitions ───────────────────────────────────────────────────────
-
-type FlyoutItem = { labelKey: string; to: string };
-
-type DropdownItem =
-  | { labelKey: string; to: string; flyout?: undefined; featured?: false }
-  | { labelKey: string; to?: undefined; flyout: FlyoutItem[]; activePrefix: string; featured?: false }
-  | { labelKey: string; to: string; flyout?: undefined; featured: true };
-
-type NavItem =
-  | { labelKey: string; to: string; dropdown?: undefined; action?: undefined }
-  | { labelKey: string; action: 'modal'; dropdown?: undefined; to?: undefined }
-  | { labelKey: string; dropdown: DropdownItem[]; to?: undefined; action?: undefined };
-
-// ─── Nav structure ──────────────────────────────────────────────────────────
-
-const NAV_LINKS: NavItem[] = [
-  { labelKey: 'nav.home', to: '/' },
-  {
-    labelKey: 'nav.platform',
-    dropdown: [
-      { labelKey: 'common.consulting', to: '/consulting' },
-      { labelKey: 'common.construction', to: '/construction' },
-      {
-        labelKey: 'common.services',
-        activePrefix: '/services',
-        flyout: [
-          { labelKey: 'nav.accountingFinance', to: '/services/accounting-finance' },
-          { labelKey: 'nav.marketingMedia', to: '/services/marketing-media' },
-        ],
-      },
-      { labelKey: 'common.accelerator', to: '/accelerator', featured: true },
-    ],
-  },
-  { labelKey: 'nav.about', to: '/about' },
-  { labelKey: 'nav.contact', action: 'modal' },
-];
-
 // ─── Navbar ──────────────────────────────────────────────────────────────────
 
 export function Navbar() {
   const { openModal } = useModal();
   const { t } = useTranslation();
-  const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [platformOpen, setPlatformOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handler, { passive: true });
     return () => window.removeEventListener('scroll', handler);
   }, []);
-
-  const [prevPathname, setPrevPathname] = useState(location.pathname);
-  if (prevPathname !== location.pathname) {
-    setPrevPathname(location.pathname);
-    setMobileOpen(false);
-    setPlatformOpen(false);
-    setServicesOpen(false);
-  }
-
-  const isPlatformActive =
-    location.pathname.startsWith('/consulting') ||
-    location.pathname.startsWith('/construction') ||
-    location.pathname.startsWith('/services') ||
-    location.pathname.startsWith('/accelerator');
-
-  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-    `text-sm font-medium transition-colors duration-200 ${
-      isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-    }`;
-
-  const dropdownItemClass = (active: boolean) =>
-    `flex items-center w-full px-4 py-2.5 text-sm font-medium transition-colors duration-150 ${
-      active ? 'text-[var(--accent-fg)]' : 'text-[var(--text-primary)] hover:text-[var(--accent-fg)]'
-    }`;
-
-  const panelStyle: React.CSSProperties = {
-    backgroundColor: 'var(--nav-bg)',
-    border: '1px solid var(--border-color)',
-    backdropFilter: 'blur(16px)',
-    fontFamily: 'var(--font-ui)',
-  };
 
   return (
     <header
@@ -178,162 +106,6 @@ export function Navbar() {
           <NavbarWordmark className="h-8 w-auto transition-transform duration-200 group-hover:scale-[1.02] sm:h-9" />
         </Link>
 
-        {/* Desktop Nav */}
-        <ul className="hidden md:flex items-center gap-7">
-          {NAV_LINKS.map((item) => (
-            <li key={item.labelKey} className="relative">
-
-              {item.action === 'modal' ? (
-                <button
-                  onClick={openModal}
-                  className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
-                >
-                  {t(item.labelKey)}
-                </button>
-
-              ) : item.dropdown ? (
-                <div
-                  className="relative"
-                  onMouseEnter={() => setPlatformOpen(true)}
-                  onMouseLeave={() => { setPlatformOpen(false); setServicesOpen(false); }}
-                >
-                  <button
-                    className={`flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 ${
-                      isPlatformActive || platformOpen ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
-                    }`}
-                  >
-                    {t(item.labelKey)}
-                    <svg
-                      width="9" height="5" viewBox="0 0 10 6" fill="currentColor"
-                      className={`transition-transform duration-200 opacity-50 ${platformOpen ? 'rotate-180' : ''}`}
-                    >
-                      <path d="M0 0l5 6 5-6H0z" />
-                    </svg>
-                  </button>
-
-                  <AnimatePresence>
-                    {platformOpen && (
-                      <motion.ul
-                        initial={{ opacity: 0, y: 6 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 6 }}
-                        transition={{ duration: 0.12 }}
-                        className="absolute top-full left-0 mt-2 w-48 py-1.5"
-                        style={panelStyle}
-                      >
-                        {item.dropdown.map((sub) => (
-                          sub.flyout ? (
-                            <li
-                              key={sub.labelKey}
-                              className="relative"
-                              onMouseEnter={() => setServicesOpen(true)}
-                              onMouseLeave={() => setServicesOpen(false)}
-                            >
-                              <div className={dropdownItemClass(location.pathname.startsWith(sub.activePrefix) || servicesOpen)}>
-                                <span className="flex-1">{t(sub.labelKey)}</span>
-                                <svg width="5" height="9" viewBox="0 0 6 10" fill="currentColor" className="opacity-40">
-                                  <path d="M0 0l6 5-6 5V0z" />
-                                </svg>
-                              </div>
-                              <AnimatePresence>
-                                {servicesOpen && (
-                                  <motion.ul
-                                    initial={{ opacity: 0, x: -6 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -6 }}
-                                    transition={{ duration: 0.12 }}
-                                    className="absolute left-full top-0 w-52 py-1.5"
-                                    style={panelStyle}
-                                  >
-                                    {sub.flyout.map((leaf) => (
-                                      <li key={leaf.labelKey}>
-                                        <NavLink
-                                          to={leaf.to}
-                                          onClick={() => { setPlatformOpen(false); setServicesOpen(false); }}
-                                          className={({ isActive }) => dropdownItemClass(isActive)}
-                                        >
-                                          {t(leaf.labelKey)}
-                                        </NavLink>
-                                      </li>
-                                    ))}
-                                    <li>
-                                      <div className="mx-4 my-1" style={{ height: '1px', backgroundColor: 'var(--border-color)' }} />
-                                    </li>
-                                    <li>
-                                      <NavLink
-                                        to="/services"
-                                        end
-                                        onClick={() => { setPlatformOpen(false); setServicesOpen(false); }}
-                                        className={({ isActive }) =>
-                                          `flex items-center gap-1.5 px-4 py-2 text-xs font-medium transition-colors duration-150 ${
-                                            isActive ? 'text-[#AEE37B]' : 'text-[var(--text-secondary)] hover:text-[#AEE37B]'
-                                          }`
-                                        }
-                                      >
-                                        {t('nav.viewAllServices')}
-                                        <svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                          <path d="M2 8L8 2M8 2H4M8 2v4" />
-                                        </svg>
-                                      </NavLink>
-                                    </li>
-                                  </motion.ul>
-                                )}
-                              </AnimatePresence>
-                            </li>
-
-                          ) : sub.featured ? (
-                            <li key={sub.labelKey}>
-                              <div className="mx-4 mb-1" style={{ height: '1px', backgroundColor: 'var(--border-color)' }} />
-                              <NavLink
-                                to={sub.to}
-                                onClick={() => setPlatformOpen(false)}
-                                className={({ isActive }) =>
-                                  `relative flex items-center gap-2.5 w-full px-4 py-2.5 transition-all duration-200 ${
-                                    isActive ? 'bg-[#AEE37B]/10' : 'hover:bg-[#AEE37B]/8'
-                                  }`
-                                }
-                              >
-                                <span className="relative flex-shrink-0 w-2 h-2">
-                                  <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-60" />
-                                  <span className="relative block w-2 h-2 rounded-full bg-[#AEE37B]" />
-                                </span>
-                                <span className="flex-1 text-sm font-medium text-[var(--accent-fg)]">
-                                  {t(sub.labelKey)}
-                                </span>
-                                <span className="text-[9px] font-semibold tracking-[0.12em] uppercase px-1.5 py-0.5 text-[var(--accent-fg)]"
-                                  style={{ border: '1px solid rgba(174,227,123,0.35)', backgroundColor: 'rgba(174,227,123,0.08)' }}
-                                >
-                                  SOON
-                                </span>
-                              </NavLink>
-                            </li>
-
-                          ) : (
-                            <li key={sub.labelKey}>
-                              <NavLink
-                                to={sub.to}
-                                onClick={() => setPlatformOpen(false)}
-                                className={({ isActive }) => dropdownItemClass(isActive)}
-                              >
-                                {t(sub.labelKey)}
-                              </NavLink>
-                            </li>
-                          )
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-              ) : (
-                <NavLink to={item.to!} end={item.to === '/'} className={navLinkClass}>
-                  {t(item.labelKey)}
-                </NavLink>
-              )}
-            </li>
-          ))}
-        </ul>
-
         {/* Right actions */}
         <div className="hidden md:flex items-center gap-5">
           <LanguageSelector />
@@ -343,7 +115,7 @@ export function Navbar() {
             className="text-xs bg-[#AEE37B] hover:bg-[#c8f090] font-semibold px-4 py-2 border border-[var(--border-color)] text-[#0A2924] hover:border-[var(--accent-fg)] transition-all duration-200 tracking-wide rounded-full"
             style={{ fontFamily: 'var(--font-ui)' }}
           >
-            {t('common.scheduleDemo')}
+            {t('common.requestConsultation')}
           </button>
         </div>
 
@@ -388,86 +160,11 @@ export function Navbar() {
           >
             <ul className="px-6 py-4 flex flex-col gap-4">
               <li>
-                <NavLink to="/" end className={navLinkClass} onClick={() => setMobileOpen(false)}>
-                  {t('nav.home')}
-                </NavLink>
-              </li>
-
-              <li>
-                <span className="text-[10px] font-semibold tracking-[0.3em] uppercase text-[var(--text-secondary)]">
-                  {t('nav.platform')}
-                </span>
-                <ul className="mt-2 flex flex-col gap-1">
-                  {[
-                    { labelKey: 'common.consulting', to: '/consulting' },
-                    { labelKey: 'common.construction', to: '/construction' },
-                  ].map(s => (
-                    <li key={s.labelKey}>
-                      <NavLink to={s.to} className={navLinkClass} onClick={() => setMobileOpen(false)}>
-                        {t(s.labelKey)}
-                      </NavLink>
-                    </li>
-                  ))}
-
-                  <li className="pt-1">
-                    <span
-                      className={`text-sm font-medium ${
-                        location.pathname.startsWith('/services') ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'
-                      }`}
-                    >
-                      {t('common.services')}
-                    </span>
-                    <ul className="mt-1.5 pl-3 flex flex-col gap-1 border-l border-[var(--border-color)]">
-                      {[
-                        { labelKey: 'nav.accountingFinance', to: '/services/accounting-finance' },
-                        { labelKey: 'nav.marketingMedia', to: '/services/marketing-media' },
-                      ].map(s => (
-                        <li key={s.labelKey}>
-                          <NavLink to={s.to} className={navLinkClass} onClick={() => setMobileOpen(false)}>
-                            {t(s.labelKey)}
-                          </NavLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-
-                  <li className="pt-1">
-                    <div style={{ height: '1px', backgroundColor: 'var(--border-color)', marginBottom: '6px' }} />
-                    <NavLink
-                      to="/accelerator"
-                      onClick={() => setMobileOpen(false)}
-                      className={({ isActive }) =>
-                        `flex items-center gap-2.5 py-1 transition-colors duration-150 ${
-                          isActive ? 'opacity-100' : 'opacity-90 hover:opacity-100'
-                        }`
-                      }
-                    >
-                      <span className="relative flex-shrink-0 w-2 h-2">
-                        <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-60" />
-                        <span className="relative block w-2 h-2 rounded-full bg-[#AEE37B]" />
-                      </span>
-                      <span className="text-sm font-medium text-[var(--accent-fg)]">{t('common.accelerator')}</span>
-                      <span className="text-[9px] font-semibold tracking-[0.12em] uppercase px-1.5 py-0.5 text-[var(--accent-fg)]"
-                        style={{ border: '1px solid rgba(174,227,123,0.35)', backgroundColor: 'rgba(174,227,123,0.08)' }}
-                      >
-                        SOON
-                      </span>
-                    </NavLink>
-                  </li>
-                </ul>
-              </li>
-
-              <li>
-                <NavLink to="/about" className={navLinkClass} onClick={() => setMobileOpen(false)}>
-                  {t('nav.about')}
-                </NavLink>
-              </li>
-              <li>
                 <button
                   onClick={() => { setMobileOpen(false); openModal(); }}
                   className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
                 >
-                  {t('nav.contact')}
+                  {t('common.requestConsultation')}
                 </button>
               </li>
               <li className="pt-2 border-t border-[var(--border-color)]">
@@ -475,7 +172,7 @@ export function Navbar() {
                   onClick={() => { setMobileOpen(false); openModal(); }}
                   className="w-full text-sm font-semibold py-3 text-[var(--text-primary)] hover:text-[var(--accent-fg)] transition-colors duration-200 text-left"
                 >
-                  {t('common.scheduleDemo')} ›
+                  {t('common.requestConsultation')} ›
                 </button>
               </li>
             </ul>

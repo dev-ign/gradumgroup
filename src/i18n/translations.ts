@@ -25,7 +25,7 @@ export function getByPath(obj: Record<string, unknown>, path: string): unknown {
 
 const en = {
   common: {
-    requestConsultation: 'Request Consultation',
+    requestConsultation: 'Request Consultatoin',
     consultation: 'Consultation',
     clientAccess: 'Client Access',
     privacyPolicy: 'Privacy Policy',

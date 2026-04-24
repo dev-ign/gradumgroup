@@ -1,8 +1,6 @@
 import { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/ui/PageTransition';
-import { LogoMark } from '../components/ui/LogoMark';
 import { useTranslation } from '../i18n/useTranslation';
 import { useModal } from '../context/ModalContext';
 
@@ -254,15 +252,6 @@ export function Home() {
             animate="animate"
             className="flex flex-col items-center"
           >
-            {/* Logo Mark — hero with glow + mouse tracking */}
-            <motion.div
-              variants={fadeUp}
-              transition={{ duration: 0.6 }}
-              className="mb-10"
-            >
-              <LogoMark size="xl" trackMouse />
-            </motion.div>
-
             <motion.h1
               variants={fadeUp}
               transition={{ duration: 0.5 }}
@@ -287,7 +276,7 @@ export function Home() {
                 className="inline-flex items-center justify-center rounded-full bg-[#AEE37B] text-[#0A2924] font-bold text-2xl px-10 py-4 hover:bg-[#c8f090] active:scale-[0.98] transition-all duration-300 shadow-[0_0_30px_rgba(174,227,123,0.3)] hover:shadow-[0_0_50px_rgba(174,227,123,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AEE37B] focus-visible:ring-offset-2 tracking-wide"
                 style={{ fontFamily: 'var(--font-ui)' }}
               >
-                {t('home.hero.cta')}
+                {t('common.requestConsultation')}
               </button>
             </motion.div>
           </motion.div>
@@ -383,11 +372,6 @@ export function Home() {
                       {t(div.taglineKey)}
                     </p>
                   </div>
-                  {!div.featured && (
-                    <span className="text-sm font-medium text-[var(--accent-fg)] mt-6 group-hover:translate-x-1 transition-transform duration-200 inline-block" style={{ fontFamily: 'var(--font-ui)' }}>
-                      {t('common.learnMore')} →
-                    </span>
-                  )}
                   {div.featured && (
                     <span className="text-xs font-medium tracking-widest uppercase text-[#AEE37B]/70 mt-6" style={{ fontFamily: 'var(--font-ui)' }}>
                       {t('common.comingSoon')}
@@ -406,34 +390,11 @@ export function Home() {
                   className="group"
                   style={{ backgroundColor: cardBg }}
                 >
-                  {div.featured ? (
-                    <div>{cardInner}</div>
-                  ) : (
-                    <Link to={div.to} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AEE37B]">
-                      {cardInner}
-                    </Link>
-                  )}
+                  <div>{cardInner}</div>
                 </motion.div>
               );
             })}
           </div>
-
-          {/* Explore Each Platform link */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.3 }}
-            className="mt-8 text-center"
-          >
-            <Link
-              to="/consulting"
-              className="text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200"
-              style={{ fontFamily: 'var(--font-ui)' }}
-            >
-              {t('home.builtForCompanies.exploreLink')} →
-            </Link>
-          </motion.div>
         </div>
       </section>
 
