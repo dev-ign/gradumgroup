@@ -1,522 +1,1059 @@
-import { useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { PageTransition } from '../components/ui/PageTransition';
-import { useTranslation } from '../i18n/useTranslation';
 import { useModal } from '../context/ModalContext';
+import { useTheme } from '../context/ThemeContext';
+import { useTranslation } from '../i18n/useTranslation';
 
-const fadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-};
-
-const stagger = {
-  animate: { transition: { staggerChildren: 0.1 } },
-};
+/* ─── Data ─────────────────────────────────────────────────────────── */
 
 const DIVISIONS = [
   {
-    to: '/consulting',
-    titleKey: 'home.divisions.0.name',
-    taglineKey: 'home.divisions.0.tagline',
-    subtitleKey: 'home.divisions.0.subtitle',
-    dark: false,
-    imgId: '1573164713988-8665fc963095',
+    code: '01',
+    name: 'Gradum Consulting',
+    subtitle: 'Advanced Technology & Engineering Advisory',
+    tagline:
+      'Advisory and technical support for teams building complex, performance-critical systems.',
+    chips: ['Systems Architecture', 'Engineering Strategy', 'Technical Direction'],
+    featured: false,
   },
   {
-    to: '/construction',
-    titleKey: 'home.divisions.1.name',
-    taglineKey: 'home.divisions.1.tagline',
-    subtitleKey: 'home.divisions.1.subtitle',
-    dark: false,
-    imgId: '1486406146926-c627a92ad1ab',
+    code: '02',
+    name: 'Gradum Construction',
+    subtitle: 'Engineering, Architecture & Build',
+    tagline:
+      'End-to-end delivery across architectural design, engineering, and physical execution.',
+    chips: ['Architecture', 'Civil & MEP', 'Build Delivery'],
+    featured: false,
   },
   {
-    to: '/services',
-    titleKey: 'home.divisions.2.name',
-    taglineKey: 'home.divisions.2.tagline',
-    subtitleKey: 'home.divisions.2.subtitle',
-    dark: false,
-    imgId: '1460925895917-afdab827c52f',
+    code: '03',
+    name: 'Gradum Services',
+    subtitle: 'Business Operations & Growth Services',
+    tagline:
+      'Financial operations, accounting, and brand execution services designed to support scalable growth.',
+    chips: ['Finance Ops', 'Accounting', 'Brand & Media'],
+    featured: false,
   },
   {
-    to: '/accelerator',
-    titleKey: 'home.divisions.3.name',
-    taglineKey: 'home.divisions.3.tagline',
-    subtitleKey: 'home.divisions.3.subtitle',
-    dark: true,
+    code: '04',
+    name: 'Gradum Accelerator',
+    subtitle: 'Startup Development & Venture Growth',
+    tagline:
+      'We partner with early-stage companies to build and scale technology-driven ventures.',
+    chips: ['Venture Build', 'Scale Advisory', 'Capital Access'],
     featured: true,
-    imgId: '1677442135703-1787eea5ce01',
   },
 ];
 
-// Brand SVG icons — paths inlined, fill="currentColor" for theme adaptability
-function CardIcon({ index }: { index: number }) {
-  const ICONS: { vb: string; paths: string[] }[] = [
-    // 0 — Consulting
-    { vb: '0 0 440.28 432.01', paths: ['M428.57,253.1h-86.8c-6.47,0-11.71,5.24-11.71,11.71v134.29c0,6.47-5.24,11.71-11.71,11.71h-9.73c-3.12,0-6.11-1.25-8.31-3.46l-7.19-7.25-50.79-50.99c-12.23-12.28-32.12-12.28-44.36,0l-50.78,50.99-7.23,7.26c-2.2,2.21-5.18,3.45-8.3,3.45h-9.7c-6.47,0-11.71-5.24-11.71-11.71v-134.29c0-6.47-5.24-11.71-11.71-11.71H11.72C5.25,253.1,0,258.34,0,264.81v83.37c0,3.21,1.3,6.26,3.61,8.46l75.26,72.11c2.18,2.09,5.09,3.26,8.11,3.26h96.97s72.38,0,72.38,0h97c3.02,0,5.91-1.17,8.11-3.26l75.24-72.11c2.3-2.21,3.6-5.26,3.6-8.45v-83.39c0-6.47-5.24-11.71-11.71-11.71Z', 'M436.68,75.37L361.41,3.26C359.24,1.17,356.32,0,353.3,0h-96.97s-72.38,0-72.38,0h-97c-3.02,0-5.91,1.17-8.11,3.26L3.61,75.37C1.3,77.57,0,80.62,0,83.83v83.38c0,6.47,5.24,11.71,11.71,11.71h86.8c6.47,0,11.71-5.24,11.71-11.71V32.92c0-6.47,5.24-11.71,11.71-11.71h9.74c3.11,0,6.09,1.24,8.28,3.45l7.21,7.26,50.78,50.98c12.23,12.28,32.12,12.28,44.36,0l50.78-50.98,7.23-7.26c2.2-2.21,5.18-3.45,8.3-3.45h9.7c6.47,0,11.71,5.24,11.71,11.71v134.29c0,6.47,5.24,11.71,11.71,11.71h86.82c6.47,0,11.71-5.24,11.71-11.71v-83.38c0-3.21-1.3-6.25-3.6-8.45Z'] },
-    // 1 — Construction
-    { vb: '0 0 595.3 341.98', paths: ['M9.91,151.01h73.25c5.47,0,9.91-4.44,9.91-9.91V27.75c0-5.39,4.36-9.83,9.83-9.83h8.24c2.62,0,5.15,1.03,6.98,2.85l119.78,120.34,6.98,6.98c1.9,1.82,4.36,2.93,6.98,2.93h69.12c5.47,0,9.91-4.44,9.91-9.91V27.75c0-5.39,4.44-9.83,9.91-9.83h8.17c2.62,0,5.15,1.03,6.98,2.85l126.84,127.31c1.82,1.82,4.36,2.93,6.98,2.93h95.6c8.88,0,13.24-10.7,7.06-16.89L461.13,2.93c-1.82-1.9-4.36-2.93-6.98-2.93h-142.93c-2.54,0-5,.95-6.82,2.77l-41.54,39.72h0S223.31,2.93,223.31,2.93c-1.82-1.9-4.36-2.93-6.98-2.93H73.41c-2.54,0-5,.95-6.82,2.77L3.09,63.58c-1.98,1.9-3.09,4.44-3.09,7.13v70.39c0,5.47,4.44,9.91,9.91,9.91Z', 'M585.35,190.97h-95.6c-2.62,0-5.15,1.03-6.98,2.93l-126.84,127.23c-1.82,1.9-4.36,2.93-6.98,2.93h-8.17c-5.47,0-9.91-4.44-9.91-9.91v-113.28c0-5.47-4.44-9.91-9.91-9.91h-69.12c-2.62,0-5.07,1.03-6.98,2.93l-6.98,6.98-119.78,120.26c-1.82,1.9-4.36,2.93-6.98,2.93h-8.24c-5.47,0-9.83-4.44-9.83-9.91v-113.28c0-5.47-4.44-9.91-9.91-9.91H9.91c-5.47,0-9.91,4.44-9.91,9.91v70.32c0,2.7,1.11,5.31,3.09,7.13l63.5,60.88c1.82,1.74,4.28,2.77,6.82,2.77h142.93c2.62,0,5.15-1.03,6.98-2.93l39.64-39.64h0l41.46,39.8c1.82,1.74,4.28,2.77,6.82,2.77h142.93c2.62,0,5.15-1.03,6.98-2.93l131.28-131.2c6.19-6.26,1.82-16.89-7.06-16.89Z'] },
-    // 2 — Services
-    { vb: '0 0 416.12 398.11', paths: ['M404.58,175.78h-111.34c-3.06,0-6-1.22-8.16-3.39L137.5,24.22c-2.16-2.17-5.1-3.39-8.16-3.39h-9.53c-6.36,0-11.51,5.15-11.51,11.51v131.93c0,6.36-5.15,11.51-11.51,11.51H11.51c-6.36,0-11.51-5.15-11.51-11.51v-81.91c0-3.14,1.28-6.14,3.55-8.31L77.47,3.2c2.14-2.05,5-3.2,7.97-3.2h166.39c3.05,0,5.98,1.21,8.14,3.37l152.76,152.76c7.25,7.25,2.12,19.65-8.14,19.65Z', 'M11.54,222.33h111.34c3.06,0,6,1.22,8.16,3.39l147.58,148.18c2.16,2.17,5.1,3.39,8.16,3.39h9.53c6.36,0,11.51-5.15,11.51-11.51v-131.93c0-6.36,5.15-11.51,11.51-11.51h85.28c6.36,0,11.51,5.15,11.51,11.51v81.91c0,3.14-1.28,6.14-3.55,8.31l-73.92,70.85c-2.14,2.05-5,3.2-7.97,3.2h-166.39c-3.05,0-5.98-1.21-8.14-3.37L3.39,241.98c-7.25-7.25-2.12-19.65,8.14-19.65Z'] },
-    // 3 — Accelerator
-    { vb: '0 0 362.16 538.34', paths: ['M163.91,10.76v103.83c0,2.85-1.14,5.59-3.16,7.61L22.58,259.8c-2.02,2.01-3.16,4.75-3.16,7.61v8.89c0,5.93,4.81,10.73,10.73,10.73h123.02c5.93,0,10.73,4.81,10.73,10.73v79.52c0,5.93-4.81,10.73-10.73,10.73h-76.38c-2.93,0-5.73-1.19-7.75-3.31L2.98,315.78c-1.92-2-2.98-4.66-2.98-7.43v-155.15c0-2.85,1.13-5.58,3.14-7.59L145.59,3.17c6.76-6.76,18.33-1.97,18.33,7.59Z', 'M198.24,527.58v-103.83c0-2.85,1.14-5.59,3.16-7.61l138.17-137.62c2.02-2.01,3.16-4.75,3.16-7.61v-8.89c0-5.93-4.81-10.73-10.73-10.73h-123.02c-5.93,0-10.73-4.81-10.73-10.73v-79.52c0-5.93,4.81-10.73,10.73-10.73h76.38c2.93,0,5.73,1.19,7.75,3.31l66.06,68.93c1.92,2,2.98,4.66,2.98,7.43v155.15c0,2.85-1.13,5.58-3.14,7.59l-142.44,142.44c-6.76,6.76-18.33,1.97-18.33-7.59Z'] },
-  ];
-  const icon = ICONS[index];
-  if (!icon) return null;
+const CAPABILITIES = [
+  { code: 'A.01', label: 'AI & Machine Learning' },
+  { code: 'A.02', label: 'IoT & Smart Systems' },
+  { code: 'A.03', label: 'Robotics & Automation' },
+  { code: 'A.04', label: 'Data Analytics & Visualization' },
+  { code: 'M.01', label: 'Systems Engineering' },
+  { code: 'M.02', label: 'Model-Based Design' },
+  { code: 'M.03', label: 'Lean Process Engineering' },
+  { code: 'M.04', label: 'Agile & Iterative Delivery' },
+  { code: 'I.01', label: 'Energy & Infrastructure' },
+  { code: 'I.02', label: 'Healthcare Technology' },
+  { code: 'I.03', label: 'Defense & Aerospace' },
+  { code: 'I.04', label: 'Manufacturing & Supply Chain' },
+];
+
+const STEPS = [
+  { num: '01', title: 'Assessment', desc: 'Clarifying objectives and operational constraints across stakeholders.' },
+  { num: '02', title: 'Scope Alignment', desc: 'Defining deliverables, milestones, and lines of accountability.' },
+  { num: '03', title: 'Structured Execution', desc: 'Delivering against measurable targets, on cadence.' },
+  { num: '04', title: 'Ongoing Advisory', desc: 'Sustaining performance through disciplined oversight.' },
+];
+
+/* ─── Style constants ───────────────────────────────────────────────── */
+
+const fDisplay = "'Space Grotesk', system-ui, sans-serif";
+const fBody    = "'Inter', system-ui, sans-serif";
+const fMono    = 'var(--font-mono)';
+
+/* ─── Scroll reveal ────────────────────────────────────────────────── */
+
+function ScrollReveal({
+  children,
+  style,
+  ...props
+}: React.ComponentProps<typeof motion.div>) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start 92%', 'end 8%'],
+  });
+  const opacity = useTransform(scrollYProgress, [0, 0.18, 0.82, 1], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.18, 0.82, 1], [18, 0, 0, -10]);
+
   return (
-    <svg height={22} viewBox={icon.vb} fill="currentColor" aria-hidden="true" style={{ width: 'auto', flexShrink: 0 }}>
-      {icon.paths.map((d, pi) => <path key={pi} d={d} />)}
+    <motion.div
+      ref={ref}
+      style={{ ...style, opacity, y }}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+const glassPanel: React.CSSProperties = {
+  background: 'rgba(13, 19, 51, 0.55)',
+  backdropFilter: 'blur(20px) saturate(140%)',
+  WebkitBackdropFilter: 'blur(20px) saturate(140%)',
+  borderRadius: 14,
+  boxShadow: 'inset 0 0 0 1px rgba(199, 211, 234, 0.10), 0 24px 60px -20px rgba(0,0,0,0.55)',
+};
+
+/* ─── Shared atoms ──────────────────────────────────────────────────── */
+
+function GradumMark({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 22 22" fill="none" aria-hidden="true">
+      <rect x="3" y="3" width="16" height="16" rx="3"
+        transform="rotate(45 11 11)" stroke="currentColor" strokeWidth="1.4" />
+      <rect x="7.5" y="7.5" width="7" height="7" rx="1.5"
+        transform="rotate(45 11 11)" fill="currentColor" />
     </svg>
   );
 }
 
-// Full-coverage 5-column mosaic — widths/heights tile exactly, +1px prevents sub-pixel gaps
-// Col 1: 0–20%  |  Col 2: 20–40%  |  Col 3: 40–60%  |  Col 4: 60–80%  |  Col 5: 80–100%
-const COLLAGE_IMAGES = [
-  // ── Column 1 (left 20%) ─────────────────────────────────────────
-  { id: '1518770660439-4636190af475', left: '0%',  top: '0%',  w: 'calc(20% + 1px)', h: 'calc(35% + 1px)' }, // circuit / tech
-  { id: '1581091226825-a6a2a5aee158', left: '0%',  top: '35%', w: 'calc(20% + 1px)', h: 'calc(35% + 1px)' }, // engineer
-  { id: '1519389950473-47ba0277781c', left: '0%',  top: '70%', w: 'calc(20% + 1px)', h: 'calc(30% + 1px)' }, // developer working
+function SectionHeader({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle?: string }) {
+  return (
+    <ScrollReveal
+      style={{ maxWidth: 720, marginInline: 'auto', textAlign: 'center' }}
+    >
+      <span className="gd-eyebrow">{eyebrow}</span>
+      <h2 style={{
+        fontFamily: fDisplay, fontWeight: 500, letterSpacing: '-0.015em', lineHeight: 1.1,
+        color: 'var(--gd-fg)', marginTop: 14, fontSize: 'clamp(32px, 4.4vw, 56px)',
+      }}>{title}</h2>
+      {subtitle && (
+        <p style={{
+          fontFamily: fBody, color: 'var(--gd-fg-3)', lineHeight: 1.55,
+          marginTop: 18, fontSize: 18, maxWidth: 620, marginInline: 'auto',
+        }}>{subtitle}</p>
+      )}
+    </ScrollReveal>
+  );
+}
 
-  // ── Column 2 (20–40%) ───────────────────────────────────────────
-  { id: '1677442135703-1787eea5ce01', left: '20%', top: '0%',  w: 'calc(20% + 1px)', h: 'calc(42% + 1px)' }, // AI visualization
-  { id: '1503387762-592deb58ef4e',   left: '20%',  top: '42%', w: 'calc(20% + 1px)', h: 'calc(33% + 1px)' }, // construction / arch
-  { id: '1460925895917-afdab827c52f', left: '20%', top: '75%', w: 'calc(20% + 1px)', h: 'calc(25% + 1px)' }, // laptop typing
+/* ─── Collage sub-cards ─────────────────────────────────────────────── */
 
-  // ── Column 3 (40–60%) ───────────────────────────────────────────
-  { id: '1461749280684-dccba630e2f6', left: '40%', top: '0%',  w: 'calc(20% + 1px)', h: 'calc(38% + 1px)' }, // code / dev
-  { id: '1552664730-d307ca884978',   left: '40%',  top: '38%', w: 'calc(20% + 1px)', h: 'calc(32% + 1px)' }, // consulting / strategy
-  { id: '1486312338219-ce68d2c6f44d',left: '40%',  top: '70%', w: 'calc(20% + 1px)', h: 'calc(30% + 1px)' }, // laptop workspace
+function ConstructionDashboard() {
+  const bars = [40, 62, 78, 55, 88, 70, 92];
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+        {['#FF5F57', '#FEBC2E', '#28C840'].map((c) => (
+          <span key={c} style={{ width: 9, height: 9, borderRadius: 999, background: c, opacity: 0.55 }} />
+        ))}
+        <div style={{ flex: 1, marginLeft: 8, fontFamily: fMono, fontSize: 10, color: 'var(--gd-fg-4)' }}>
+          gradum / projects / GR-204
+        </div>
+      </div>
 
-  // ── Column 4 (60–80%) ───────────────────────────────────────────
-  { id: '1573164713988-8665fc963095', left: '60%', top: '0%',  w: 'calc(20% + 1px)', h: 'calc(45% + 1px)' }, // business meeting
-  { id: '1558618666-fcd25c85cd64',   left: '60%',  top: '45%', w: 'calc(20% + 1px)', h: 'calc(30% + 1px)' }, // server / infra
-  { id: '1486406146926-c627a92ad1ab',left: '60%',  top: '75%', w: 'calc(20% + 1px)', h: 'calc(25% + 1px)' }, // modern architecture
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+        <div>
+          <div style={{ fontFamily: fMono, fontSize: 10, color: 'var(--gd-fg-4)', letterSpacing: '0.06em' }}>Tower B · Site Progress</div>
+          <div style={{ fontFamily: fDisplay, fontSize: 26, color: 'var(--gd-fg)', marginTop: 6, fontWeight: 500 }}>
+            72<span style={{ color: 'var(--gd-fg-3)', fontSize: 18 }}>%</span>
+          </div>
+        </div>
+        <span style={{
+          padding: '4px 10px', borderRadius: 999, fontSize: 10,
+          color: 'var(--gd-fg-2)', fontFamily: fBody,
+          background: 'rgba(174,227,123,0.10)',
+          boxShadow: 'inset 0 0 0 1px rgba(174,227,123,0.25)',
+          display: 'inline-flex', alignItems: 'center', gap: 6,
+        }}>
+          <span style={{ width: 5, height: 5, borderRadius: 999, background: 'var(--gd-accent)', boxShadow: '0 0 8px var(--gd-accent-glow)' }} />
+          On schedule
+        </span>
+      </div>
 
-  // ── Column 5 (80–100%) ──────────────────────────────────────────
-  { id: '1551288049-bebda4e38f71',   left: '80%',  top: '0%',  w: 'calc(20% + 1px)', h: 'calc(38% + 1px)' }, // data analytics
-  { id: '1507003211169-0a1dd7228f2d', left: '80%', top: '38%', w: 'calc(20% + 1px)', h: 'calc(35% + 1px)' }, // programmer
-  { id: '1522071820081-009f0129c71c', left: '80%', top: '73%', w: 'calc(20% + 1px)', h: 'calc(27% + 1px)' }, // office space
-] as const;
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 10 }}>
+        {[['$4.2M', 'Budget'], ['18d', 'To MS-04'], ['142', 'Crew']].map(([v, k]) => (
+          <div key={k} style={{ padding: '10px 12px', borderRadius: 8, boxShadow: 'inset 0 0 0 1px rgba(199,211,234,0.08)' }}>
+            <div style={{ fontFamily: fDisplay, fontSize: 16, color: 'var(--gd-fg)', fontWeight: 500 }}>{v}</div>
+            <div style={{ fontFamily: fMono, fontSize: 9, color: 'var(--gd-fg-4)', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 2 }}>{k}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <span style={{ fontFamily: fBody, fontSize: 10, color: 'var(--gd-fg-3)' }}>Weekly Output</span>
+          <span style={{ fontFamily: fMono, fontSize: 9, color: 'var(--gd-fg-4)' }}>m³ · 7d</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, height: 64 }}>
+          {bars.map((h, i) => (
+            <div key={i} style={{
+              flex: 1, height: `${h}%`,
+              background: i === 4 ? 'var(--gd-accent)' : 'rgba(199,211,234,0.16)',
+              borderRadius: 3,
+              boxShadow: i === 4 ? '0 0 12px var(--gd-accent-glow)' : 'none',
+            }} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BrandStyleCard() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+      <div style={{ fontFamily: fMono, fontSize: 10, color: 'var(--gd-fg-4)', letterSpacing: '0.06em' }}>Brand · Style</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: 6 }}>
+        {['#0D1333', '#1B4FD8', '#0A2924', '#80ADAC', '#B3E4C6', '#AEE37B'].map((c) => (
+          <div key={c} style={{ aspectRatio: '1/1', borderRadius: 6, background: c, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }} />
+        ))}
+      </div>
+      <div style={{ padding: '12px 14px', borderRadius: 8, boxShadow: 'inset 0 0 0 1px rgba(199,211,234,0.08)' }}>
+        <div style={{ fontFamily: fDisplay, fontSize: 28, color: 'var(--gd-fg)', fontWeight: 500, lineHeight: 1 }}>Aa</div>
+        <div style={{ fontFamily: fMono, fontSize: 9, color: 'var(--gd-fg-4)', marginTop: 6 }}>Space Grotesk</div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6 }}>
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} style={{
+            aspectRatio: '1/1', borderRadius: 6,
+            background: i === 1 ? 'rgba(174,227,123,0.10)' : 'transparent',
+            boxShadow: i === 1 ? 'inset 0 0 0 1px rgba(174,227,123,0.45)' : 'inset 0 0 0 1px rgba(199,211,234,0.08)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: i === 1 ? 'var(--gd-accent)' : 'var(--gd-fg-3)',
+          }}>
+            <GradumMark size={14} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function AuthPanel() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{
+          width: 24, height: 24, borderRadius: 6,
+          background: 'rgba(174,227,123,0.12)',
+          boxShadow: 'inset 0 0 0 1px rgba(174,227,123,0.35)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: 'var(--gd-accent)',
+        }}>
+          <GradumMark size={12} />
+        </div>
+        <div style={{ fontFamily: fBody, fontSize: 11, color: 'var(--gd-fg-2)', fontWeight: 500 }}>Sign in to Gradum</div>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{
+          height: 30, borderRadius: 6,
+          boxShadow: 'inset 0 0 0 1px rgba(199,211,234,0.10)',
+          display: 'flex', alignItems: 'center', padding: '0 10px',
+          fontFamily: fBody, fontSize: 10, color: 'var(--gd-fg-4)',
+        }}>you@company.com</div>
+        <div style={{
+          height: 30, borderRadius: 6,
+          background: 'var(--gd-accent)', color: 'var(--gd-accent-fg)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: fBody, fontSize: 11, fontWeight: 600,
+          boxShadow: '0 0 18px var(--gd-accent-glow)',
+        }}>Continue</div>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span style={{ flex: 1, height: 1, background: 'rgba(199,211,234,0.10)' }} />
+        <span style={{ fontFamily: fMono, fontSize: 9, color: 'var(--gd-fg-4)' }}>OR</span>
+        <span style={{ flex: 1, height: 1, background: 'rgba(199,211,234,0.10)' }} />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {['Continue with SSO', 'Continue with SAML'].map((p) => (
+          <div key={p} style={{
+            height: 28, borderRadius: 999,
+            boxShadow: 'inset 0 0 0 1px rgba(199,211,234,0.10)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontFamily: fBody, fontSize: 10, color: 'var(--gd-fg-2)',
+          }}>{p}</div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CodeLine({ n, children }: { n: number; children: React.ReactNode }) {
+  return (
+    <div style={{ display: 'flex', gap: 12 }}>
+      <span style={{ fontFamily: fMono, color: 'var(--gd-fg-4)', width: 12, textAlign: 'right' }}>{n}</span>
+      <span>{children}</span>
+    </div>
+  );
+}
+
+function CodeSnippet() {
+  return (
+    <div style={{ fontFamily: fMono, fontSize: 10.5, lineHeight: 1.7, color: 'var(--gd-fg-3)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+        <span style={{ width: 7, height: 7, borderRadius: 999, background: 'var(--gd-accent)', boxShadow: '0 0 8px var(--gd-accent-glow)' }} />
+        <span style={{ fontSize: 10, color: 'var(--gd-fg-4)' }}>auth.ts</span>
+      </div>
+      <CodeLine n={1}><span style={{ color: 'var(--gd-accent)' }}>const</span>{' '}<span style={{ color: 'var(--gd-fg-2)' }}>session</span>{' = '}<span style={{ color: '#80ADAC' }}>await</span></CodeLine>
+      <CodeLine n={2}>{'  '}gradum.<span style={{ color: '#B3E4C6' }}>verify</span>{'({'}</CodeLine>
+      <CodeLine n={3}>{'    '}scope: <span style={{ color: 'var(--gd-accent)' }}>'admin'</span>,</CodeLine>
+      <CodeLine n={4}>{'    '}mfa: <span style={{ color: 'var(--gd-accent)' }}>true</span>,</CodeLine>
+      <CodeLine n={5}>{'  '}{'}'});</CodeLine>
+      <div style={{ marginTop: 10, fontSize: 9, color: 'var(--gd-fg-4)', display: 'flex', alignItems: 'center', gap: 6 }}>
+        <span style={{ color: 'var(--gd-accent)' }}>✓</span> verified · 12ms
+      </div>
+    </div>
+  );
+}
+
+function TokensChip() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ fontFamily: fMono, fontSize: 10, color: 'var(--gd-fg-4)', letterSpacing: '0.06em' }}>Tokens</div>
+      {[['Primary', 'var(--gd-accent)'], ['Surface', '#1B4FD8'], ['Accent', '#80ADAC']].map(([n, c]) => (
+        <div key={n} style={{
+          display: 'flex', alignItems: 'center', gap: 10,
+          padding: '6px 8px', borderRadius: 6,
+          boxShadow: 'inset 0 0 0 1px rgba(199,211,234,0.08)',
+        }}>
+          <span style={{ width: 14, height: 14, borderRadius: 4, background: c, boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.06)' }} />
+          <span style={{ fontFamily: fBody, fontSize: 10, color: 'var(--gd-fg-2)', flex: 1 }}>{n}</span>
+          <span style={{ fontFamily: fMono, fontSize: 9, color: 'var(--gd-fg-4)' }}>—</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ─── Sections ──────────────────────────────────────────────────────── */
+
+function Hero() {
+  return (
+    <section style={{ position: 'relative', padding: '100px 0 32px', overflow: 'hidden' }}>
+      <div style={{
+        position: 'absolute', inset: 0, pointerEvents: 'none',
+        background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(174,227,123,0.10) 0%, transparent 60%)',
+      }} />
+      <div className="gd-grid-bg" style={{
+        position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.6,
+        maskImage: 'radial-gradient(ellipse 70% 70% at 50% 30%, black 0%, transparent 70%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 70% 70% at 50% 30%, black 0%, transparent 70%)',
+      }} />
+
+      <div style={{ maxWidth: 1280, minWidth: 'min(1100px, calc(100vw - 48px))', marginInline: 'auto', padding: '0 32px', position: 'relative', textAlign: 'center' }}>
+        <ScrollReveal>
+          <h1
+            className="gd-sweep-text"
+            style={{
+              fontFamily: fDisplay, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.08,
+              color: 'var(--gd-fg)', fontSize: 'clamp(28px, 4vw, 60px)',
+              maxWidth: 880, margin: '0 auto',
+            }}
+          >
+            Structured Advisory.<br />
+            Engineered Execution{' '}
+            <span style={{ fontStyle: 'normal', fontWeight: 700 }}>
+              Platform
+            </span>
+          </h1>
+        </ScrollReveal>
+
+        <ScrollReveal
+          style={{
+            fontFamily: fBody, marginTop: 28, fontSize: 18,
+            maxWidth: 620, marginInline: 'auto', color: 'var(--gd-fg-3)', lineHeight: 1.55,
+          }}
+        >
+          <p style={{ margin: 0 }}>
+            Gradum helps organizations design, build, and scale solutions across business operations,
+            technology, and infrastructure — engineered for performance-critical environments.
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal
+          style={{ marginTop: 40, display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}
+        >
+          <a href="#contact" className="gd-btn gd-btn-primary">Request Consultation →</a>
+          <a href="#platform" className="gd-btn gd-btn-ghost">Explore Platform</a>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+function DashboardCollage() {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ['6%', '-6%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.08, 0.82, 1], [0, 1, 1, 0]);
+
+  return (
+    <motion.section ref={ref} style={{ position: 'relative', marginTop: -20 }}>
+      <motion.div style={{
+        y, opacity,
+        maxWidth: 1280, minWidth: 'min(1100px, calc(100vw - 48px))',
+        marginInline: 'auto', padding: '0 32px', position: 'relative',
+      }}>
+        <div style={{
+          position: 'relative', height: 400, marginTop: 31,
+          maskImage: 'linear-gradient(to bottom, black 0%, black 55%, transparent 92%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 55%, transparent 92%)',
+        }}>
+          {/* Center: Construction dashboard */}
+          <div className="gd-collage-card" style={{
+            position: 'absolute', left: '50%', top: 30,
+            ['--tx' as string]: '-50%', ['--rot' as string]: '0deg',
+            ['--fan-x' as string]: '0px', ['--fan-y' as string]: '0px',
+            ['--fan-start-rot' as string]: '0deg',
+            animationDelay: '120ms', width: 'min(560px, 56%)', zIndex: 3,
+            ...glassPanel, padding: 20,
+          }}>
+            <ConstructionDashboard />
+          </div>
+
+          {/* Left-back: Brand / style */}
+          <div className="gd-collage-card" style={{
+            position: 'absolute', left: '6%', top: 80,
+            ['--rot' as string]: '-1.2deg', ['--fan-x' as string]: '180px',
+            ['--fan-y' as string]: '-20px', ['--fan-start-rot' as string]: '14deg',
+            animationDelay: '380ms', width: 'min(300px, 30%)', zIndex: 2,
+            ...glassPanel, padding: 16,
+          }}>
+            <BrandStyleCard />
+          </div>
+
+          {/* Right-back: Auth panel */}
+          <div className="gd-collage-card" style={{
+            position: 'absolute', right: '6%', top: 60,
+            ['--rot' as string]: '1.4deg', ['--fan-x' as string]: '-180px',
+            ['--fan-y' as string]: '-20px', ['--fan-start-rot' as string]: '-14deg',
+            animationDelay: '380ms', width: 'min(260px, 26%)', zIndex: 2,
+            ...glassPanel, padding: 16,
+          }}>
+            <AuthPanel />
+          </div>
+
+          {/* Foreground-left: Code snippet */}
+          <div className="gd-collage-card" style={{
+            position: 'absolute', left: '14%', top: 230,
+            ['--rot' as string]: '-0.6deg', ['--fan-x' as string]: '120px',
+            ['--fan-y' as string]: '-40px', ['--fan-start-rot' as string]: '8deg',
+            animationDelay: '560ms', width: 'min(280px, 28%)', zIndex: 4,
+            ...glassPanel, padding: 14,
+          }}>
+            <CodeSnippet />
+          </div>
+
+          {/* Foreground-right: Tokens */}
+          <div className="gd-collage-card" style={{
+            position: 'absolute', right: '12%', top: 250,
+            ['--rot' as string]: '1deg', ['--fan-x' as string]: '-120px',
+            ['--fan-y' as string]: '-40px', ['--fan-start-rot' as string]: '-8deg',
+            animationDelay: '560ms', width: 'min(220px, 22%)', zIndex: 4,
+            ...glassPanel, padding: 14,
+          }}>
+            <TokensChip />
+          </div>
+        </div>
+      </motion.div>
+    </motion.section>
+  );
+}
+
+function DivisionGlyph({ index }: { index: number }) {
+  return (
+    <span style={{ color: 'var(--gd-fg)', display: 'inline-flex' }}>
+      <svg width={22} height={22} viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.4">
+        {index === 0 && <>
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="12" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="12" width="7" height="7" rx="1" />
+          <rect x="12" y="12" width="7" height="7" rx="1" fill="currentColor" stroke="none" />
+        </>}
+        {index === 1 && <>
+          <path d="M3 18 L11 5 L19 18 Z" />
+          <line x1="3" y1="18" x2="19" y2="18" />
+        </>}
+        {index === 2 && <>
+          <circle cx="11" cy="11" r="8" />
+          <circle cx="11" cy="11" r="3" fill="currentColor" stroke="none" />
+        </>}
+        {index === 3 && <>
+          <path d="M11 3 L19 11 L11 19 L3 11 Z" />
+          <path d="M11 7 L15 11 L11 15 L7 11 Z" fill="currentColor" stroke="none" />
+        </>}
+      </svg>
+    </span>
+  );
+}
+
+function Platform() {
+  const [hovered, setHovered] = useState<number | null>(null);
+  return (
+    <section id="platform" className="gd-section">
+      <div style={{ maxWidth: 1280, minWidth: 'min(1100px, calc(100vw - 48px))', marginInline: 'auto', padding: '0 32px' }}>
+        <SectionHeader
+          eyebrow="// 01 — Platform"
+          title="One platform. Four capabilities."
+          subtitle="Platform divisions operate under defined mandate frameworks and integrate within a unified advisory and execution architecture."
+        />
+        <div
+          style={{ marginTop: 64, display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}
+        >
+          {DIVISIONS.map((d, i) => (
+            <ScrollReveal key={d.code}>
+              <motion.div
+                onHoverStart={() => setHovered(i)}
+                onHoverEnd={() => setHovered(null)}
+                className="gd-glass"
+                style={{
+                  position: 'relative', padding: 32,
+                  display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+                  minHeight: 280,
+                  background: d.featured
+                    ? 'linear-gradient(135deg, rgba(174,227,123,0.07), rgba(186,214,247,0.025))'
+                    : undefined,
+                  transform: hovered === i ? 'translateY(-2px)' : 'translateY(0)',
+                  transition: 'transform .35s ease',
+                  overflow: 'hidden',
+                }}
+              >
+                <span aria-hidden="true" style={{
+                  position: 'absolute', right: 24, top: 18,
+                  fontFamily: fMono, fontSize: 12, color: 'var(--gd-fg-4)', letterSpacing: '0.08em',
+                }}>{d.code}</span>
+
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+                    <DivisionGlyph index={i} />
+                    {d.featured && (
+                      <span className="gd-chip" style={{ padding: '4px 10px', fontSize: 11 }}>
+                        <span className="gd-live-dot" />
+                        Coming soon
+                      </span>
+                    )}
+                  </div>
+                  <h3 style={{ fontFamily: fDisplay, fontWeight: 500, fontSize: 26, letterSpacing: '-0.015em', lineHeight: 1.1, color: 'var(--gd-fg)' }}>
+                    {d.name}
+                  </h3>
+                  <div className="gd-eyebrow" style={{ marginTop: 6 }}>{d.subtitle}</div>
+                  <p style={{ fontFamily: fBody, color: 'var(--gd-fg-3)', lineHeight: 1.55, marginTop: 16, fontSize: 15, maxWidth: 480 }}>
+                    {d.tagline}
+                  </p>
+                </div>
+
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 28 }}>
+                  {d.chips.map((c) => (
+                    <span key={c} className="gd-chip" style={{ padding: '4px 10px', fontSize: 11 }}>{c}</span>
+                  ))}
+                </div>
+              </motion.div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Capabilities() {
+  const groups = [
+    { code: 'A', label: 'Applications', items: CAPABILITIES.filter((c) => c.code.startsWith('A')) },
+    { code: 'M', label: 'Methodologies', items: CAPABILITIES.filter((c) => c.code.startsWith('M')) },
+    { code: 'I', label: 'Industries', items: CAPABILITIES.filter((c) => c.code.startsWith('I')) },
+  ];
+  return (
+    <section className="gd-section">
+      <div style={{ maxWidth: 1280, minWidth: 'min(1100px, calc(100vw - 48px))', marginInline: 'auto', padding: '0 32px' }}>
+        <SectionHeader
+          eyebrow="// 02 — Capabilities"
+          title="Built for teams operating at scale."
+          subtitle="We operate across advanced engineering domains, proven technical frameworks, and complex industry environments."
+        />
+        <div
+          style={{ marginTop: 64, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}
+        >
+          {groups.map((g) => (
+            <ScrollReveal key={g.code} className="gd-glass" style={{ padding: 28 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+                <span style={{ fontFamily: fDisplay, fontSize: 22, color: 'var(--gd-fg)', fontWeight: 500 }}>{g.label}</span>
+                <span className="gd-eyebrow">{g.code}.0×</span>
+              </div>
+              <hr className="gd-rule" style={{ marginBlock: 18, border: 0 }} />
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {g.items.map((it) => (
+                  <li key={it.code} style={{
+                    display: 'grid', gridTemplateColumns: '52px 1fr auto', alignItems: 'center', gap: 12,
+                    padding: '10px 0', borderBottom: '1px dashed var(--gd-hairline)',
+                  }}>
+                    <span style={{ fontFamily: fMono, fontSize: 11, color: 'var(--gd-fg-4)' }}>{it.code}</span>
+                    <span style={{ fontFamily: fBody, fontSize: 14, color: 'var(--gd-fg-2)' }}>{it.label}</span>
+                    <span style={{ width: 6, height: 6, borderRadius: 999, background: 'var(--gd-accent)', boxShadow: '0 0 8px var(--gd-accent-glow)' }} />
+                  </li>
+                ))}
+              </ul>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function BlueprintGraphic() {
+  return (
+    <svg width="100%" height="100%" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet"
+      style={{ position: 'absolute', inset: 0 }}>
+      <defs>
+        <linearGradient id="bp-arc-fade" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0" />
+          <stop offset="100%" stopColor="#FFFFFF" stopOpacity="0.6" />
+        </linearGradient>
+        <radialGradient id="bp-node-glow">
+          <stop offset="0%" stopColor="#AEE37B" stopOpacity="1" />
+          <stop offset="100%" stopColor="#AEE37B" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      {[80, 140, 210, 290, 380].map((r) => (
+        <circle key={r} cx="500" cy="300" r={r} fill="none" stroke="url(#bp-arc-fade)" strokeWidth="1" />
+      ))}
+      {Array.from({ length: 12 }).map((_, i) => {
+        const a = (i / 12) * Math.PI * 2;
+        return (
+          <line key={i}
+            x1={500 + Math.cos(a) * 60} y1={300 + Math.sin(a) * 60}
+            x2={500 + Math.cos(a) * 380} y2={300 + Math.sin(a) * 380}
+            stroke="rgba(216,220,236,0.06)" strokeWidth="1" />
+        );
+      })}
+      {[[500, 300], [420, 220], [580, 360], [460, 400], [560, 180]].map((p, i) => (
+        <g key={i}>
+          <circle cx={p[0]} cy={p[1]} r="14" fill="url(#bp-node-glow)" />
+          <circle cx={p[0]} cy={p[1]} r="3" fill="#AEE37B" />
+        </g>
+      ))}
+      <circle cx="500" cy="300" r="20" fill="none" stroke="rgba(216,220,236,0.3)" strokeWidth="1" />
+      <line x1="470" y1="300" x2="530" y2="300" stroke="rgba(216,220,236,0.3)" strokeWidth="1" />
+      <line x1="500" y1="270" x2="500" y2="330" stroke="rgba(216,220,236,0.3)" strokeWidth="1" />
+    </svg>
+  );
+}
+
+function Precision() {
+  return (
+    <section className="gd-section" style={{ position: 'relative' }}>
+      <div style={{ maxWidth: 1280, minWidth: 'min(1100px, calc(100vw - 48px))', marginInline: 'auto', padding: '0 32px' }}>
+        <ScrollReveal
+          className="gd-glass-solid"
+          style={{
+            position: 'relative',
+            padding: 'clamp(40px, 5vw, 72px)',
+            overflow: 'hidden',
+            background: `
+              radial-gradient(ellipse 50% 60% at 90% 50%, rgba(174,227,123,0.08), transparent 70%),
+              linear-gradient(135deg, #0F1738 0%, #0B102B 100%)
+            `,
+          }}
+        >
+          <div aria-hidden="true" style={{
+            position: 'absolute', top: 0, right: 0, bottom: 0, width: '46%',
+            opacity: 0.55, pointerEvents: 'none',
+          }}>
+            <BlueprintGraphic />
+          </div>
+
+          <div style={{ position: 'relative', maxWidth: 560 }}>
+            <span className="gd-eyebrow">// 03 — Precision</span>
+            <h2 style={{
+              fontFamily: fDisplay, fontWeight: 500, letterSpacing: '-0.015em', lineHeight: 1.04,
+              color: 'var(--gd-fg)', marginTop: 14, fontSize: 'clamp(32px, 4.6vw, 60px)',
+            }}>
+              Gradum is not built for volume.<br />
+              It is{' '}
+              <span style={{ color: 'var(--gd-accent)', fontStyle: 'italic', fontWeight: 400 }}>
+                engineered for precision.
+              </span>
+            </h2>
+            <p style={{ fontFamily: fBody, color: 'var(--gd-fg-3)', lineHeight: 1.55, marginTop: 24, fontSize: 17, maxWidth: 480 }}>
+              We work selectively with organizations where execution quality, depth, and long-term
+              impact matter. From design to delivery, we focus on what actually moves the needle.
+            </p>
+            <div style={{ marginTop: 32, display: 'flex', gap: 8, flexWrap: 'wrap', maxWidth: 520 }}>
+              {['System Architecture', 'Embedded Systems', 'Control & Automation', 'Engineering Strategy'].map((t) => (
+                <span key={t} className="gd-chip">{t}</span>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+function Methodology() {
+  return (
+    <section className="gd-section">
+      <div style={{ maxWidth: 1280, minWidth: 'min(1100px, calc(100vw - 48px))', marginInline: 'auto', padding: '0 32px' }}>
+        <SectionHeader
+          eyebrow="// 04 — Methodology"
+          title="A disciplined operating model."
+          subtitle="Every engagement runs through the same four-stage cadence — clear objectives, defined scope, measured execution, and ongoing oversight."
+        />
+        <div
+          style={{
+            marginTop: 64,
+            display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1,
+            background: 'var(--gd-hairline)',
+            borderRadius: 16, overflow: 'hidden',
+            boxShadow: 'var(--gd-shadow-pill)',
+          }}
+        >
+          {STEPS.map((s, i) => (
+            <ScrollReveal key={s.num} style={{
+              background: 'var(--gd-bg)', padding: 28, minHeight: 220,
+              display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ fontFamily: fMono, fontSize: 12, color: 'var(--gd-accent)', letterSpacing: '0.08em' }}>
+                  STAGE {s.num}
+                </span>
+                <span style={{
+                  width: 22, height: 22, borderRadius: 999,
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  boxShadow: 'inset 0 0 0 1px var(--gd-hairline-b)',
+                  fontFamily: fMono, fontSize: 11, color: 'var(--gd-fg-3)',
+                }}>{i + 1}</span>
+              </div>
+              <div>
+                <h3 style={{ fontFamily: fDisplay, fontSize: 22, fontWeight: 500, color: 'var(--gd-fg)', marginBottom: 10 }}>
+                  {s.title}
+                </h3>
+                <p style={{ fontFamily: fBody, fontSize: 14, color: 'var(--gd-fg-3)', lineHeight: 1.55 }}>
+                  {s.desc}
+                </p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FormInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
+  const [focused, setFocused] = useState(false);
+  return (
+    <input
+      {...props}
+      onFocus={(e) => { setFocused(true); props.onFocus?.(e); }}
+      onBlur={(e) => { setFocused(false); props.onBlur?.(e); }}
+      style={{
+        height: 42, width: '100%', padding: '0 14px',
+        background: 'rgba(199, 211, 234, 0.06)',
+        borderRadius: 4, border: 'none',
+        boxShadow: focused ? 'inset 0 0 0 1px rgba(174,227,123,0.5)' : 'inset 0 0 0 1px var(--gd-hairline)',
+        color: 'var(--gd-fg)', fontFamily: fBody, fontSize: 14, letterSpacing: '-0.01em',
+        outline: 'none', transition: 'box-shadow .2s ease',
+      }}
+    />
+  );
+}
+
+function FormSelect({ children }: { children: React.ReactNode }) {
+  return (
+    <select style={{
+      height: 42, width: '100%', padding: '0 14px',
+      background: 'rgba(199, 211, 234, 0.06)',
+      borderRadius: 4, border: 'none',
+      boxShadow: 'inset 0 0 0 1px var(--gd-hairline)',
+      color: 'var(--gd-fg)', fontFamily: fBody, fontSize: 14, letterSpacing: '-0.01em',
+      outline: 'none', appearance: 'none',
+      backgroundImage: 'linear-gradient(45deg, transparent 50%, var(--gd-fg-3) 50%), linear-gradient(135deg, var(--gd-fg-3) 50%, transparent 50%)',
+      backgroundPosition: 'calc(100% - 18px) 50%, calc(100% - 13px) 50%',
+      backgroundSize: '5px 5px', backgroundRepeat: 'no-repeat',
+    }}>{children}</select>
+  );
+}
+
+function ContactCTA({ onOpenModal }: { onOpenModal: () => void }) {
+  const [submitted, setSubmitted] = useState(false);
+  return (
+    <section id="contact" className="gd-section">
+      <div style={{ maxWidth: 1280, minWidth: 'min(1100px, calc(100vw - 48px))', marginInline: 'auto', padding: '0 32px' }}>
+        <ScrollReveal
+          className="gd-glass-solid"
+          style={{
+            padding: 'clamp(40px, 5vw, 80px)',
+            display: 'grid', gridTemplateColumns: '1.1fr 1fr', gap: 56, alignItems: 'center',
+            background: `
+              radial-gradient(ellipse 60% 60% at 0% 100%, rgba(27,79,216,0.18), transparent 70%),
+              radial-gradient(ellipse 50% 50% at 100% 0%, rgba(174,227,123,0.10), transparent 70%),
+              #0B102B
+            `,
+          }}
+        >
+          <div>
+            <span className="gd-eyebrow">// Begin engagement</span>
+            <h2 style={{
+              fontFamily: fDisplay, fontWeight: 500, letterSpacing: '-0.015em', lineHeight: 1.1,
+              color: 'var(--gd-fg)', marginTop: 14, fontSize: 'clamp(32px, 4.2vw, 52px)',
+            }}>
+              Designed for complex environments.
+            </h2>
+            <p style={{ fontFamily: fBody, color: 'var(--gd-fg-3)', lineHeight: 1.55, marginTop: 18, fontSize: 17, maxWidth: 460 }}>
+              All engagements are managed through the Gradum Client Portal — secure collaboration,
+              defined project stages, and centralized documentation.
+            </p>
+            <div style={{ marginTop: 28, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {['Technology & Engineering', 'Business Operations', 'Infrastructure & Build', 'Data & Intelligence'].map((t) => (
+                <span key={t} className="gd-chip">{t}</span>
+              ))}
+            </div>
+          </div>
+
+          <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }} className="gd-glass" style={{ padding: 28 }}>
+            {submitted ? (
+              <div style={{ textAlign: 'center', paddingBlock: 24 }}>
+                <div style={{
+                  width: 48, height: 48, borderRadius: 999,
+                  background: 'var(--gd-accent)', color: 'var(--gd-accent-fg)',
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: 22,
+                }}>✓</div>
+                <h3 style={{ fontFamily: fDisplay, fontSize: 20, color: 'var(--gd-fg)', marginTop: 16 }}>
+                  Message received
+                </h3>
+                <p style={{ fontFamily: fBody, color: 'var(--gd-fg-3)', fontSize: 14, marginTop: 8 }}>
+                  A member of our team will contact you shortly.
+                </p>
+              </div>
+            ) : (
+              <>
+                <h3 style={{ fontFamily: fDisplay, fontSize: 20, color: 'var(--gd-fg)', marginBottom: 6 }}>
+                  Request a consultation
+                </h3>
+                <p style={{ fontFamily: fBody, color: 'var(--gd-fg-3)', fontSize: 13, marginBottom: 20 }}>
+                  We respond within one business day.
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <FormInput placeholder="Full name" />
+                  <FormInput placeholder="you@company.com" type="email" />
+                  <FormSelect>
+                    <option>Consulting Inquiry</option>
+                    <option>Construction Project</option>
+                    <option>Accounting &amp; Finance</option>
+                    <option>Marketing &amp; Media</option>
+                    <option>Accelerator Program</option>
+                  </FormSelect>
+                  <button type="submit" className="gd-btn gd-btn-primary"
+                    style={{ height: 46, marginTop: 4, width: '100%', borderRadius: 6, fontSize: 14 }}>
+                    Submit inquiry
+                  </button>
+                </div>
+                <div style={{ marginTop: 16, textAlign: 'center' }}>
+                  <button type="button" onClick={onOpenModal}
+                    style={{ fontFamily: fBody, fontSize: 12, color: 'var(--gd-fg-4)', background: 'none', border: 'none', cursor: 'pointer' }}>
+                    Or use the full contact form →
+                  </button>
+                </div>
+              </>
+            )}
+          </form>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+function PageFooter() {
+  const { openModal } = useModal();
+  const { t } = useTranslation();
+
+  return (
+    <footer style={{ borderTop: '1px solid var(--gd-footer-line)', background: 'var(--gd-footer-bg)' }}>
+      <div style={{ maxWidth: 1280, marginInline: 'auto', padding: '48px 32px' }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          gap: 40,
+          flexWrap: 'wrap',
+          marginBottom: 48,
+        }}>
+          <a href="/" style={{ display: 'inline-flex', alignItems: 'baseline', gap: 8 }}>
+            <span style={{
+              fontFamily: fDisplay,
+              fontSize: 24,
+              fontWeight: 800,
+              letterSpacing: '0.02em',
+              color: 'var(--gd-footer-fg)',
+              lineHeight: 1,
+            }}>
+              GRADUM
+            </span>
+            <span style={{
+              fontFamily: fMono,
+              fontSize: 10,
+              fontWeight: 600,
+              letterSpacing: '0.3em',
+              color: 'var(--gd-footer-fg-3)',
+              textTransform: 'uppercase',
+            }}>
+              GROUP
+            </span>
+          </a>
+
+          <button
+            type="button"
+            onClick={openModal}
+            style={{
+              border: '1px solid rgba(174,227,123,0.35)',
+              borderRadius: 999,
+              background: 'var(--gd-accent)',
+              color: 'var(--gd-accent-fg)',
+              fontFamily: fBody,
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: '0.04em',
+              padding: '10px 18px',
+              boxShadow: '0 0 24px var(--gd-accent-glow)',
+            }}
+          >
+            {t('common.requestConsultation')}
+          </button>
+        </div>
+
+        <div style={{
+          borderTop: '1px solid var(--gd-footer-line)',
+          paddingTop: 24,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 24,
+          flexWrap: 'wrap',
+        }}>
+          <button
+            type="button"
+            onClick={openModal}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--gd-footer-fg-3)',
+              fontFamily: fBody,
+              fontSize: 12,
+              transition: 'color .2s ease',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--gd-accent)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--gd-footer-fg-3)'; }}
+          >
+            {t('common.requestConsultation')}
+          </button>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <a
+              href="https://www.instagram.com/gradumgroup/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Gradum Group Instagram"
+              style={{ display: 'inline-flex', transition: 'opacity .2s ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ borderRadius: 6 }}>
+                <defs>
+                  <linearGradient id="home-ig-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#F58529" />
+                    <stop offset="50%" stopColor="#DD2A7B" />
+                    <stop offset="100%" stopColor="#8134AF" />
+                  </linearGradient>
+                </defs>
+                <rect x="2" y="2" width="20" height="20" rx="5" stroke="url(#home-ig-gradient)" strokeWidth="2" fill="none" />
+                <circle cx="12" cy="12" r="4" stroke="url(#home-ig-gradient)" strokeWidth="2" fill="none" />
+                <circle cx="18" cy="6" r="1.25" fill="url(#home-ig-gradient)" />
+              </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/company/gradumgroup"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Gradum Group LinkedIn"
+              style={{ display: 'inline-flex', transition: 'opacity .2s ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+            </a>
+            <a
+              href="https://www.facebook.com/gradumgroup"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Gradum Group Facebook"
+              style={{ display: 'inline-flex', transition: 'opacity .2s ease' }}
+              onMouseEnter={(e) => { e.currentTarget.style.opacity = '0.8'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.opacity = '1'; }}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.412c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.972H15.83c-1.491 0-1.956.931-1.956 1.887v2.263h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 16 }}>
+          <p style={{ fontFamily: fBody, fontSize: 11, color: 'var(--gd-footer-fg-4)' }}>
+            {t('common.footerLegal')}
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ─── Page export ───────────────────────────────────────────────────── */
 
 export function Home() {
-  const { t, tArray } = useTranslation();
   const { openModal } = useModal();
+  const { theme } = useTheme();
 
-  // Cursor-reveal collage — direct DOM update, no React state, native 60fps
-  const collageRef = useRef<HTMLDivElement>(null);
-
-  const handleHeroMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    if (!collageRef.current) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const mask = `radial-gradient(circle 230px at ${x}px ${y}px, black 15%, transparent 100%)`;
-    collageRef.current.style.maskImage = mask;
-    collageRef.current.style.webkitMaskImage = mask;
-  };
-
-  const handleHeroMouseLeave = () => {
-    if (!collageRef.current) return;
-    const hidden = 'radial-gradient(circle 0px at -500px -500px, black 0%, transparent 100%)';
-    collageRef.current.style.maskImage = hidden;
-    collageRef.current.style.webkitMaskImage = hidden;
-  };
+  useEffect(() => {
+    const prevBg = document.body.style.background;
+    const prevAttach = document.body.style.backgroundAttachment;
+    document.body.style.background = theme === 'dark'
+      ? 'radial-gradient(ellipse 70% 55% at 50% 18%, #1A2358 0%, #121944 35%, #0A0F2C 65%, #05071C 100%)'
+      : 'radial-gradient(ellipse 70% 55% at 50% 18%, #FFFFFF 0%, #F5F7FF 40%, #EDF0FA 70%, #E8ECF8 100%)';
+    document.body.style.backgroundAttachment = 'fixed';
+    document.documentElement.style.setProperty(
+      '--nav-bg',
+      theme === 'dark' ? 'rgba(13, 19, 51, 0.88)' : 'rgba(242, 245, 255, 0.88)'
+    );
+    return () => {
+      document.body.style.background = prevBg;
+      document.body.style.backgroundAttachment = prevAttach;
+      document.documentElement.style.removeProperty('--nav-bg');
+    };
+  }, [theme]);
 
   return (
     <PageTransition>
-
-      {/* ── Hero ──────────────────────────────────────────────────────────── */}
-      <section
-        className="relative min-h-[96vh] flex flex-col justify-center overflow-hidden -mt-16"
-        style={{ backgroundColor: 'var(--bg-primary)' }}
-        onMouseMove={handleHeroMouseMove}
-        onMouseLeave={handleHeroMouseLeave}
-      >
-        {/* Layer 0a — image collage, revealed only at cursor position */}
-        <div
-          ref={collageRef}
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            maskImage: 'radial-gradient(circle 0px at -500px -500px, black 0%, transparent 100%)',
-            WebkitMaskImage: 'radial-gradient(circle 0px at -500px -500px, black 0%, transparent 100%)',
-          }}
-        >
-          {COLLAGE_IMAGES.map((img) => (
-            <img
-              key={img.id}
-              src={`https://images.unsplash.com/photo-${img.id}?w=700&auto=format&fit=crop&q=75`}
-              alt=""
-              loading="lazy"
-              draggable={false}
-              className="absolute object-cover select-none"
-              style={{ left: img.left, top: img.top, width: img.w, height: img.h }}
-            />
-          ))}
-        </div>
-
-        {/* Layer 0b — scrim: tints images toward bg-primary so text stays legible */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'var(--hero-scrim)' }}
-        />
-
-        {/* Layer 1 — radial ambient glow behind logo */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: [
-              'radial-gradient(ellipse 60% 42% at 50% 16%, rgba(0,185,140,0.18) 0%, transparent 65%)',
-              'radial-gradient(ellipse 40% 28% at 50% 12%, rgba(174,227,123,0.10) 0%, transparent 60%)',
-            ].join(', '),
-          }}
-        />
-
-        {/* Layer 2 — dot grid, masked so it fades out toward the bottom */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              'radial-gradient(var(--text-primary) 1px, transparent 1px)',
-            backgroundSize: '28px 28px',
-            opacity: 0.18,
-            maskImage:
-              'linear-gradient(to bottom, black 0%, black 40%, transparent 82%)',
-            WebkitMaskImage:
-              'linear-gradient(to bottom, black 0%, black 40%, transparent 82%)',
-          }}
-        />
-
-        {/* Layer 3 — perspective concentric rings anchored to bottom-center */}
-        <div
-          className="absolute inset-x-0 bottom-0 pointer-events-none overflow-hidden"
-          style={{ height: '62%' }}
-        >
-          <svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 1200 500"
-            fill="none"
-            preserveAspectRatio="xMidYMax meet"
-            aria-hidden="true"
-          >
-            <defs>
-              {/* Fade: transparent at top → opaque at bottom, so rings emerge from the fold */}
-              <linearGradient id="ring-fade" x1="0" y1="0" x2="0" y2="500" gradientUnits="userSpaceOnUse">
-                <stop offset="0%"   stopColor="white" stopOpacity="0" />
-                <stop offset="35%"  stopColor="white" stopOpacity="0.5" />
-                <stop offset="100%" stopColor="white" stopOpacity="1" />
-              </linearGradient>
-              <mask id="ring-mask">
-                <rect width="1200" height="500" fill="url(#ring-fade)" />
-              </mask>
-            </defs>
-            <g mask="url(#ring-mask)">
-              {([
-                [70,  0.70],
-                [175, 0.55],
-                [310, 0.40],
-                [475, 0.28],
-                [665, 0.18],
-                [880, 0.10],
-              ] as [number, number][]).map(([rx, op]) => (
-                <ellipse
-                  key={rx}
-                  cx="600"
-                  cy="500"
-                  rx={rx}
-                  ry={rx * 0.24}
-                  stroke="var(--text-primary)"
-                  strokeWidth="1.2"
-                  opacity={op}
-                />
-              ))}
-            </g>
-          </svg>
-        </div>
-
-        {/* Layer 4 — bottom gradient fade to bg-secondary */}
-        <div
-          className="absolute inset-x-0 bottom-0 pointer-events-none"
-          style={{
-            height: '45%',
-            background:
-              'linear-gradient(to bottom, var(--hero-fade) 0%, var(--bg-secondary) 100%)',
-          }}
-        />
-
-        <div className="relative max-w-4xl mx-auto px-6 py-28 text-center">
-          <motion.div
-            variants={stagger}
-            initial="initial"
-            animate="animate"
-            className="flex flex-col items-center"
-          >
-            <motion.h1
-              variants={fadeUp}
-              transition={{ duration: 0.5 }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] text-[var(--text-primary)] mb-6 whitespace-pre-line"
-              style={{ fontFamily: 'var(--font-ui)' }}
-            >
-              {t('home.hero.mainTitle')}
-            </motion.h1>
-
-            <motion.p
-              variants={fadeUp}
-              transition={{ duration: 0.5 }}
-              className="text-lg text-[var(--text-secondary)] leading-relaxed mb-20 max-w-2xl"
-              style={{ fontFamily: 'var(--font-body)' }}
-            >
-              {t('home.hero.description')}
-            </motion.p>
-
-            <motion.div variants={fadeUp} transition={{ duration: 0.5 }}>
-              <button
-                onClick={openModal}
-                className="inline-flex items-center justify-center rounded-full bg-[#AEE37B] text-[#0A2924] font-bold text-2xl px-10 py-4 hover:bg-[#c8f090] active:scale-[0.98] transition-all duration-300 shadow-[0_0_30px_rgba(174,227,123,0.3)] hover:shadow-[0_0_50px_rgba(174,227,123,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AEE37B] focus-visible:ring-offset-2 tracking-wide"
-                style={{ fontFamily: 'var(--font-ui)' }}
-              >
-                {t('common.requestConsultation')}
-              </button>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── Built for Teams Operating at Scale ──────────────────────────────── */}
-      <section className="py-20" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2
-              className="text-3xl sm:text-4xl font-semibold tracking-tight text-[var(--text-primary)] mb-6"
-              style={{ fontFamily: 'var(--font-ui)' }}
-            >
-              {t('home.innovativeSolutions.label')}
-            </h2>
-            <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-3" style={{ fontFamily: 'var(--font-body)' }}>
-              {t('home.innovativeSolutions.intro1')}
-            </p>
-            <p className="text-base text-[var(--text-secondary)] leading-relaxed" style={{ fontFamily: 'var(--font-body)' }}>
-              {t('home.innovativeSolutions.intro2')}
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── One Platform. Four Capabilities. ────────────────────────────────── */}
-      <section className="py-20" style={{ backgroundColor: 'var(--bg-secondary)' }}>
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="text-center text-sm font-medium text-[var(--text-secondary)] mb-8 tracking-wide"
-            style={{ fontFamily: 'var(--font-ui)' }}
-          >
-            {t('home.builtForCompanies.platformLabel')}
-          </motion.p>
-
-          {/* 2×2 Platform Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ backgroundColor: 'var(--border-color)' }}>
-            {DIVISIONS.map((div, i) => {
-              const isDark = div.dark;
-              const cardBg = isDark ? 'var(--bg-dark-section)' : 'var(--bg-primary)';
-              const titleColor = isDark ? '#FFFFFF' : 'var(--text-primary)';
-              const tagColor = isDark ? 'rgba(255,255,255,0.55)' : 'var(--text-secondary)';
-
-              const cardInner = (
-                <div className="relative flex flex-col justify-between min-h-[240px] p-9 overflow-hidden">
-                  {/* Hover background image */}
-                  <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                    <img
-                      src={`https://images.unsplash.com/photo-${div.imgId}?w=700&auto=format&fit=crop&q=70`}
-                      alt=""
-                      className="absolute right-0 top-0 h-full w-3/5 object-cover object-left"
-                    />
-                    <div
-                      className="absolute right-0 top-0 h-full w-3/5 pointer-events-none"
-                      style={{ background: `linear-gradient(to right, ${cardBg} 0%, ${cardBg} 25%, transparent 100%)` }}
-                    />
-                  </div>
-                  {div.featured && (
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{ background: 'linear-gradient(135deg, rgba(0,185,140,0.14) 0%, rgba(0,185,140,0.05) 60%, transparent 100%)' }}
-                    />
-                  )}
-                  <div className="relative">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div style={{ color: isDark ? 'rgba(174,227,123,0.75)' : 'var(--text-secondary)', opacity: 0.85 }}>
-                        <CardIcon index={i} />
-                      </div>
-                      <h3 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-ui)', color: titleColor }}>
-                        {t(div.titleKey)}
-                      </h3>
-                      {div.featured && (
-                        <span className="relative shrink-0 w-1.5 h-1.5">
-                          <span className="absolute inset-0 rounded-full bg-[#AEE37B] animate-ping opacity-70" />
-                          <span className="relative block w-1.5 h-1.5 rounded-full bg-[#AEE37B]" />
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-base font-medium" style={{ color: isDark ? 'rgba(255,255,255,0.8)' : 'var(--text-primary)', fontFamily: 'var(--font-ui)' }}>
-                      {t(div.subtitleKey)}
-                    </p>
-                    <p className="text-sm mt-2 leading-relaxed" style={{ color: tagColor, fontFamily: 'var(--font-body)' }}>
-                      {t(div.taglineKey)}
-                    </p>
-                  </div>
-                  {div.featured && (
-                    <span className="text-xs font-medium tracking-widest uppercase text-[#AEE37B]/70 mt-6" style={{ fontFamily: 'var(--font-ui)' }}>
-                      {t('common.comingSoon')}
-                    </span>
-                  )}
-                </div>
-              );
-
-              return (
-                <motion.div
-                  key={div.to}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.07 }}
-                  className="group"
-                  style={{ backgroundColor: cardBg }}
-                >
-                  <div>{cardInner}</div>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Engineered for Precision ─────────────────────────────────────────── */}
-      <section
-        className="relative overflow-hidden min-h-[520px] lg:min-h-[580px]"
-        style={{ backgroundColor: 'var(--bg-dark-section)' }}
-      >
-        {/* Background image — bleeds from right, feathered into text */}
-        <div className="absolute inset-y-0 right-0 w-full lg:w-[88%] pointer-events-none">
-          <img
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1400&auto=format&fit=crop&q=80"
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ opacity: 0.9 }}
-          />
-          {/* Mobile scrim — keeps text readable on small screens */}
-          <div
-            className="absolute inset-0 lg:hidden pointer-events-none"
-            style={{ background: 'var(--bg-dark-section)', opacity: 0.88 }}
-          />
-          {/* Desktop left feather — wide bleed into text column */}
-          <div
-            className="absolute inset-y-0 left-0 pointer-events-none hidden lg:block"
-            style={{
-              width: '68%',
-              background: 'linear-gradient(to right, var(--bg-dark-section) 0%, var(--bg-dark-section) 8%, transparent 100%)',
-            }}
-          />
-          {/* Top feather */}
-          <div
-            className="absolute inset-x-0 top-0 h-1/2 pointer-events-none"
-            style={{ background: 'linear-gradient(to bottom, var(--bg-dark-section) 0%, transparent 100%)' }}
-          />
-          {/* Bottom feather */}
-          <div
-            className="absolute inset-x-0 bottom-0 h-1/2 pointer-events-none"
-            style={{ background: 'linear-gradient(to top, var(--bg-dark-section) 0%, transparent 100%)' }}
-          />
-          {/* Right feather */}
-          <div
-            className="absolute inset-y-0 right-0 w-1/5 pointer-events-none"
-            style={{ background: 'linear-gradient(to left, var(--bg-dark-section) 0%, transparent 100%)' }}
-          />
-          {/* Teal brand tint */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: 'radial-gradient(ellipse 80% 70% at 65% 45%, rgba(0,185,140,0.12) 0%, transparent 75%)',
-              mixBlendMode: 'screen',
-            }}
-          />
-        </div>
-
-        {/* Text content — sits above image */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 lg:py-32">
-          <div className="max-w-lg">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <h2
-                className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-[1.05] text-white mb-6"
-                style={{ fontFamily: 'var(--font-ui)' }}
-              >
-                {t('home.precision.heading1')}<br />
-                {t('home.precision.heading2Prefix')}
-                <span style={{ color: 'var(--accent)' }}>{t('home.precision.heading2Accent')}</span>
-              </h2>
-              <p
-                className="text-base text-white/55 leading-relaxed"
-                style={{ fontFamily: 'var(--font-body)' }}
-              >
-                {t('home.precision.description')}
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Designed for Complex Environments ───────────────────────────────── */}
-      <section className="py-20" style={{ backgroundColor: 'var(--bg-primary)' }}>
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2
-              className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--text-primary)] mb-8"
-              style={{ fontFamily: 'var(--font-ui)' }}
-            >
-              {t('home.letsBuild.heading')}
-            </h2>
-
-            {/* Tech tag chips */}
-            <div className="flex flex-wrap justify-center gap-2.5 mb-8">
-              {tArray('home.letsBuild.techTags').map(tag => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium px-3.5 py-1.5 rounded-full text-[var(--text-secondary)]"
-                  style={{ border: '1px solid var(--border-color)', fontFamily: 'var(--font-ui)' }}
-                >
-                  <span className="w-1 h-1 rounded-full bg-[#AEE37B] inline-block" />
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <p
-              className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-lg mx-auto"
-              style={{ fontFamily: 'var(--font-body)' }}
-            >
-              {t('home.letsBuild.description')}
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <div style={{ color: 'var(--gd-fg-2)', fontFamily: fBody }}>
+        <Hero />
+        <DashboardCollage />
+        <Platform />
+        <Capabilities />
+        <Precision />
+        <Methodology />
+        <ContactCTA onOpenModal={openModal} />
+        <PageFooter />
+      </div>
     </PageTransition>
   );
 }

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useModal } from '../../context/ModalContext';
 import { useTranslation } from '../../i18n/useTranslation';
-import { Button } from './Button';
 
 export function ContactModal() {
   const { isOpen, closeModal } = useModal();
@@ -75,8 +74,44 @@ export function ContactModal() {
     }
   };
 
-  const inputClass = 'w-full bg-transparent border border-[var(--border-color)] text-[var(--text-primary)] placeholder:text-[var(--text-secondary)] px-4 py-3 text-sm focus:outline-none focus:border-[#AEE37B] transition-colors duration-200';
-  const labelClass = 'block text-xs font-semibold tracking-widest uppercase text-[var(--text-secondary)] mb-1.5';
+  const inputClass = 'w-full px-4 py-3 text-sm focus:outline-none transition-all duration-200';
+  const labelClass = 'block text-xs font-semibold tracking-widest uppercase mb-1.5';
+  const inputStyle: React.CSSProperties = {
+    background: 'rgba(199, 211, 234, 0.06)',
+    border: '1px solid rgba(186, 215, 247, 0.14)',
+    borderRadius: 4,
+    color: '#FFFFFF',
+    fontFamily: 'var(--font-body)',
+    letterSpacing: '-0.01em',
+    boxShadow: 'inset 0 1px 1px rgba(216, 236, 248, 0.08)',
+  };
+  const labelStyle: React.CSSProperties = {
+    color: '#9DA7C2',
+    fontFamily: 'var(--font-mono)',
+  };
+  const optionStyle: React.CSSProperties = {
+    backgroundColor: '#080C24',
+    color: '#D8DCEC',
+  };
+  const secondaryButtonStyle: React.CSSProperties = {
+    background: 'transparent',
+    border: 'none',
+    color: '#9DA7C2',
+    fontFamily: 'var(--font-body)',
+  };
+  const primaryButtonStyle: React.CSSProperties = {
+    minHeight: 44,
+    border: '1px solid rgba(174, 227, 123, 0.36)',
+    borderRadius: 999,
+    background: 'var(--gd-accent)',
+    color: 'var(--gd-accent-fg)',
+    fontFamily: 'var(--font-body)',
+    fontSize: 14,
+    fontWeight: 700,
+    letterSpacing: '0.01em',
+    padding: '0 22px',
+    boxShadow: 'inset 0 1px 1px rgba(255,255,255,0.18), 0 0 24px var(--gd-accent-glow)',
+  };
 
   return (
     <AnimatePresence>
@@ -89,7 +124,12 @@ export function ContactModal() {
           transition={{ duration: 0.2 }}
           onClick={handleOverlayClick}
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          style={{ backgroundColor: 'rgba(10,41,36,0.85)', backdropFilter: 'blur(4px)' }}
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 55% at 50% 18%, rgba(26,35,88,0.50), transparent 62%), rgba(5, 6, 15, 0.88)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+          }}
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-title"
@@ -100,22 +140,50 @@ export function ContactModal() {
             exit={{ opacity: 0, y: 24, scale: 0.97 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="w-full max-w-xl max-h-[90vh] overflow-y-auto"
-            style={{ backgroundColor: 'var(--bg-primary)', border: '1px solid var(--border-color)' }}
+            style={{
+              background:
+                'radial-gradient(ellipse 65% 45% at 85% 0%, rgba(186,215,247,0.08), transparent 70%), rgba(5, 6, 15, 0.97)',
+              border: '1px solid rgba(186, 215, 247, 0.16)',
+              borderRadius: 16,
+              boxShadow:
+                'inset 0 1px 1px rgba(216,236,248,0.20), inset 0 24px 48px rgba(168,216,245,0.06), 0 24px 64px rgba(0,0,0,0.48)',
+            }}
           >
             {/* Header */}
-            <div className="flex items-start justify-between p-6 border-b border-[var(--border-color)]">
+            <div
+              className="flex items-start justify-between p-6"
+              style={{ borderBottom: '1px solid rgba(186, 215, 247, 0.14)' }}
+            >
               <div>
-                <h2 id="modal-title" className="text-xl font-bold tracking-tight text-[var(--text-primary)]">
+                <h2
+                  id="modal-title"
+                  className="text-xl font-bold tracking-tight"
+                  style={{ color: '#FFFFFF', fontFamily: 'var(--font-ui)' }}
+                >
                   {t('modal.title')}
                 </h2>
-                <p className="text-xs text-[var(--text-secondary)] mt-1 tracking-wide">
+                <p
+                  className="text-xs mt-1 tracking-wide"
+                  style={{ color: '#9DA7C2', fontFamily: 'var(--font-body)' }}
+                >
                   {t('modal.subtitle')}
                 </p>
               </div>
               <button
                 onClick={closeModal}
                 aria-label={t('modal.closeLabel')}
-                className="ml-4 mt-0.5 text-[var(--text-secondary)] hover:text-[#AEE37B] transition-colors duration-200 text-2xl leading-none"
+                className="ml-4 mt-0.5 transition-colors duration-200 text-2xl leading-none"
+                style={{
+                  width: 34,
+                  height: 34,
+                  borderRadius: 999,
+                  border: '1px solid rgba(186, 215, 247, 0.14)',
+                  color: '#D1E4FA',
+                  background: 'rgba(186, 214, 247, 0.04)',
+                  lineHeight: 1,
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = '#B6D9FC'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = '#D1E4FA'; }}
               >
                 &times;
               </button>
@@ -129,70 +197,92 @@ export function ContactModal() {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center py-10"
                 >
-                  <div className="text-4xl mb-4">✓</div>
-                  <p className="text-[#AEE37B] font-semibold tracking-wide text-lg mb-2">{t('modal.messageReceived')}</p>
-                  <p className="text-[var(--text-secondary)] text-sm">
+                  <div
+                    className="text-2xl mb-4 mx-auto flex items-center justify-center"
+                    style={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: 999,
+                      color: 'var(--gd-accent-fg)',
+                      background: 'var(--gd-accent)',
+                      boxShadow: '0 0 24px var(--gd-accent-glow)',
+                    }}
+                  >
+                    ✓
+                  </div>
+                  <p className="font-semibold tracking-wide text-lg mb-2" style={{ color: '#D8ECF8' }}>{t('modal.messageReceived')}</p>
+                  <p className="text-sm" style={{ color: '#9DA7C2' }}>
                     {t('modal.thankYou')}
                   </p>
-                  <Button onClick={closeModal} variant="outline" size="sm" className="mt-8">
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="mt-8 px-5 py-2 text-xs font-semibold transition-all duration-200 active:scale-[0.98]"
+                    style={{
+                      border: '1px solid rgba(186, 215, 247, 0.18)',
+                      borderRadius: 999,
+                      color: '#D1E4FA',
+                      background: 'rgba(186, 214, 247, 0.06)',
+                    }}
+                  >
                     {t('common.close')}
-                  </Button>
+                  </button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className={labelClass}>{t('modal.name')}</label>
+                      <label htmlFor="name" className={labelClass} style={labelStyle}>{t('modal.name')}</label>
                       <input ref={firstInputRef} id="name" name="name" type="text" required
                         value={form.name} onChange={handleChange}
-                        placeholder={t('modal.namePlaceholder')} className={inputClass} />
+                        placeholder={t('modal.namePlaceholder')} className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label htmlFor="company" className={labelClass}>{t('modal.company')}</label>
+                      <label htmlFor="company" className={labelClass} style={labelStyle}>{t('modal.company')}</label>
                       <input id="company" name="company" type="text"
                         value={form.company} onChange={handleChange}
-                        placeholder={t('modal.companyPlaceholder')} className={inputClass} />
+                        placeholder={t('modal.companyPlaceholder')} className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label htmlFor="email" className={labelClass}>{t('modal.email')}</label>
+                      <label htmlFor="email" className={labelClass} style={labelStyle}>{t('modal.email')}</label>
                       <input id="email" name="email" type="email" required
                         value={form.email} onChange={handleChange}
-                        placeholder={t('modal.emailPlaceholder')} className={inputClass} />
+                        placeholder={t('modal.emailPlaceholder')} className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label htmlFor="phone" className={labelClass}>{t('modal.phone')}</label>
+                      <label htmlFor="phone" className={labelClass} style={labelStyle}>{t('modal.phone')}</label>
                       <input id="phone" name="phone" type="tel"
                         value={form.phone} onChange={handleChange}
-                        placeholder={t('modal.phonePlaceholder')} className={inputClass} />
+                        placeholder={t('modal.phonePlaceholder')} className={inputClass} style={inputStyle} />
                     </div>
                     <div>
-                      <label htmlFor="country" className={labelClass}>{t('modal.country')}</label>
+                      <label htmlFor="country" className={labelClass} style={labelStyle}>{t('modal.country')}</label>
                       <select id="country" name="country"
                         value={form.country} onChange={handleChange}
                         className={`${inputClass} appearance-none`}
-                        style={{ backgroundColor: 'var(--bg-primary)' }}
+                        style={inputStyle}
                       >
-                        <option value="">{t('modal.selectCountry')}</option>
-                        {countries.map(c => <option key={c} value={c}>{c}</option>)}
+                        <option value="" style={optionStyle}>{t('modal.selectCountry')}</option>
+                        {countries.map(c => <option key={c} value={c} style={optionStyle}>{c}</option>)}
                       </select>
                     </div>
                     <div>
-                      <label htmlFor="inquiryType" className={labelClass}>{t('modal.inquiryType')}</label>
+                      <label htmlFor="inquiryType" className={labelClass} style={labelStyle}>{t('modal.inquiryType')}</label>
                       <select id="inquiryType" name="inquiryType"
                         value={form.inquiryType} onChange={handleChange}
                         className={`${inputClass} appearance-none`}
-                        style={{ backgroundColor: 'var(--bg-primary)' }}
+                        style={inputStyle}
                       >
-                        <option value="">{t('modal.selectType')}</option>
-                        {inquiryTypes.map(type => <option key={type} value={type}>{type}</option>)}
+                        <option value="" style={optionStyle}>{t('modal.selectType')}</option>
+                        {inquiryTypes.map(type => <option key={type} value={type} style={optionStyle}>{type}</option>)}
                       </select>
                     </div>
                     <div className="sm:col-span-2">
-                      <label htmlFor="message" className={labelClass}>{t('modal.message')}</label>
+                      <label htmlFor="message" className={labelClass} style={labelStyle}>{t('modal.message')}</label>
                       <textarea id="message" name="message" rows={4} required
                         value={form.message} onChange={handleChange}
                         placeholder={t('modal.messagePlaceholder')}
-                        className={`${inputClass} resize-none`} />
+                        className={`${inputClass} resize-none`} style={inputStyle} />
                     </div>
                   </div>
                   {error && (
@@ -207,10 +297,19 @@ export function ContactModal() {
 
                   <div className="mt-6 flex items-center justify-between gap-4">
                     <button type="button" onClick={closeModal} disabled={loading}
-                      className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors duration-200 tracking-wide disabled:opacity-40">
+                      className="text-sm transition-colors duration-200 tracking-wide disabled:opacity-40"
+                      style={secondaryButtonStyle}
+                      onMouseEnter={(e) => { e.currentTarget.style.color = '#D8ECF8'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.color = '#9DA7C2'; }}
+                    >
                       {t('common.cancel')}
                     </button>
-                    <Button type="submit" variant="primary" size="md" disabled={loading}>
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="inline-flex items-center justify-center transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none"
+                      style={primaryButtonStyle}
+                    >
                       {loading ? (
                         <span className="flex items-center gap-2">
                           <svg className="animate-spin" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -219,7 +318,7 @@ export function ContactModal() {
                           Sending…
                         </span>
                       ) : t('common.submitInquiry')}
-                    </Button>
+                    </button>
                   </div>
                 </form>
               )}

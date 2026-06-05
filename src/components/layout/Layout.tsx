@@ -7,6 +7,7 @@ import { ContactModal } from '../ui/ContactModal';
 
 export function Layout() {
   const location = useLocation();
+  const hideGlobalFooter = location.pathname === '/';
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -20,7 +21,7 @@ export function Layout() {
           <Outlet key={location.pathname} />
         </AnimatePresence>
       </main>
-      <Footer />
+      {!hideGlobalFooter && <Footer />}
       <ContactModal />
     </div>
   );
