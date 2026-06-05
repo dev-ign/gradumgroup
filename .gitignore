@@ -32,3 +32,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+AGENTS.md
+CLAUDE.md
+DESIGN.md
