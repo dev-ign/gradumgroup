@@ -25,7 +25,7 @@ export function getByPath(obj: Record<string, unknown>, path: string): unknown {
 
 const en = {
   common: {
-    requestConsultation: 'Request Consultatoin',
+    requestConsultation: 'Request Consultation',
     consultation: 'Consultation',
     clientAccess: 'Client Access',
     privacyPolicy: 'Privacy Policy',
@@ -45,6 +45,13 @@ const en = {
     submitInquiry: 'Submit Inquiry',
     returnHome: 'Return Home →',
     scheduleDemo: 'Schedule Demo',
+    scheduleConsultation: 'Schedule a Consultation',
+    ventures: 'Ventures',
+    footerEntity1: 'Gradum Group LLC',
+    footerEntity1Location: 'Miami, Florida, USA',
+    footerEntity2: 'Gradum Group, SRL',
+    footerEntity2Location: 'Santo Domingo, Dominican Republic',
+    footerServiceTagline: 'Technology • Infrastructure • Operations',
     footerTagline: 'Engineering-led advisory and execution platform structured for performance-critical environments.',
     footerLegal: 'Gradum Group LLC (US)  |  Gradum Group, SRL (Dominican Republic)',
   },
@@ -56,6 +63,7 @@ const en = {
     home: 'Home',
     platform: 'Platform',
     about: 'About',
+    execution: 'Execution',
     contact: 'Contact',
     selectLanguage: 'Select language',
     english: 'English',
@@ -90,13 +98,40 @@ const en = {
   home: {
     hero: {
       tagline: 'Engineering-Led Advisory Platform',
-      mainTitle: 'A Technology-First Advisory & Execution Platform',
+      mainTitle: 'Strategic Advisory & Execution',
+      titleParts: [
+        { text: 'Strategic ' },
+        { text: 'Advisory', gradient: true },
+        { text: ' & ' },
+        { text: 'Execution', gradient: true },
+      ],
       title1: 'Structured',
       title2: 'Advisory.',
       title3: 'Engineered',
       title4: 'Execution.',
-      description: 'Gradum helps organizations design, build, and scale solutions across business operations, technology, and infrastructure.',
+      description: 'Gradum supports organizations in navigating complex initiatives across technology, infrastructure, and business operations.',
+      region: 'Supporting organizations across North America and Latin America',
       cta: 'Explore Platform',
+    },
+    whoWeServe: {
+      label: 'Who We Serve',
+      headline: 'Built for Organizations Managing Complexity',
+      headlineParts: [
+        { text: 'Built for ' },
+        { text: 'Organizations', gradient: true },
+        { text: ' managing ' },
+        { text: 'Complexity', gradient: true },
+      ],
+      body: 'Gradum partners with business owners, executive teams, investors, developers, and engineering organizations facing decisions that require specialized expertise, structured execution, and cross-functional coordination.',
+    },
+    whoWeAre: {
+      label: 'Who We Are',
+      headline: 'Integrated by Design',
+      headlineParts: [
+        { text: 'Integrated ' },
+        { text: 'by Design', gradient: true },
+      ],
+      body: 'Gradum was established to bring together capabilities that are traditionally fragmented across multiple providers. Our platform combines advisory, execution, and operational support under a single organization.',
     },
     platform: {
       label: 'Our Platform',
@@ -104,10 +139,10 @@ const en = {
       intro: 'Platform divisions operate under defined mandate frameworks and integrate within a unified advisory and execution architecture designed for multi-functional and multi-entity environments.',
     },
     divisions: [
-      { name: 'Gradum Consulting', tagline: 'Advisory and technical support for teams building complex, performance-critical systems.', subtitle: 'Advanced Technology & Engineering Advisory' },
-      { name: 'Gradum Construction', tagline: 'End-to-end delivery across architectural design, engineering, and physical execution.', subtitle: 'Engineering, Architecture & Build' },
-      { name: 'Gradum Services', tagline: 'Financial operations, accounting, and brand execution services designed to support scalable growth.', subtitle: 'Business Operations & Growth Services' },
-      { name: 'Gradum Accelerator', tagline: 'We partner with early-stage companies to build and scale technology-driven ventures.', subtitle: 'Startup Development & Venture Growth' },
+      { name: 'Consulting', tagline: '', subtitle: 'Technology, engineering, and strategic advisory services that support innovation, operational performance, and digital transformation.' },
+      { name: 'Construction', tagline: '', subtitle: 'Architecture, engineering, project management, and construction execution for residential, commercial, and industrial environments.' },
+      { name: 'Services', tagline: '', subtitle: 'Business support services including accounting, finance, marketing, media, and operational administration.' },
+      { name: 'Ventures', tagline: '', subtitle: 'Technology investments, real estate development, and business ventures aligned with our long-term strategic vision.' },
     ],
     howWeWork: {
       label: 'Methodology',
@@ -147,7 +182,15 @@ const en = {
     builtForCompanies: {
       heading: 'Technical Advisory Built for Strategic and Execution-Level Impact',
       description: 'We operate across executive, architecture, and program-delivery layers, helping organizations make stronger technical decisions and move complex initiatives forward with clarity.',
-      platformLabel: 'One Platform. Four Capabilities.',
+      sectionLabel: 'Platform',
+      platformLabel: 'Four Disciplines. One Organization.',
+      platformLabelParts: [
+        { text: 'Four ' },
+        { text: 'Disciplines.', gradient: true },
+        { text: ' One ' },
+        { text: 'Organization.', gradient: true },
+      ],
+      platformCta: 'Explore Platform',
       exploreLink: 'Explore Each Platform',
     },
     advisoryCards: {
@@ -179,7 +222,35 @@ const en = {
     letsBuild: {
       heading: 'Designed for Complex Environments',
       description: 'Gradum integrates strategy, engineering, and execution to deliver solutions that perform in real-world environments.',
-      techTags: ['Technology & Engineering', 'Business Operations', 'Infrastructure & Build', 'Data & Intelligence'],
+      techTags: ['Technology Systems', 'Engineering Disciplines', 'Business Operations', 'Infrastructure Development', 'Digital Transformation', 'Financial Operations'],
+    },
+    differentiator: {
+      label: 'Differentiator',
+      headline: 'Built Around Execution',
+      headlineParts: [
+        { text: 'Built Around ' },
+        { text: 'Execution', gradient: true },
+      ],
+      body1: 'Organizations often engage separate firms for advisory, technical expertise, project delivery, and operational support.',
+      body2: 'Gradum was established to bring these capabilities together under a single organization, creating greater alignment, accountability, and continuity throughout execution.',
+    },
+    expertise: {
+      label: 'Expertise',
+      headline: 'Areas of Expertise',
+      headlineParts: [
+        { text: 'Areas of ' },
+        { text: 'Expertise', gradient: true },
+      ],
+      body: 'Our experience spans technology systems, engineering disciplines, business operations, and infrastructure development. We apply specialized knowledge where it contributes to measurable outcomes and long-term organizational objectives.',
+    },
+    engagementSection: {
+      label: 'Engagement',
+      headline: "Let's Start the Conversation",
+      headlineParts: [
+        { text: "Let's Start " },
+        { text: 'the Conversation', gradient: true },
+      ],
+      body: 'Whether evaluating a new initiative, expanding operations, developing infrastructure, or exploring strategic opportunities, Gradum provides the expertise and execution support required to move forward with confidence.',
     },
     footerLocations: 'Miami, FL (USA)\nSanto Domingo (Dominican Republic)',
   },
@@ -510,6 +581,13 @@ const es: typeof en = {
     submitInquiry: 'Enviar solicitud',
     returnHome: 'Volver al inicio →',
     scheduleDemo: 'Agendar Demo',
+    scheduleConsultation: 'Agendar una Consultoría',
+    ventures: 'Ventures',
+    footerEntity1: 'Gradum Group LLC',
+    footerEntity1Location: 'Miami, Florida, EE. UU.',
+    footerEntity2: 'Gradum Group, SRL',
+    footerEntity2Location: 'Santo Domingo, República Dominicana',
+    footerServiceTagline: 'Tecnología • Infraestructura • Operaciones',
     footerTagline: 'Plataforma de asesoría y ejecución liderada por ingeniería, estructurada para entornos de alto rendimiento.',
     footerLegal: 'Gradum Group LLC (EE. UU.)  |  Gradum Group, SRL (República Dominicana)',
   },
@@ -521,6 +599,7 @@ const es: typeof en = {
     home: 'Inicio',
     platform: 'Plataforma',
     about: 'Nosotros',
+    execution: 'Ejecución',
     contact: 'Contacto',
     selectLanguage: 'Seleccionar idioma',
     english: 'English',
@@ -555,13 +634,38 @@ const es: typeof en = {
   home: {
     hero: {
       tagline: 'Plataforma de asesoría liderada por ingeniería',
-      mainTitle: 'Una Plataforma de Asesoría y Ejecución Tecnológica',
+      mainTitle: 'Asesoría Estratégica y Ejecución',
+      titleParts: [
+        { text: 'Asesoría ' },
+        { text: 'Estratégica', gradient: true },
+        { text: ' y ' },
+        { text: 'Ejecución', gradient: true },
+      ],
       title1: 'Asesoría',
       title2: 'estructurada.',
       title3: 'Ejecución',
       title4: 'ingenieril.',
-      description: 'Gradum ayuda a las organizaciones a diseñar, construir y escalar soluciones en operaciones empresariales, tecnología e infraestructura.',
+      description: 'Gradum apoya a organizaciones en la gestión de iniciativas complejas en tecnología, infraestructura y operaciones empresariales.',
+      region: 'Apoyando organizaciones en América del Norte y América Latina',
       cta: 'Explorar Plataforma',
+    },
+    whoWeServe: {
+      label: 'A Quién Servimos',
+      headline: 'Para Organizaciones que Gestionan la Complejidad',
+      headlineParts: [
+        { text: 'Para Organizaciones que Gestionan la ' },
+        { text: 'Complejidad', gradient: true },
+      ],
+      body: 'Gradum trabaja con propietarios de empresas, equipos ejecutivos, inversores, desarrolladores y organizaciones de ingeniería que enfrentan decisiones que requieren experiencia especializada, ejecución estructurada y coordinación interfuncional.',
+    },
+    whoWeAre: {
+      label: 'Quiénes Somos',
+      headline: 'Integrados por Diseño',
+      headlineParts: [
+        { text: 'Integrados ' },
+        { text: 'por Diseño', gradient: true },
+      ],
+      body: 'Gradum fue establecido para reunir capacidades que tradicionalmente están fragmentadas en múltiples proveedores. Nuestra plataforma combina asesoría, ejecución y soporte operativo bajo una sola organización.',
     },
     platform: {
       label: 'Nuestra plataforma',
@@ -569,10 +673,10 @@ const es: typeof en = {
       intro: 'Las divisiones de la plataforma operan bajo marcos de mandato definidos e integran una arquitectura unificada de asesoría y ejecución para entornos multifuncionales y multi-entidad.',
     },
     divisions: [
-      { name: 'Gradum Consulting', tagline: 'Asesoría y soporte técnico para equipos que desarrollan sistemas complejos y de rendimiento crítico.', subtitle: 'Asesoría Avanzada en Tecnología e Ingeniería' },
-      { name: 'Gradum Construction', tagline: 'Entrega integral en diseño arquitectónico, ingeniería y ejecución física.', subtitle: 'Ingeniería, Arquitectura y Construcción' },
-      { name: 'Gradum Services', tagline: 'Servicios de operaciones financieras, contabilidad y ejecución de marca para apoyar el crecimiento escalable.', subtitle: 'Operaciones Empresariales y Servicios de Crecimiento' },
-      { name: 'Gradum Accelerator', tagline: 'Trabajamos con empresas en etapa temprana para desarrollar y escalar emprendimientos impulsados por tecnología.', subtitle: 'Desarrollo de Startups y Crecimiento de Ventures' },
+      { name: 'Consultoría', tagline: '', subtitle: 'Servicios de asesoría en tecnología, ingeniería y estrategia que apoyan la innovación, el rendimiento operativo y la transformación digital.' },
+      { name: 'Construcción', tagline: '', subtitle: 'Arquitectura, ingeniería, gestión de proyectos y ejecución de construcción para entornos residenciales, comerciales e industriales.' },
+      { name: 'Servicios', tagline: '', subtitle: 'Servicios de soporte empresarial que incluyen contabilidad, finanzas, marketing, medios y administración operativa.' },
+      { name: 'Ventures', tagline: '', subtitle: 'Inversiones tecnológicas, desarrollo inmobiliario y emprendimientos empresariales alineados con nuestra visión estratégica a largo plazo.' },
     ],
     howWeWork: {
       label: 'Metodología',
@@ -612,7 +716,15 @@ const es: typeof en = {
     builtForCompanies: {
       heading: 'Asesoría Técnica para Impacto Estratégico y de Ejecución',
       description: 'Operamos en los niveles ejecutivo, de arquitectura y de entrega de programas, ayudando a las organizaciones a tomar decisiones técnicas más sólidas y avanzar en iniciativas complejas con claridad.',
-      platformLabel: 'Una Plataforma. Cuatro Capacidades.',
+      sectionLabel: 'Plataforma',
+      platformLabel: 'Cuatro Disciplinas. Una Organización.',
+      platformLabelParts: [
+        { text: 'Cuatro ' },
+        { text: 'Disciplinas.', gradient: true },
+        { text: ' Una ' },
+        { text: 'Organización.', gradient: true },
+      ],
+      platformCta: 'Explorar Plataforma',
       exploreLink: 'Explorar Cada Plataforma',
     },
     advisoryCards: {
@@ -644,7 +756,35 @@ const es: typeof en = {
     letsBuild: {
       heading: 'Diseñado para Entornos Complejos',
       description: 'Gradum integra estrategia, ingeniería y ejecución para entregar soluciones que funcionan en entornos del mundo real.',
-      techTags: ['Tecnología e Ingeniería', 'Operaciones Empresariales', 'Infraestructura y Construcción', 'Datos e Inteligencia'],
+      techTags: ['Sistemas Tecnológicos', 'Disciplinas de Ingeniería', 'Operaciones Empresariales', 'Desarrollo de Infraestructura', 'Transformación Digital', 'Operaciones Financieras'],
+    },
+    differentiator: {
+      label: 'Diferenciador',
+      headline: 'Construido para la Ejecución',
+      headlineParts: [
+        { text: 'Construido para la ' },
+        { text: 'Ejecución', gradient: true },
+      ],
+      body1: 'Las organizaciones suelen contratar firmas separadas para asesoría, experiencia técnica, entrega de proyectos y soporte operativo.',
+      body2: 'Gradum fue establecido para reunir estas capacidades bajo una sola organización, creando mayor alineación, responsabilidad y continuidad durante la ejecución.',
+    },
+    expertise: {
+      label: 'Experiencia',
+      headline: 'Áreas de Experiencia',
+      headlineParts: [
+        { text: 'Áreas de ' },
+        { text: 'Experiencia', gradient: true },
+      ],
+      body: 'Nuestra experiencia abarca sistemas tecnológicos, disciplinas de ingeniería, operaciones empresariales y desarrollo de infraestructura. Aplicamos conocimiento especializado donde contribuye a resultados medibles y objetivos organizacionales a largo plazo.',
+    },
+    engagementSection: {
+      label: 'Engagement',
+      headline: 'Iniciemos la Conversación',
+      headlineParts: [
+        { text: 'Iniciemos ' },
+        { text: 'la Conversación', gradient: true },
+      ],
+      body: 'Ya sea evaluando una nueva iniciativa, expandiendo operaciones, desarrollando infraestructura o explorando oportunidades estratégicas, Gradum proporciona la experiencia y el soporte de ejecución necesarios para avanzar con confianza.',
     },
     footerLocations: 'Miami, FL (EE. UU.)\nSanto Domingo (República Dominicana)',
   },

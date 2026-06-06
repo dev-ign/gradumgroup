@@ -1,4 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" fill="#0A2924"/>
-  <text x="5" y="24" font-family="Arial" font-weight="900" font-size="20" fill="#AEE37B">G</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.3 140.1">
+  <defs>
+    <linearGradient id="brand-gradient" x1="16" y1="18" x2="128" y2="131" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#D8F79B" />
+      <stop offset="38%" stop-color="#AEE37B" />
+      <stop offset="72%" stop-color="#48D0AE" />
+      <stop offset="100%" stop-color="#159B78" />
+    </linearGradient>
+  </defs>
+  <rect width="130.3" height="140.1" rx="24" fill="#0A2924" />
+  <g fill="url(#brand-gradient)">
+    <path d="M57.5,3.8v36.4c0,1-.4,2-1.1,2.7L7.9,91.2c-.7.7-1.1,1.7-1.1,2.7v3.1c0,2.1,1.7,3.8,3.8,3.8h43.2c2.1,0,3.8,1.7,3.8,3.8v27.9c0,2.1-1.7,3.8-3.8,3.8h-26.8c-1,0-2-.4-2.7-1.2L1,110.9c-.7-.7-1-1.6-1-2.6v-54.5c0-1,.4-2,1.1-2.7L51.1,1.1c2.4-2.4,6.4-.7,6.4,2.7h0Z" />
+    <path d="M72.8,3.8v36.4c0,1,.4,2,1.1,2.7l48.5,48.3c.7.7,1.1,1.7,1.1,2.7v3.1c0,2.1-1.7,3.8-3.8,3.8h-43.2c-2.1,0-3.8,1.7-3.8,3.8v27.9c0,2.1,1.7,3.8,3.8,3.8h26.8c1,0,2-.4,2.7-1.2l23.2-24.2c.7-.7,1.1-1.6,1.1-2.6v-54.5c0-1-.4-2-1.1-2.7L79.2,1.1c-2.4-2.4-6.4-.7-6.4,2.7h0Z" />
+  </g>
 </svg>
