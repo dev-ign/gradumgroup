@@ -1,102 +1,51 @@
-import { useModal } from '../../context/ModalContext';
+import { Link } from 'react-router-dom';
+import { platformNavigation } from '../../data/navigation';
+import { useLanguage } from '../../context/LanguageContext';
 import { useTranslation } from '../../i18n/useTranslation';
-import { LanguageSelector } from '../ui/LanguageSelector';
+import { Reveal, StaggerGroup } from '../ui/Reveal';
+
+const labelKeys: Record<string, string> = {
+  Consulting: 'nav.consulting', Construction: 'nav.construction', Services: 'nav.services', Capabilities: 'nav.capabilities',
+  Industries: 'nav.industries', 'How We Work': 'nav.howWeWork', Architecture: 'nav.architecture', Engineering: 'nav.engineering',
+  Build: 'nav.build', 'Accounting & Finance': 'nav.accountingFinance', 'Marketing & Media': 'nav.marketingMedia', 'Admin & Legal': 'nav.adminLegal',
+};
 
 export function Footer() {
-  const { openModal } = useModal();
   const { t } = useTranslation();
+  const { lang, setLang } = useLanguage();
+  const label = (value: string) => labelKeys[value] ? t(labelKeys[value]) : value;
 
   return (
-    <footer
-      className="border-t border-[var(--border-color)] mt-auto"
-      style={{ backgroundColor: 'var(--bg-secondary)' }}
-    >
-      <div className="max-w-7xl mx-auto px-6 py-12">
-
-        {/* Top row — brand + CTA */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-6 mb-10">
-          <a href="/" className="inline-flex items-center gap-2 group">
-            <span className="text-xl font-black tracking-tight text-[var(--text-primary)] group-hover:text-[#AEE37B] transition-colors duration-200">
-              GRADUM
-            </span>
-            <span className="text-[10px] font-semibold tracking-[0.3em] text-[var(--text-secondary)] uppercase self-end pb-0.5">
-              GROUP
-            </span>
-          </a>
-          <button
-            onClick={openModal}
-            className="self-start text-xs bg-[#AEE37B] hover:bg-[#c8f090] font-semibold px-4 py-2 border border-[var(--border-color)] text-[#0A2924] hover:border-[var(--accent-fg)] transition-all duration-200 tracking-wide rounded-full"
-          >
-            {t('common.requestConsultation')}
-          </button>
-        </div>
-
-        {/* Service tagline */}
-        <p
-          className="text-xs tracking-widest uppercase mb-10"
-          style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-ui)' }}
-        >
-          {t('common.footerServiceTagline')}
-        </p>
-
-        {/* Bottom bar */}
-        <div className="border-t border-[var(--border-color)] pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <LanguageSelector />
-
-          {/* Social icons */}
-          <div className="flex items-center gap-4">
-            <a
-              href="https://www.instagram.com/gradumgroup/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Gradum Group Instagram"
-              className="text-[var(--text-secondary)] hover:opacity-80 transition-opacity duration-200"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="rounded-md">
-                <defs>
-                  <linearGradient id="ig-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#F58529" />
-                    <stop offset="50%" stopColor="#DD2A7B" />
-                    <stop offset="100%" stopColor="#8134AF" />
-                  </linearGradient>
-                </defs>
-                <rect x="2" y="2" width="20" height="20" rx="5" stroke="url(#ig-gradient)" strokeWidth="2" fill="none" />
-                <circle cx="12" cy="12" r="4" stroke="url(#ig-gradient)" strokeWidth="2" fill="none" />
-                <circle cx="18" cy="6" r="1.25" fill="url(#ig-gradient)" />
-              </svg>
-            </a>
-            <a
-              href="https://www.facebook.com/gradumgroup"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Gradum Group Facebook"
-              className="text-[var(--text-secondary)] hover:opacity-80 transition-opacity duration-200"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="#1877F2" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.412c0-3.025 1.792-4.697 4.533-4.697 1.313 0 2.686.236 2.686.236v2.972H15.83c-1.491 0-1.956.931-1.956 1.887v2.263h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
-              </svg>
-            </a>
-            <a
-              href="https://www.linkedin.com/company/gradumgroup"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Gradum Group LinkedIn"
-              className="text-[var(--text-secondary)] hover:opacity-80 transition-opacity duration-200"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A66C2" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 23.999 23.227 23.999 22.271V1.729C23.999.774 23.2 0 22.222 0h.003z" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <div className="mt-4">
-          <p className="text-[11px] text-[var(--text-secondary)]">
-            {t('common.footerLegal')}
-          </p>
-        </div>
-
+    <footer className="site-footer">
+      <div className="site-footer__top">
+        <Reveal trigger="viewport" className="site-footer__brand">
+          <div><span />Gradum Group</div>
+          <p>{t('common.footerFigmaTagline')}</p>
+        </Reveal>
+        <StaggerGroup trigger="viewport" className="site-footer__columns" stagger={0.06}>
+          {platformNavigation.map((group) => (
+            <Reveal key={group.href}>
+              <Link className="site-footer__heading" to={group.href}>{label(group.label)}</Link>
+              {group.children.slice(1).map((item) => <Link key={item.href} to={item.href}>{label(item.label)}</Link>)}
+            </Reveal>
+          ))}
+          <Reveal>
+            <span className="site-footer__heading">{t('nav.company')}</span>
+            <Link to="/about">{t('nav.about')}</Link>
+            <Link to="/ventures">{t('nav.ventures')}</Link>
+            <Link to="/insights">{t('nav.insights')}</Link>
+            <a href="#client-portal">{t('nav.clientPortal')}</a>
+          </Reveal>
+        </StaggerGroup>
       </div>
+      <Reveal trigger="viewport" className="site-footer__bottom">
+        <p>© 2026 Gradum Group. {t('common.allRightsReserved')}</p>
+        <div className="footer-language" aria-label={t('nav.selectLanguage')}>
+          <button className={lang === 'en' ? 'active' : ''} aria-pressed={lang === 'en'} onClick={() => setLang('en')}>EN</button><span aria-hidden="true">·</span>
+          <button className={lang === 'es' ? 'active' : ''} aria-pressed={lang === 'es'} onClick={() => setLang('es')}>ES</button>
+        </div>
+        <p>{t('common.footerRegions')}</p>
+      </Reveal>
     </footer>
   );
 }

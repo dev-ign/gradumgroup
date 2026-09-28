@@ -1,20 +1,25 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import type { ReactNode } from 'react';
+import { motionTokens } from '../../motion/presets';
 
 const variants = {
-  initial: { opacity: 0, y: 16 },
+  initial: { opacity: 0, y: 4 },
   animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -8 },
+  exit: { opacity: 0, y: 0 },
 };
 
 export function PageTransition({ children }: { children: ReactNode }) {
+  const reducedMotion = useReducedMotion();
   return (
     <motion.div
       variants={variants}
-      initial="initial"
+      initial={reducedMotion ? false : 'initial'}
       animate="animate"
       exit="exit"
-      transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+      transition={{
+        duration: reducedMotion ? 0 : motionTokens.duration.fast,
+        ease: motionTokens.ease,
+      }}
       className="page-transition"
     >
       {children}
