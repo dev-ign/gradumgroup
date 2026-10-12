@@ -26,7 +26,7 @@ export function DetailPage({ content }: DetailPageProps) {
           {content.image && <Reveal trigger="mount" variant="image" delay={0.22} className="detail-hero__image-frame"><img className="detail-hero__image" src={content.image} alt={content.imageAlt ? l(content.imageAlt) : ''} /></Reveal>}
         </section>
 
-        <StaggerGroup as="section" trigger="viewport" className={`detail-features section-shell detail-features--${content.layout}`} stagger={0.06}>
+        <StaggerGroup as="section" trigger="viewport" className={`detail-features section-shell detail-features--${content.layout}`}>
           {content.items.map((item) => (
             <Reveal as="article" className="detail-feature" key={`${item.code ?? ''}-${l(item.title)}`}>
               {item.image && <img src={item.image} alt="" />}
@@ -43,12 +43,12 @@ export function DetailPage({ content }: DetailPageProps) {
             {content.statementImage && content.layout !== 'split' && <img className="approach-band__background" src={content.statementImage} alt="" />}
             <StaggerGroup trigger="viewport" className="approach-band__inner">
               {content.statementImage && content.family === 'services' && content.layout === 'split' && <Reveal variant="image" className="approach-band__visual"><img src={content.statementImage} alt="" /></Reveal>}
-              <Reveal>
-                {content.statementEyebrow && <p className="eyebrow">{l(content.statementEyebrow)}</p>}
-                <h2>{l(content.statement)}</h2>
-                {content.family === 'consulting' && <p>{lang === 'es' ? 'Seleccionamos métodos y plataformas según los requisitos técnicos, las necesidades de integración y la mantenibilidad a largo plazo.' : 'We select methods and platforms based on technical requirements, integration needs and long-term maintainability.'}</p>}
-                <button className="pill-button" onClick={openModal}>{l(content.cta)}</button>
-              </Reveal>
+              <StaggerGroup trigger="inherit">
+                {content.statementEyebrow && <Reveal><p className="eyebrow">{l(content.statementEyebrow)}</p></Reveal>}
+                <Reveal><h2>{l(content.statement)}</h2></Reveal>
+                {content.family === 'consulting' && <Reveal><p>{lang === 'es' ? 'Seleccionamos métodos y plataformas según los requisitos técnicos, las necesidades de integración y la mantenibilidad a largo plazo.' : 'We select methods and platforms based on technical requirements, integration needs and long-term maintainability.'}</p></Reveal>}
+                <Reveal><button className="pill-button" onClick={openModal}>{l(content.cta)}</button></Reveal>
+              </StaggerGroup>
             </StaggerGroup>
           </section>
         )}

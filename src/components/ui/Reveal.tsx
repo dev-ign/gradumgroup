@@ -29,7 +29,7 @@ type RevealProps = SharedMotionProps & {
 };
 
 type StaggerGroupProps = SharedMotionProps & {
-  trigger?: Exclude<RevealTrigger, 'inherit'>;
+  trigger?: RevealTrigger;
   delayChildren?: number;
   staggerChildren?: number;
   stagger?: number;
@@ -49,7 +49,7 @@ const renderMotionElement = (
     initial?: false | string;
     animate?: string;
     whileInView?: string;
-    viewport?: { once: boolean; amount: number };
+    viewport?: { once: boolean; amount: number; margin: string };
   },
 ) => {
   if (as === 'article') return <motion.article {...props} />;
@@ -74,7 +74,7 @@ export const Reveal = ({
     ? {
         initial: prefersReducedMotion ? false as const : 'hidden',
         whileInView: 'visible',
-        viewport: { once, amount },
+        viewport: { once, amount, margin: motionTokens.viewport.margin },
       }
     : trigger === 'mount'
       ? {
@@ -95,7 +95,7 @@ export const Reveal = ({
 export const StaggerGroup = ({
   as = 'div',
   trigger = 'mount',
-  delayChildren = 0,
+  delayChildren = motionTokens.groupDelay,
   staggerChildren,
   stagger,
   amount = motionTokens.viewport.amount,
@@ -113,12 +113,14 @@ export const StaggerGroup = ({
     ? {
         initial: prefersReducedMotion ? false as const : 'hidden',
         whileInView: 'visible',
-        viewport: { once, amount },
+        viewport: { once, amount, margin: motionTokens.viewport.margin },
       }
-    : {
+    : trigger === 'mount'
+      ? {
         initial: prefersReducedMotion ? false as const : 'hidden',
         animate: 'visible',
-      };
+      }
+      : {};
 
   return renderMotionElement(as, {
     ...props,

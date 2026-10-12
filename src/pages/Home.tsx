@@ -58,11 +58,11 @@ export function Home() {
         </section>
 
         <section className="disciplines section-shell">
-          <Reveal trigger="viewport" className="section-heading">
-            <h2>{l(homeContent.disciplines.title)}</h2>
-            <p>{l(homeContent.disciplines.description)}</p>
-          </Reveal>
-          <StaggerGroup trigger="viewport" className="discipline-grid" stagger={0.06}>
+          <StaggerGroup trigger="viewport" className="section-heading">
+            <Reveal><h2>{l(homeContent.disciplines.title)}</h2></Reveal>
+            <Reveal><p>{l(homeContent.disciplines.description)}</p></Reveal>
+          </StaggerGroup>
+          <StaggerGroup trigger="viewport" className="discipline-grid">
             {disciplines.map((item) => (
               <Reveal className="discipline-card-reveal" key={item.href}>
                 <Link className={`discipline-card family-${item.family}`} to={item.href} style={{ backgroundImage: `linear-gradient(145deg, rgba(0,0,0,.7), rgba(10,41,36,.28)), url(${item.image})` }}>
@@ -81,7 +81,10 @@ export function Home() {
         </StaggerGroup>
 
         <StaggerGroup as="section" trigger="viewport" className="latam-section section-shell">
-          <Reveal><h2>{l(homeContent.latam.title)}</h2><p>{l(homeContent.latam.description)}</p></Reveal>
+          <StaggerGroup trigger="inherit">
+            <Reveal><h2>{l(homeContent.latam.title)}</h2></Reveal>
+            <Reveal><p>{l(homeContent.latam.description)}</p></Reveal>
+          </StaggerGroup>
           <Reveal variant="image" className="latam-section__visual"><img src="/assets/figma/latam-flags.png" alt="Flags of countries served across the Americas" /></Reveal>
         </StaggerGroup>
 
@@ -91,7 +94,11 @@ export function Home() {
         </StaggerGroup>
 
         <StaggerGroup as="section" trigger="viewport" className="home-cta section-shell">
-          <Reveal><h2>{l(homeContent.cta.title)}</h2><p>{l(homeContent.cta.description)}</p><button className="pill-button" onClick={openModal}>{lang === 'es' ? 'Iniciar una Conversación' : 'Start a Conversation'}</button></Reveal>
+          <StaggerGroup trigger="inherit">
+            <Reveal><h2>{l(homeContent.cta.title)}</h2></Reveal>
+            <Reveal><p>{l(homeContent.cta.description)}</p></Reveal>
+            <Reveal><button className="pill-button" onClick={openModal}>{lang === 'es' ? 'Iniciar una Conversación' : 'Start a Conversation'}</button></Reveal>
+          </StaggerGroup>
           <Reveal variant="image" className="home-cta__visual"><img src="/assets/figma/home-cta.png" alt="Team collaborating on a digital product" /></Reveal>
         </StaggerGroup>
       </article>

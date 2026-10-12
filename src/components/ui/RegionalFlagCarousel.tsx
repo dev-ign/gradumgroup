@@ -86,9 +86,11 @@ export const RegionalFlagCarousel = ({ lang = 'en' }: { lang?: 'en' | 'es' }) =>
       {prefersReducedMotion ? (
         renderSequence()
       ) : (
-        <div className="regional-marquee__track">
-          {renderSequence()}
-          {renderSequence(true)}
+        <div className="regional-marquee__viewport">
+          <div className="regional-marquee__track">
+            {renderSequence()}
+            {renderSequence(true)}
+          </div>
         </div>
       )}
     </div>

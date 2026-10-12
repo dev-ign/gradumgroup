@@ -22,7 +22,7 @@ export function Footer() {
           <div><span />Gradum Group</div>
           <p>{t('common.footerFigmaTagline')}</p>
         </Reveal>
-        <StaggerGroup trigger="viewport" className="site-footer__columns" stagger={0.06}>
+        <StaggerGroup trigger="viewport" className="site-footer__columns">
           {platformNavigation.map((group) => (
             <Reveal key={group.href}>
               <Link className="site-footer__heading" to={group.href}>{label(group.label)}</Link>

@@ -7,21 +7,23 @@ export type RevealVariant = 'fadeUp' | 'fadeIn' | 'image';
 export const motionTokens = {
   duration: {
     fast: 0.25,
-    standard: 0.54,
-    slow: 0.64,
+    standard: 0.55,
+    slow: 0.6,
   },
   distance: {
-    subtle: 16,
+    subtle: 20,
     image: 12,
   },
   stagger: {
-    tight: 0.055,
-    standard: 0.075,
+    tight: 0.08,
+    standard: 0.1,
     image: 0.14,
   },
   viewport: {
-    amount: 0.15,
+    amount: 0.08,
+    margin: '0px',
   },
+  groupDelay: 0.04,
   ease: premiumEase,
 } as const;
 
@@ -55,12 +57,10 @@ export const imageRevealVariants: Variants = {
   hidden: {
     opacity: 0,
     y: motionTokens.distance.image,
-    scale: 0.985,
   },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
     transition: {
       duration: motionTokens.duration.slow,
       ease: motionTokens.ease,
@@ -69,8 +69,8 @@ export const imageRevealVariants: Variants = {
 };
 
 export const reducedRevealVariants: Variants = {
-  hidden: { opacity: 1, y: 0, scale: 1 },
-  visible: { opacity: 1, y: 0, scale: 1 },
+  hidden: { opacity: 1, y: 0 },
+  visible: { opacity: 1, y: 0 },
 };
 
 export const createRevealVariants = (
@@ -82,6 +82,8 @@ export const createRevealVariants = (
     : variant === 'fadeIn'
       ? fadeInVariants
       : revealVariants;
+  if (delay === 0) return source;
+
   const visible = source.visible as Record<string, unknown>;
   const transition = (visible.transition ?? {}) as Record<string, unknown>;
 
@@ -98,7 +100,7 @@ export const createRevealVariants = (
 };
 
 export const createStaggerVariants = (
-  delayChildren: number = 0,
+  delayChildren: number = motionTokens.groupDelay,
   staggerChildren: number = motionTokens.stagger.standard,
 ): Variants => ({
   hidden: {},
