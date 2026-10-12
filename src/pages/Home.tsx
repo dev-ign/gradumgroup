@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { PageTransition } from '../components/ui/PageTransition';
 import { RegionalFlagCarousel } from '../components/ui/RegionalFlagCarousel';
 import { Reveal, StaggerGroup } from '../components/ui/Reveal';
+import { OptimizedImage } from '../components/ui/OptimizedImage';
+import { imageSizes } from '../data/imageSizes';
 import { useLanguage } from '../context/LanguageContext';
 import { useModal } from '../context/ModalContext';
 import { homeContent, localize, platformLandings } from '../data/siteContent';
@@ -15,9 +17,9 @@ export function Home() {
   const [heroLead, heroFinish] = l(homeContent.hero.title).split('. ');
   const regionalParts = l(homeContent.hero.regional).split(/(North America|Latin America|Norteamérica|América Latina)/g);
   const disciplines = [
-    { ...platformLandings.consulting, href: '/consulting', image: '/assets/figma/home-consulting.png' },
-    { ...platformLandings.construction, href: '/construction', image: '/assets/figma/home-construction.png' },
-    { ...platformLandings.services, href: '/services', image: '/assets/figma/home-services.png' },
+    { ...platformLandings.consulting, href: '/consulting', image: homeContent.imagery.consulting },
+    { ...platformLandings.construction, href: '/construction', image: homeContent.imagery.construction },
+    { ...platformLandings.services, href: '/services', image: homeContent.imagery.services },
   ];
 
   return (
@@ -51,9 +53,9 @@ export function Home() {
             delayChildren={0.38}
             staggerChildren={motionTokens.stagger.image}
           >
-            <Reveal variant="image" className="home-hero__image home-hero__image--portrait"><img src="/assets/figma/home-hero-portrait.png" alt="Consulting professional" width="319" height="389" loading="eager" fetchPriority="high" /></Reveal>
-            <Reveal variant="image" className="home-hero__image home-hero__image--construction"><img src="/assets/figma/home-hero-construction.png" alt="Construction professional" width="287" height="221" loading="eager" /></Reveal>
-            <Reveal variant="image" className="home-hero__image home-hero__image--developer"><img src="/assets/figma/home-hero-developer.png" alt="Software developer" width="287" height="249" loading="eager" /></Reveal>
+            <Reveal variant="image" className="home-hero__image home-hero__image--portrait"><OptimizedImage src="/assets/figma/home-hero-portrait.png" alt="Consulting professional" sizes="319px" loading="eager" fetchPriority="high" /></Reveal>
+            <Reveal variant="image" className="home-hero__image home-hero__image--construction"><OptimizedImage src="/assets/figma/home-hero-construction.png" alt="Construction professional" sizes="287px" loading="eager" /></Reveal>
+            <Reveal variant="image" className="home-hero__image home-hero__image--developer"><OptimizedImage src="/assets/figma/home-hero-developer.png" alt="Software developer" sizes="287px" loading="eager" /></Reveal>
           </StaggerGroup>
         </section>
 
@@ -65,7 +67,8 @@ export function Home() {
           <StaggerGroup trigger="viewport" className="discipline-grid">
             {disciplines.map((item) => (
               <Reveal className="discipline-card-reveal" key={item.href}>
-                <Link className={`discipline-card family-${item.family}`} to={item.href} style={{ backgroundImage: `linear-gradient(145deg, rgba(0,0,0,.7), rgba(10,41,36,.28)), url(${item.image})` }}>
+                <Link className={`discipline-card family-${item.family}`} to={item.href}>
+                  <OptimizedImage src={item.image} alt="" sizes={imageSizes.card} loading="lazy" decoding="async" />
                   <h3>{l(item.eyebrow).replace('Gradum ', '')}</h3>
                   <p>{l(item.description)}</p>
                   <span>{lang === 'es' ? 'Explorar' : 'Explore'} {l(item.eyebrow).replace('Gradum ', '')} →</span>
@@ -99,7 +102,7 @@ export function Home() {
             <Reveal><p>{l(homeContent.cta.description)}</p></Reveal>
             <Reveal><button className="pill-button" onClick={openModal}>{lang === 'es' ? 'Iniciar una Conversación' : 'Start a Conversation'}</button></Reveal>
           </StaggerGroup>
-          <Reveal variant="image" className="home-cta__visual"><img src="/assets/figma/home-cta.png" alt="Team collaborating on a digital product" /></Reveal>
+          <Reveal variant="image" className="home-cta__visual"><OptimizedImage src={homeContent.imagery.cta} alt={l(homeContent.imagery.ctaAlt)} loading="lazy" decoding="async" /></Reveal>
         </StaggerGroup>
       </article>
     </PageTransition>

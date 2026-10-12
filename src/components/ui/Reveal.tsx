@@ -1,6 +1,7 @@
 import { motion, useReducedMotion, type MotionStyle } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { createContext, useContext, type ReactNode } from 'react';
 import {
+  createProgressiveRevealVariants,
   createRevealVariants,
   createStaggerVariants,
   motionTokens,
@@ -10,6 +11,7 @@ import {
 
 type MotionTag = 'div' | 'article' | 'section' | 'footer' | 'ul';
 type RevealTrigger = 'inherit' | 'mount' | 'viewport';
+const ProgressiveRevealContext = createContext(false);
 
 interface SharedMotionProps {
   children: ReactNode;
@@ -69,25 +71,30 @@ export const Reveal = ({
   ...props
 }: RevealProps) => {
   const prefersReducedMotion = useReducedMotion();
+  const inheritedProgressive = useContext(ProgressiveRevealContext);
   const resolvedVariant = variant === 'content' ? 'fadeUp' : variant;
+  const progressive = !prefersReducedMotion && (trigger === 'viewport' || (trigger === 'inherit' && inheritedProgressive));
   const triggerProps = trigger === 'viewport'
     ? {
-        initial: prefersReducedMotion ? false as const : 'hidden',
-        whileInView: 'visible',
-        viewport: { once, amount, margin: motionTokens.viewport.margin },
+        initial: false as const,
+        ...(prefersReducedMotion
+          ? { animate: 'visible' }
+          : { whileInView: 'visible', viewport: { once, amount, margin: motionTokens.viewport.margin } }),
       }
     : trigger === 'mount'
       ? {
           initial: prefersReducedMotion ? false as const : 'hidden',
           animate: 'visible',
         }
-      : {};
+      : progressive ? { initial: false as const } : {};
 
   return renderMotionElement(as, {
     ...props,
     variants: prefersReducedMotion
       ? reducedRevealVariants
-      : createRevealVariants(resolvedVariant, delay),
+      : progressive
+        ? createProgressiveRevealVariants(resolvedVariant, delay)
+        : createRevealVariants(resolvedVariant, delay),
     ...triggerProps,
   });
 };
@@ -103,6 +110,7 @@ export const StaggerGroup = ({
   ...props
 }: StaggerGroupProps) => {
   const prefersReducedMotion = useReducedMotion();
+  const inheritedProgressive = useContext(ProgressiveRevealContext);
   const variants = createStaggerVariants(
     prefersReducedMotion ? 0 : delayChildren,
     prefersReducedMotion
@@ -111,9 +119,10 @@ export const StaggerGroup = ({
   );
   const triggerProps = trigger === 'viewport'
     ? {
-        initial: prefersReducedMotion ? false as const : 'hidden',
-        whileInView: 'visible',
-        viewport: { once, amount, margin: motionTokens.viewport.margin },
+        initial: false as const,
+        ...(prefersReducedMotion
+          ? { animate: 'visible' }
+          : { whileInView: 'visible', viewport: { once, amount, margin: motionTokens.viewport.margin } }),
       }
     : trigger === 'mount'
       ? {
@@ -122,9 +131,11 @@ export const StaggerGroup = ({
       }
       : {};
 
-  return renderMotionElement(as, {
+  const element = renderMotionElement(as, {
     ...props,
     variants,
     ...triggerProps,
   });
+  const progressive = trigger === 'viewport' || (trigger === 'inherit' && inheritedProgressive);
+  return <ProgressiveRevealContext.Provider value={progressive}>{element}</ProgressiveRevealContext.Provider>;
 };

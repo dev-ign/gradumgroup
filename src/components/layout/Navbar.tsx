@@ -198,7 +198,10 @@ export function Navbar() {
               if (!platformRef.current?.contains(document.activeElement)) setMenuOpen(false);
             });
           }}>
-            <button className={platformIsActive ? 'is-active' : ''} ref={triggerRef} type="button" aria-expanded={menuOpen} aria-controls="platform-menu" onClick={() => setMenuOpen((value) => !value)} onKeyDown={(event) => {
+            <button className={platformIsActive ? 'is-active' : ''} ref={triggerRef} type="button" aria-expanded={menuOpen} aria-controls="platform-menu" onClick={(event) => {
+              if (event.detail === 0) setMenuOpen((value) => !value);
+              else openMenu();
+            }} onKeyDown={(event) => {
               if (event.key === 'ArrowDown') {
                 event.preventDefault();
                 openMenu();

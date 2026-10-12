@@ -99,6 +99,27 @@ export const createRevealVariants = (
   };
 };
 
+// Viewport content starts in its natural, visible state. If an observer sees it,
+// these keyframes add the entrance motion without making visibility depend on
+// that observer firing (a fast scroll can skip an entire section).
+export const createProgressiveRevealVariants = (
+  variant: RevealVariant = 'fadeUp',
+  delay = 0,
+): Variants => {
+  const distance = variant === 'image' ? motionTokens.distance.image : motionTokens.distance.subtle;
+  return {
+    visible: {
+      opacity: [0, 1],
+      ...(variant === 'fadeIn' ? {} : { y: [distance, 0] }),
+      transition: {
+        duration: variant === 'image' ? motionTokens.duration.slow : motionTokens.duration.standard,
+        ease: motionTokens.ease,
+        delay,
+      },
+    },
+  };
+};
+
 export const createStaggerVariants = (
   delayChildren: number = motionTokens.groupDelay,
   staggerChildren: number = motionTokens.stagger.standard,

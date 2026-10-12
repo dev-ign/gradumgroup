@@ -1,0 +1,921 @@
+{
+  "/assets/figma/Construcción/architect-engineer-pointing-architectural-building-prototype-analyzing-construction-model-computer-businessman-designer-working-remote-from-home-real-estate-project-modeling-sketch.jpg": {
+    "width": 5340,
+    "height": 3560,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/architect-engineer-pointing-architectural--e164d493-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/architect-engineer-pointing-architectural--e164d493-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/architect-engineer-pointing-architectural--e164d493-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/architect-engineer-pointing-architectural--e164d493-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/architect-engineer-pointing-architectural--e164d493-1600.jpg"
+  },
+  "/assets/figma/Construcción/asian-two-business-man-construction-engineers-supervising-progress-construction-project-construction-site.jpg": {
+    "width": 7952,
+    "height": 5304,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/asian-two-business-man-construction-engine-9e8b2bb7-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/asian-two-business-man-construction-engine-9e8b2bb7-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/asian-two-business-man-construction-engine-9e8b2bb7-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/asian-two-business-man-construction-engine-9e8b2bb7-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/asian-two-business-man-construction-engine-9e8b2bb7-1600.jpg"
+  },
+  "/assets/figma/Construcción/close-up-construction-worker-construction-site.jpg": {
+    "width": 5760,
+    "height": 3840,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/close-up-construction-worker-construction--d1d3ed0b-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/close-up-construction-worker-construction--d1d3ed0b-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/close-up-construction-worker-construction--d1d3ed0b-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/close-up-construction-worker-construction--d1d3ed0b-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/close-up-construction-worker-construction--d1d3ed0b-1600.jpg"
+  },
+  "/assets/figma/Construcción/construction-site-with-tall-crane-building-development.jpg": {
+    "width": 3560,
+    "height": 5360,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/construction-site-with-tall-crane-building-3c72856d-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/construction-site-with-tall-crane-building-3c72856d-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/construction-site-with-tall-crane-building-3c72856d-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/construction-site-with-tall-crane-building-3c72856d-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/construction-site-with-tall-crane-building-3c72856d-1600.jpg"
+  },
+  "/assets/figma/Construcción/detailed-view-interior-inspection-process-home.jpg": {
+    "width": 2560,
+    "height": 2560,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/detailed-view-interior-inspection-process--2fae99f0-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/detailed-view-interior-inspection-process--2fae99f0-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/detailed-view-interior-inspection-process--2fae99f0-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/detailed-view-interior-inspection-process--2fae99f0-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/detailed-view-interior-inspection-process--2fae99f0-1600.jpg"
+  },
+  "/assets/figma/Construcción/employee-working-project-side-view.jpg": {
+    "width": 7952,
+    "height": 5304,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/employee-working-project-side-view-e8751f9f-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/employee-working-project-side-view-e8751f9f-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/employee-working-project-side-view-e8751f9f-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/employee-working-project-side-view-e8751f9f-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/employee-working-project-side-view-e8751f9f-1600.jpg"
+  },
+  "/assets/figma/Construcción/portrait-architect-engineer-with-experience-multistory-building-construction.jpg": {
+    "width": 8256,
+    "height": 5504,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/portrait-architect-engineer-with-experienc-71856e3d-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/portrait-architect-engineer-with-experienc-71856e3d-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/portrait-architect-engineer-with-experienc-71856e3d-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/portrait-architect-engineer-with-experienc-71856e3d-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/portrait-architect-engineer-with-experienc-71856e3d-1600.jpg"
+  },
+  "/assets/figma/Construcción/steel-bar-site-construction.jpg": {
+    "width": 5760,
+    "height": 3840,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/steel-bar-site-construction-8c8fc667-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/steel-bar-site-construction-8c8fc667-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/steel-bar-site-construction-8c8fc667-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/steel-bar-site-construction-8c8fc667-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/steel-bar-site-construction-8c8fc667-1600.jpg"
+  },
+  "/assets/figma/Construcción/unfinished-gray-building-construction-exterior.jpg": {
+    "width": 2596,
+    "height": 3888,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-1600.jpg"
+  },
+  "/assets/figma/Construcción/woman-studying-draft-construction-site.jpg": {
+    "width": 6016,
+    "height": 4016,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/construccion/woman-studying-draft-construction-site-0c8c456f-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/construccion/woman-studying-draft-construction-site-0c8c456f-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/construccion/woman-studying-draft-construction-site-0c8c456f-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/construccion/woman-studying-draft-construction-site-0c8c456f-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/construccion/woman-studying-draft-construction-site-0c8c456f-1600.jpg"
+  },
+  "/assets/figma/Creatividad/medium-shot-business-woman-with-post-its.jpg": {
+    "width": 5647,
+    "height": 3765,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/creatividad/medium-shot-business-woman-with-post-its-b783c5d9-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/creatividad/medium-shot-business-woman-with-post-its-b783c5d9-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/creatividad/medium-shot-business-woman-with-post-its-b783c5d9-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/creatividad/medium-shot-business-woman-with-post-its-b783c5d9-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/creatividad/medium-shot-business-woman-with-post-its-b783c5d9-1600.jpg"
+  },
+  "/assets/figma/Creatividad/medium-shot-happy-business-people.jpg": {
+    "width": 5710,
+    "height": 3812,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/creatividad/medium-shot-happy-business-people-ea5fff9a-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/creatividad/medium-shot-happy-business-people-ea5fff9a-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/creatividad/medium-shot-happy-business-people-ea5fff9a-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/creatividad/medium-shot-happy-business-people-ea5fff9a-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/creatividad/medium-shot-happy-business-people-ea5fff9a-1600.jpg"
+  },
+  "/assets/figma/Creatividad/medium-shot-people-meeting.jpg": {
+    "width": 5784,
+    "height": 3856,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/creatividad/medium-shot-people-meeting-a1853016-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/creatividad/medium-shot-people-meeting-a1853016-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/creatividad/medium-shot-people-meeting-a1853016-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/creatividad/medium-shot-people-meeting-a1853016-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/creatividad/medium-shot-people-meeting-a1853016-1600.jpg"
+  },
+  "/assets/figma/Creatividad/medium-shot-people-working-with-laptop.jpg": {
+    "width": 4590,
+    "height": 3672,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/creatividad/medium-shot-people-working-with-laptop-05356467-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/creatividad/medium-shot-people-working-with-laptop-05356467-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/creatividad/medium-shot-people-working-with-laptop-05356467-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/creatividad/medium-shot-people-working-with-laptop-05356467-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/creatividad/medium-shot-people-working-with-laptop-05356467-1600.jpg"
+  },
+  "/assets/figma/Creatividad/medium-shot-smiley-business-woman-with-post-its.jpg": {
+    "width": 5731,
+    "height": 3821,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/creatividad/medium-shot-smiley-business-woman-with-pos-b13f5328-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/creatividad/medium-shot-smiley-business-woman-with-pos-b13f5328-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/creatividad/medium-shot-smiley-business-woman-with-pos-b13f5328-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/creatividad/medium-shot-smiley-business-woman-with-pos-b13f5328-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/creatividad/medium-shot-smiley-business-woman-with-pos-b13f5328-1600.jpg"
+  },
+  "/assets/figma/Finanzas/high-angle-woman-working-laptop.jpg": {
+    "width": 4000,
+    "height": 6000,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/finanzas/high-angle-woman-working-laptop-8792749c-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/finanzas/high-angle-woman-working-laptop-8792749c-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/finanzas/high-angle-woman-working-laptop-8792749c-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/finanzas/high-angle-woman-working-laptop-8792749c-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/finanzas/high-angle-woman-working-laptop-8792749c-1600.jpg"
+  },
+  "/assets/figma/Finanzas/man-is-writing-calculator-pen-paper.jpg": {
+    "width": 5170,
+    "height": 5170,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/finanzas/man-is-writing-calculator-pen-paper-2c4076b2-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/finanzas/man-is-writing-calculator-pen-paper-2c4076b2-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/finanzas/man-is-writing-calculator-pen-paper-2c4076b2-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/finanzas/man-is-writing-calculator-pen-paper-2c4076b2-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/finanzas/man-is-writing-calculator-pen-paper-2c4076b2-1600.jpg"
+  },
+  "/assets/figma/Finanzas/medium-shot-woman-working-as-economist.jpg": {
+    "width": 4000,
+    "height": 6000,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/finanzas/medium-shot-woman-working-as-economist-530aca35-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/finanzas/medium-shot-woman-working-as-economist-530aca35-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/finanzas/medium-shot-woman-working-as-economist-530aca35-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/finanzas/medium-shot-woman-working-as-economist-530aca35-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/finanzas/medium-shot-woman-working-as-economist-530aca35-1600.jpg"
+  },
+  "/assets/figma/Finanzas/middle-aged-hispanic-business-people (2).jpg": {
+    "width": 7999,
+    "height": 5333,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/finanzas/middle-aged-hispanic-business-people-2-67bc2b1a-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/finanzas/middle-aged-hispanic-business-people-2-67bc2b1a-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/finanzas/middle-aged-hispanic-business-people-2-67bc2b1a-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/finanzas/middle-aged-hispanic-business-people-2-67bc2b1a-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/finanzas/middle-aged-hispanic-business-people-2-67bc2b1a-1600.jpg"
+  },
+  "/assets/figma/Finanzas/side-view-cropped-unrecognizable-business-people-working-common-desk.jpg": {
+    "width": 7360,
+    "height": 4912,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/finanzas/side-view-cropped-unrecognizable-business--b9e2569f-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/finanzas/side-view-cropped-unrecognizable-business--b9e2569f-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/finanzas/side-view-cropped-unrecognizable-business--b9e2569f-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/finanzas/side-view-cropped-unrecognizable-business--b9e2569f-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/finanzas/side-view-cropped-unrecognizable-business--b9e2569f-1600.jpg"
+  },
+  "/assets/figma/Finanzas/side-view-woman-working-as-economist.jpg": {
+    "width": 6000,
+    "height": 4000,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/finanzas/side-view-woman-working-as-economist-f5154481-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/finanzas/side-view-woman-working-as-economist-f5154481-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/finanzas/side-view-woman-working-as-economist-f5154481-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/finanzas/side-view-woman-working-as-economist-f5154481-1600.webp"
+      },
+      {
+        "width": 1920,
+        "src": "/assets/optimized/finanzas/side-view-woman-working-as-economist-f5154481-1920.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/finanzas/side-view-woman-working-as-economist-f5154481-1920.jpg"
+  },
+  "/assets/figma/Finanzas/tablet-label-shipping-with-man-warehouse-logistics-route-tracking-code-cargo-box-inventory-checklist-ecommerce-delivery-with-person-factory-supplier-distribution-depot.jpg": {
+    "width": 4096,
+    "height": 2160,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-1600.jpg"
+  },
+  "/assets/figma/Personas/authentic-small-youthful-marketing-agency (2).jpg": {
+    "width": 6753,
+    "height": 4502,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--6a6d0935-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--6a6d0935-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--6a6d0935-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--6a6d0935-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--6a6d0935-1600.jpg"
+  },
+  "/assets/figma/Personas/authentic-small-youthful-marketing-agency (3).jpg": {
+    "width": 7008,
+    "height": 4672,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--3902a889-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--3902a889-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--3902a889-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--3902a889-1600.webp"
+      },
+      {
+        "width": 1920,
+        "src": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--3902a889-1920.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/personas/authentic-small-youthful-marketing-agency--3902a889-1920.jpg"
+  },
+  "/assets/figma/Personas/business-people-conference-room-medium-shot.jpg": {
+    "width": 5522,
+    "height": 3681,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/personas/business-people-conference-room-medium-sho-7eb6387e-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/personas/business-people-conference-room-medium-sho-7eb6387e-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/personas/business-people-conference-room-medium-sho-7eb6387e-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/personas/business-people-conference-room-medium-sho-7eb6387e-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/personas/business-people-conference-room-medium-sho-7eb6387e-1600.jpg"
+  },
+  "/assets/figma/Personas/business-people-conference-room.jpg": {
+    "width": 5432,
+    "height": 3621,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/personas/business-people-conference-room-b0675ef0-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/personas/business-people-conference-room-b0675ef0-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/personas/business-people-conference-room-b0675ef0-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/personas/business-people-conference-room-b0675ef0-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/personas/business-people-conference-room-b0675ef0-1600.jpg"
+  },
+  "/assets/figma/Personas/medium-shot-latin-friends-hanging-out.jpg": {
+    "width": 8000,
+    "height": 5333,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/personas/medium-shot-latin-friends-hanging-out-89902143-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/personas/medium-shot-latin-friends-hanging-out-89902143-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/personas/medium-shot-latin-friends-hanging-out-89902143-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/personas/medium-shot-latin-friends-hanging-out-89902143-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/personas/medium-shot-latin-friends-hanging-out-89902143-1600.jpg"
+  },
+  "/assets/figma/Personas/middle-aged-hispanic-business-people (3).jpg": {
+    "width": 7990,
+    "height": 5327,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-3-122bc9be-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-3-122bc9be-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-3-122bc9be-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-3-122bc9be-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/personas/middle-aged-hispanic-business-people-3-122bc9be-1600.jpg"
+  },
+  "/assets/figma/Personas/middle-aged-hispanic-business-people (6).jpg": {
+    "width": 8000,
+    "height": 5333,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-6-e96479d2-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-6-e96479d2-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-6-e96479d2-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-6-e96479d2-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/personas/middle-aged-hispanic-business-people-6-e96479d2-1600.jpg"
+  },
+  "/assets/figma/Personas/middle-aged-hispanic-business-people.jpg": {
+    "width": 7990,
+    "height": 5327,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-792ea7a9-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-792ea7a9-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-792ea7a9-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-792ea7a9-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/personas/middle-aged-hispanic-business-people-792ea7a9-1600.jpg"
+  },
+  "/assets/figma/Personas/middle-aged-hispanic-business-person (1).jpg": {
+    "width": 7999,
+    "height": 4500,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-person-1-b5292266-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-person-1-b5292266-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-person-1-b5292266-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-person-1-b5292266-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/personas/middle-aged-hispanic-business-person-1-b5292266-1600.jpg"
+  },
+  "/assets/figma/Tech/cheerful-young-businessman-using-digital-tablet-smiling-while-his-colleagues-working-background.jpg": {
+    "width": 6000,
+    "height": 4000,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/cheerful-young-businessman-using-digital-t-2062050e-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/cheerful-young-businessman-using-digital-t-2062050e-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/cheerful-young-businessman-using-digital-t-2062050e-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/tech/cheerful-young-businessman-using-digital-t-2062050e-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/cheerful-young-businessman-using-digital-t-2062050e-1600.jpg"
+  },
+  "/assets/figma/Tech/colleagues-collaborating-laptop-office.jpg": {
+    "width": 4000,
+    "height": 2000,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-1600.webp"
+      },
+      {
+        "width": 1920,
+        "src": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-1920.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-1920.jpg"
+  },
+  "/assets/figma/Tech/forecast-expert-ceo-analyzing-investment-insights-negotiations-details.jpg": {
+    "width": 7300,
+    "height": 4106,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/forecast-expert-ceo-analyzing-investment-i-18ef56fe-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/forecast-expert-ceo-analyzing-investment-i-18ef56fe-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/forecast-expert-ceo-analyzing-investment-i-18ef56fe-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/tech/forecast-expert-ceo-analyzing-investment-i-18ef56fe-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/forecast-expert-ceo-analyzing-investment-i-18ef56fe-1600.jpg"
+  },
+  "/assets/figma/Tech/magnific_recrea-esta-imagen-mejora_SyAMSTJUb8.jpeg": {
+    "width": 3712,
+    "height": 4608,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/magnific-recrea-esta-imagen-mejora-syamstj-d23769d3-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/magnific-recrea-esta-imagen-mejora-syamstj-d23769d3-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/magnific-recrea-esta-imagen-mejora-syamstj-d23769d3-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/tech/magnific-recrea-esta-imagen-mejora-syamstj-d23769d3-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/magnific-recrea-esta-imagen-mejora-syamstj-d23769d3-1600.jpg"
+  },
+  "/assets/figma/Tech/medium-shot-latin-friends-hanging-out (1).jpg": {
+    "width": 8000,
+    "height": 5333,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-1600.jpg"
+  },
+  "/assets/figma/Tech/woman-analyzing-data-flowchart-computer-office.jpg": {
+    "width": 7000,
+    "height": 3907,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/woman-analyzing-data-flowchart-computer-of-7053fe5d-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/woman-analyzing-data-flowchart-computer-of-7053fe5d-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/woman-analyzing-data-flowchart-computer-of-7053fe5d-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/tech/woman-analyzing-data-flowchart-computer-of-7053fe5d-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/woman-analyzing-data-flowchart-computer-of-7053fe5d-1600.jpg"
+  },
+  "/assets/figma/Tech/woman-working-mobile-app-interface-desk.jpg": {
+    "width": 3072,
+    "height": 5504,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-960.webp"
+      },
+      {
+        "width": 1600,
+        "src": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-1600.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-1600.jpg"
+  },
+  "/assets/figma/home-hero-portrait.png": {
+    "width": 319,
+    "height": 389,
+    "webp": [
+      {
+        "width": 319,
+        "src": "/assets/optimized/home-hero/portrait.webp"
+      }
+    ],
+    "fallback": "/assets/figma/home-hero-portrait.png"
+  },
+  "/assets/figma/home-hero-construction.png": {
+    "width": 287,
+    "height": 221,
+    "webp": [
+      {
+        "width": 287,
+        "src": "/assets/optimized/home-hero/construction.webp"
+      }
+    ],
+    "fallback": "/assets/figma/home-hero-construction.png"
+  },
+  "/assets/figma/home-hero-developer.png": {
+    "width": 287,
+    "height": 249,
+    "webp": [
+      {
+        "width": 287,
+        "src": "/assets/optimized/home-hero/developer.webp"
+      }
+    ],
+    "fallback": "/assets/figma/home-hero-developer.png"
+  }
+}

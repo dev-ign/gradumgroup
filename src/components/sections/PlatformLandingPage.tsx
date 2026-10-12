@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { PageTransition } from '../ui/PageTransition';
 import { Reveal, StaggerGroup } from '../ui/Reveal';
+import { OptimizedImage } from '../ui/OptimizedImage';
+import { imageSizes } from '../../data/imageSizes';
 import { useLanguage } from '../../context/LanguageContext';
 import { useModal } from '../../context/ModalContext';
 import { localize, type PlatformLandingContent } from '../../data/siteContent';
@@ -28,7 +30,7 @@ export function PlatformLandingPage({ content }: PlatformLandingPageProps) {
             </div></Reveal>
           </StaggerGroup>
           <Reveal trigger="mount" variant="image" delay={0.24} className={`platform-hero__media platform-hero__media--${content.heroImages.length}`}>
-            {content.heroImages.map((image, index) => <img key={image} src={image} alt="" className={`media-${index + 1}`} />)}
+            {content.heroImages.map((image, index) => <OptimizedImage key={image} src={image} alt={l(content.heroImageAlts[index])} className={`media-${index + 1}`} decoding="async" loading="eager" fetchPriority={index === 0 ? 'high' : 'auto'} />)}
           </Reveal>
         </section>
 
@@ -36,7 +38,7 @@ export function PlatformLandingPage({ content }: PlatformLandingPageProps) {
           {content.cards.map((card) => (
             <Reveal className="landing-card-reveal" key={card.href}>
               <Link to={card.href} className="landing-card">
-                {card.image && <img src={card.image} alt="" />}
+                {card.image && <OptimizedImage src={card.image} alt="" sizes={imageSizes.thumbnail} loading="lazy" decoding="async" />}
                 <div>
                   <h2>{l(card.title)}</h2>
                   <p>{l(card.description)}</p>

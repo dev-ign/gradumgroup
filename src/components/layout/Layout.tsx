@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Outlet, useLocation } from 'react-router-dom';
+import { useLayoutEffect, useRef } from 'react';
+import { Outlet, useLocation, useNavigationType } from 'react-router-dom';
 import { AnimatePresence, MotionConfig } from 'framer-motion';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
@@ -7,10 +7,16 @@ import { ContactModal } from '../ui/ContactModal';
 
 export function Layout() {
   const location = useLocation();
+  const navigationType = useNavigationType();
+  const initialLocation = useRef(true);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
+  useLayoutEffect(() => {
+    if (initialLocation.current) {
+      initialLocation.current = false;
+      return;
+    }
+    if (navigationType !== 'POP') window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.key, navigationType]);
 
   return (
     <MotionConfig reducedMotion="user">
