@@ -32,7 +32,7 @@ export function PlatformLandingPage({ content }: PlatformLandingPageProps) {
           </Reveal>
         </section>
 
-        <StaggerGroup as="section" trigger="viewport" id="explore" className="landing-cards section-shell" stagger={0.06}>
+        <StaggerGroup as="section" trigger="viewport" id="explore" className="landing-cards section-shell">
           {content.cards.map((card) => (
             <Reveal className="landing-card-reveal" key={card.href}>
               <Link to={card.href} className="landing-card">
@@ -66,11 +66,11 @@ export function PlatformLandingPage({ content }: PlatformLandingPageProps) {
 
         {content.toolsTitle && (
           <StaggerGroup as="section" trigger="viewport" className="tools-section section-shell">
-            <Reveal>
-              <h2>{l(content.toolsTitle)}</h2>
-              <p>{content.toolsBody ? l(content.toolsBody) : ''}</p>
-              <div className="tool-pills">{content.tools?.map((tool) => <span key={tool}>{tool}</span>)}</div>
-            </Reveal>
+            <StaggerGroup trigger="inherit">
+              <Reveal><h2>{l(content.toolsTitle)}</h2></Reveal>
+              <Reveal><p>{content.toolsBody ? l(content.toolsBody) : ''}</p></Reveal>
+              <Reveal><div className="tool-pills">{content.tools?.map((tool) => <span key={tool}>{tool}</span>)}</div></Reveal>
+            </StaggerGroup>
             <Reveal variant="image" className="schematic" aria-hidden>
               <small>MODEL — RUN 018</small><span className="node node-1" /><span className="node node-2" /><span className="node node-3" /><span className="node node-4" />
               <i className="line line-1" /><i className="line line-2" /><i className="line line-3" />

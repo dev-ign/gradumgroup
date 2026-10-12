@@ -278,6 +278,7 @@ const en = {
     footerLocations: 'Miami, FL (USA)\nSanto Domingo (Dominican Republic)',
   },
   about: {
+    explorePlatform: 'Explore Our Platform',
     hero: {
       label: 'About',
       title1: 'Engineered for',
@@ -835,6 +836,7 @@ const es: typeof en = {
     footerLocations: 'Miami, FL (EE. UU.)\nSanto Domingo (República Dominicana)',
   },
   about: {
+    explorePlatform: 'Explorar nuestra plataforma',
     hero: {
       label: 'Nosotros',
       title1: 'Ingeniería para',
