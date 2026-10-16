@@ -1,7 +1,6 @@
 import { motion, useReducedMotion, type MotionStyle } from 'framer-motion';
-import { createContext, useContext, type ReactNode } from 'react';
+import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import {
-  createProgressiveRevealVariants,
   createRevealVariants,
   createStaggerVariants,
   motionTokens,
@@ -11,7 +10,21 @@ import {
 
 type MotionTag = 'div' | 'article' | 'section' | 'footer' | 'ul';
 type RevealTrigger = 'inherit' | 'mount' | 'viewport';
-const ProgressiveRevealContext = createContext(false);
+
+// Motion's accelerated opacity can briefly expose the hidden base style as it
+// finishes. A value subscriber keeps these short entrance tweens on its JS
+// renderer, which commits the final opacity in the same frame.
+const keepRevealOnMainThread = () => {};
+
+// A responsive switch can change which element owns the viewport trigger.
+// Once that happens, keep the mounted content visible instead of rearming it.
+const useTriggerChanged = (trigger: RevealTrigger) => {
+  const [history, setHistory] = useState({ trigger, changed: false });
+  if (history.trigger !== trigger) {
+    setHistory({ trigger, changed: true });
+  }
+  return history.changed || history.trigger !== trigger;
+};
 
 interface SharedMotionProps {
   children: ReactNode;
@@ -27,7 +40,6 @@ type RevealProps = SharedMotionProps & {
   trigger?: RevealTrigger;
   delay?: number;
   amount?: number;
-  once?: boolean;
 };
 
 type StaggerGroupProps = SharedMotionProps & {
@@ -36,7 +48,6 @@ type StaggerGroupProps = SharedMotionProps & {
   staggerChildren?: number;
   stagger?: number;
   amount?: number;
-  once?: boolean;
 };
 
 const renderMotionElement = (
@@ -50,7 +61,8 @@ const renderMotionElement = (
     variants: ReturnType<typeof createRevealVariants>;
     initial?: false | string;
     animate?: string;
-    whileInView?: string;
+    onViewportEnter?: () => void;
+    onUpdate?: () => void;
     viewport?: { once: boolean; amount: number; margin: string };
   },
 ) => {
@@ -67,34 +79,38 @@ export const Reveal = ({
   trigger = 'inherit',
   delay = 0,
   amount = motionTokens.viewport.amount,
-  once = true,
   ...props
 }: RevealProps) => {
   const prefersReducedMotion = useReducedMotion();
-  const inheritedProgressive = useContext(ProgressiveRevealContext);
+  const triggerChanged = useTriggerChanged(trigger);
+  const [hasEntered, setHasEntered] = useState(false);
+  const markEntered = useCallback(() => setHasEntered(true), []);
   const resolvedVariant = variant === 'content' ? 'fadeUp' : variant;
-  const progressive = !prefersReducedMotion && (trigger === 'viewport' || (trigger === 'inherit' && inheritedProgressive));
+  const observeViewport = !prefersReducedMotion && !triggerChanged && typeof IntersectionObserver !== 'undefined';
+  const variants = useMemo(
+    () => prefersReducedMotion || triggerChanged ? reducedRevealVariants : createRevealVariants(resolvedVariant, delay),
+    [prefersReducedMotion, triggerChanged, resolvedVariant, delay],
+  );
   const triggerProps = trigger === 'viewport'
     ? {
-        initial: false as const,
-        ...(prefersReducedMotion
-          ? { animate: 'visible' }
-          : { whileInView: 'visible', viewport: { once, amount, margin: motionTokens.viewport.margin } }),
+        initial: observeViewport ? 'hidden' : false as const,
+        animate: observeViewport && !hasEntered ? 'hidden' : 'visible',
+        ...(observeViewport ? {
+          onViewportEnter: markEntered,
+          viewport: { once: true, amount, margin: motionTokens.viewport.margin },
+        } : {}),
       }
     : trigger === 'mount'
       ? {
-          initial: prefersReducedMotion ? false as const : 'hidden',
+          initial: prefersReducedMotion || triggerChanged ? false as const : 'hidden',
           animate: 'visible',
         }
-      : progressive ? { initial: false as const } : {};
+      : triggerChanged ? { initial: false as const, animate: 'visible' } : {};
 
   return renderMotionElement(as, {
     ...props,
-    variants: prefersReducedMotion
-      ? reducedRevealVariants
-      : progressive
-        ? createProgressiveRevealVariants(resolvedVariant, delay)
-        : createRevealVariants(resolvedVariant, delay),
+    variants,
+    onUpdate: keepRevealOnMainThread,
     ...triggerProps,
   });
 };
@@ -106,36 +122,36 @@ export const StaggerGroup = ({
   staggerChildren,
   stagger,
   amount = motionTokens.viewport.amount,
-  once = true,
   ...props
 }: StaggerGroupProps) => {
   const prefersReducedMotion = useReducedMotion();
-  const inheritedProgressive = useContext(ProgressiveRevealContext);
-  const variants = createStaggerVariants(
-    prefersReducedMotion ? 0 : delayChildren,
-    prefersReducedMotion
-      ? 0
-      : stagger ?? staggerChildren ?? motionTokens.stagger.standard,
-  );
+  const triggerChanged = useTriggerChanged(trigger);
+  const [hasEntered, setHasEntered] = useState(false);
+  const markEntered = useCallback(() => setHasEntered(true), []);
+  const observeViewport = !prefersReducedMotion && !triggerChanged && typeof IntersectionObserver !== 'undefined';
+  const variants = useMemo(() => createStaggerVariants(
+    prefersReducedMotion || triggerChanged ? 0 : delayChildren,
+    prefersReducedMotion || triggerChanged ? 0 : stagger ?? staggerChildren ?? motionTokens.stagger.standard,
+  ), [prefersReducedMotion, triggerChanged, delayChildren, stagger, staggerChildren]);
   const triggerProps = trigger === 'viewport'
     ? {
-        initial: false as const,
-        ...(prefersReducedMotion
-          ? { animate: 'visible' }
-          : { whileInView: 'visible', viewport: { once, amount, margin: motionTokens.viewport.margin } }),
+        initial: observeViewport ? 'hidden' : false as const,
+        animate: observeViewport && !hasEntered ? 'hidden' : 'visible',
+        ...(observeViewport ? {
+          onViewportEnter: markEntered,
+          viewport: { once: true, amount, margin: motionTokens.viewport.margin },
+        } : {}),
       }
     : trigger === 'mount'
       ? {
-        initial: prefersReducedMotion ? false as const : 'hidden',
+        initial: prefersReducedMotion || triggerChanged ? false as const : 'hidden',
         animate: 'visible',
       }
-      : {};
+      : triggerChanged ? { initial: false as const, animate: 'visible' } : {};
 
-  const element = renderMotionElement(as, {
+  return renderMotionElement(as, {
     ...props,
     variants,
     ...triggerProps,
   });
-  const progressive = trigger === 'viewport' || (trigger === 'inherit' && inheritedProgressive);
-  return <ProgressiveRevealContext.Provider value={progressive}>{element}</ProgressiveRevealContext.Provider>;
 };

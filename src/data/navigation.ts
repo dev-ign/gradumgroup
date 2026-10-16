@@ -1,3 +1,5 @@
+import featureVisibility from './siteFeatures.json';
+
 export interface NavigationItem {
   label: string;
   href: string;
@@ -7,6 +9,10 @@ export interface PlatformNavigationGroup extends NavigationItem {
   accent: 'consulting' | 'construction' | 'services';
   children: NavigationItem[];
 }
+
+// Temporarily excluded from the public launch. This shared configuration also
+// controls production route availability in vercel.mjs.
+export const siteFeatures = featureVisibility;
 
 interface RouteMatchOptions {
   exact?: boolean;
@@ -62,6 +68,6 @@ export const platformNavigation: PlatformNavigationGroup[] = [
 
 export const primaryNavigation: NavigationItem[] = [
   { label: 'About', href: '/about' },
-  { label: 'Ventures', href: '/ventures' },
-  { label: 'Insights', href: '/insights' },
+  ...(siteFeatures.ventures ? [{ label: 'Ventures', href: '/ventures' }] : []),
+  ...(siteFeatures.insights ? [{ label: 'Insights', href: '/insights' }] : []),
 ];

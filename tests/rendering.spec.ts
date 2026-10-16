@@ -5,12 +5,13 @@ const routes = [
   '/consulting/how-we-work', '/construction', '/construction/architecture',
   '/construction/engineering', '/construction/build', '/services',
   '/services/accounting-finance', '/services/marketing-media', '/services/admin-legal',
-  '/ventures', '/insights',
 ];
 
 async function hiddenContent(page: Page) {
   return page.locator('main').evaluate((main) => [...main.querySelectorAll('h1,h2,h3,p,button,a')]
     .filter((element) => {
+      const rect = element.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top >= innerHeight || rect.right <= 0 || rect.left >= innerWidth) return false;
       let current: Element | null = element;
       while (current && current !== main) {
         const style = getComputedStyle(current);

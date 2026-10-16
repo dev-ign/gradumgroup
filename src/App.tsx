@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { ModalProvider } from './context/ModalContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -11,10 +11,8 @@ import { Services } from './pages/Services';
 import { Detail } from './pages/Detail';
 import { Ventures } from './pages/Ventures';
 import { Insights } from './pages/Insights';
-
-function RedirectHome() {
-  return <Navigate to="/" replace />;
-}
+import { NotFound } from './pages/NotFound';
+import { siteFeatures } from './data/navigation';
 
 export default function App() {
   return (
@@ -38,9 +36,9 @@ export default function App() {
               <Route path="services/accounting-finance" element={<Detail page="services-accounting" />} />
               <Route path="services/marketing-media" element={<Detail page="services-marketing" />} />
               <Route path="services/admin-legal" element={<Detail page="services-admin" />} />
-              <Route path="ventures" element={<Ventures />} />
-              <Route path="insights" element={<Insights />} />
-              <Route path="*" element={<RedirectHome />} />
+              <Route path="ventures" element={siteFeatures.ventures ? <Ventures /> : <NotFound />} />
+              <Route path="insights" element={siteFeatures.insights ? <Insights /> : <NotFound />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
         </ModalProvider>

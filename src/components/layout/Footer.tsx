@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { platformNavigation } from '../../data/navigation';
+import { platformNavigation, primaryNavigation, siteFeatures } from '../../data/navigation';
 import { useLanguage } from '../../context/LanguageContext';
 import { useTranslation } from '../../i18n/useTranslation';
 import { Reveal, StaggerGroup } from '../ui/Reveal';
 
 const labelKeys: Record<string, string> = {
+  About: 'nav.about', Ventures: 'nav.ventures', Insights: 'nav.insights',
   Consulting: 'nav.consulting', Construction: 'nav.construction', Services: 'nav.services', Capabilities: 'nav.capabilities',
   Industries: 'nav.industries', 'How We Work': 'nav.howWeWork', Architecture: 'nav.architecture', Engineering: 'nav.engineering',
   Build: 'nav.build', 'Accounting & Finance': 'nav.accountingFinance', 'Marketing & Media': 'nav.marketingMedia', 'Admin & Legal': 'nav.adminLegal',
@@ -31,10 +32,8 @@ export function Footer() {
           ))}
           <Reveal>
             <span className="site-footer__heading">{t('nav.company')}</span>
-            <Link to="/about">{t('nav.about')}</Link>
-            <Link to="/ventures">{t('nav.ventures')}</Link>
-            <Link to="/insights">{t('nav.insights')}</Link>
-            <a href="#client-portal">{t('nav.clientPortal')}</a>
+            {primaryNavigation.map((item) => <Link key={item.href} to={item.href}>{label(item.label)}</Link>)}
+            {siteFeatures.clientPortal && <a href="#client-portal">{t('nav.clientPortal')}</a>}
           </Reveal>
         </StaggerGroup>
       </div>

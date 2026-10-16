@@ -246,23 +246,54 @@ export const homeContent = {
     services: '/assets/figma/Finanzas/side-view-cropped-unrecognizable-business-people-working-common-desk.jpg',
     cta: '/assets/figma/Personas/middle-aged-hispanic-business-people (3).jpg',
     ctaAlt: text('Colleagues collaborating on a project in the office', 'Colegas colaborando en un proyecto en la oficina'),
+    networkMapAlt: text('Network map showing connections from the Dominican Republic across the Americas.', 'Mapa de conexiones desde la República Dominicana hacia el resto de las Américas.'),
   },
   hero: {
-    title: text('Complex problems. Integrated execution.', 'Problemas complejos. Ejecución integrada.'),
-    description: text('Gradum brings together consulting, construction and business services to help organizations make better decisions, execute with discipline and build for long-term value.', 'Gradum integra consultoría, construcción y servicios empresariales para ayudar a las organizaciones a tomar mejores decisiones, ejecutar con disciplina y construir valor a largo plazo.'),
+    title: text('Specialized Expertise. Real-World Impact.', 'Experiencia especializada. Impacto en el mundo real.'),
+    description: text('Engineering, construction, and professional business services for organizations navigating technical, operational, and commercial challenges.', 'Ingeniería, construcción y servicios empresariales profesionales para organizaciones que afrontan desafíos técnicos, operativos y comerciales.'),
+    primaryCta: text('Discuss Your Project', 'Hablemos de su proyecto'),
+    secondaryCta: text('Explore Our Expertise', 'Explore nuestra experiencia'),
     regional: text('Supporting Organizations Across North America and Latin America', 'Apoyando organizaciones en Norteamérica y América Latina'),
   },
   disciplines: {
-    title: text('One platform. Three disciplines.', 'Una plataforma. Tres disciplinas.'),
-    description: text('Specialized expertise, connected by a common approach to problem-solving and execution.', 'Experiencia especializada, conectada por un enfoque común para resolver problemas y ejecutar.'),
+    title: text('Three Disciplines. Focused Expertise.', 'Tres disciplinas. Experiencia especializada.'),
+    introduction: text('We bring together specialized capabilities across engineering and technology, the built environment, and business operations.', 'Reunimos capacidades especializadas en ingeniería y tecnología, el entorno construido y las operaciones empresariales.'),
+    detail: text('Each division provides dedicated expertise, with engagements tailored to the requirements of the client and project.', 'Cada división aporta experiencia específica, con servicios adaptados a los requisitos del cliente y del proyecto.'),
+    cards: {
+      consulting: {
+        title: text('Gradum Consulting', 'Gradum Consulting'),
+        category: text('Engineering & Technology', 'Ingeniería y tecnología'),
+        description: text('Engineering modeling, simulation, technical software, and analytical solutions for complex systems and industrial applications.', 'Modelado de ingeniería, simulación, software técnico y soluciones analíticas para sistemas complejos y aplicaciones industriales.'),
+        cta: text('Explore Consulting', 'Explorar Consultoría'),
+      },
+      construction: {
+        title: text('Gradum Construction', 'Gradum Construction'),
+        category: text('Architecture, Engineering & Execution', 'Arquitectura, ingeniería y ejecución'),
+        description: text('Architectural design, engineering services, construction estimating, and project execution—from individual technical deliverables to broader construction scopes.', 'Diseño arquitectónico, servicios de ingeniería, presupuestos de construcción y ejecución de proyectos, desde entregables técnicos individuales hasta alcances de construcción más amplios.'),
+        cta: text('Explore Construction', 'Explorar Construcción'),
+      },
+      services: {
+        title: text('Gradum Services', 'Gradum Services'),
+        category: text('Finance, Creative & Legal', 'Finanzas, creatividad y asuntos legales'),
+        description: text('Accounting and financial advisory, creative and digital production, and corporate legal support through project-based and ongoing professional engagements.', 'Asesoría contable y financiera, producción creativa y digital, y apoyo legal corporativo mediante proyectos específicos y servicios profesionales continuos.'),
+        cta: text('Explore Services', 'Explorar Servicios'),
+      },
+    },
   },
-  insight: {
-    title: text('From insight to implementation.', 'De la visión a la implementación.'),
-    description: text('We work where strategy, technical complexity and execution meet—helping clients define the problem, design the right response and move forward with clarity.', 'Trabajamos donde convergen la estrategia, la complejidad técnica y la ejecución, ayudando a definir el problema, diseñar la respuesta adecuada y avanzar con claridad.'),
+  howWeWork: {
+    title: text('The Right Expertise. For the Work That Matters.', 'La experiencia adecuada. Para el trabajo que importa.'),
+    introduction: text('Every engagement begins with understanding the requirements, constraints, and intended outcomes.', 'Cada proyecto comienza por comprender los requisitos, las limitaciones y los resultados previstos.'),
+    detail: text("We define the scope, bring together the appropriate capabilities, and focus on delivering practical work that addresses the client's needs.", 'Definimos el alcance, reunimos las capacidades adecuadas y nos enfocamos en entregar trabajo práctico que responda a las necesidades del cliente.'),
+    steps: [
+      { title: text('Understand the Challenge', 'Comprender el desafío'), description: text('Clarify objectives, requirements, and project constraints.', 'Aclarar los objetivos, requisitos y limitaciones del proyecto.') },
+      { title: text('Define the Scope', 'Definir el alcance'), description: text('Establish deliverables, responsibilities, and the appropriate engagement model.', 'Establecer los entregables, las responsabilidades y el modelo de colaboración adecuado.') },
+      { title: text('Deliver the Work', 'Entregar el trabajo'), description: text('Apply specialized expertise with clear communication and accountability.', 'Aplicar experiencia especializada con comunicación clara y responsabilidad.') },
+    ],
   },
   latam: {
-    title: text('Built with Latin America in mind.', 'Creado pensando en América Latina.'),
-    description: text('With roots in the Dominican Republic, Gradum combines local understanding with global engineering and business practices to serve organizations across Latin America and beyond.', 'Con raíces en República Dominicana, Gradum combina conocimiento local con prácticas globales de ingeniería y negocios para servir a organizaciones en América Latina y más allá.'),
+    title: text('Rooted in the Dominican Republic. Connected to Broader Markets.', 'Con raíces en la República Dominicana. Conectados con mercados más amplios.'),
+    introduction: text('Based in the Dominican Republic, Gradum Group supports organizations locally while pursuing selected opportunities across Latin America and North America.', 'Con sede en la República Dominicana, Gradum Group apoya a organizaciones a nivel local mientras busca oportunidades seleccionadas en América Latina y Norteamérica.'),
+    detail: text('Our multidisciplinary structure allows us to address different types of technical, construction, and business needs through focused service divisions.', 'Nuestra estructura multidisciplinaria nos permite atender distintas necesidades técnicas, de construcción y empresariales mediante divisiones de servicios especializadas.'),
   },
   ventures: {
     title: text('Gradum Ventures', 'Gradum Ventures'),
@@ -273,8 +304,9 @@ export const homeContent = {
     description: text('Perspectives and practical resources across engineering, construction, business and emerging opportunities.', 'Perspectivas y recursos prácticos sobre ingeniería, construcción, negocios y oportunidades emergentes.'),
   },
   cta: {
-    title: text('Build what comes next.', 'Construyamos lo que viene.'),
-    description: text('Bring us the challenge, project or opportunity.', 'Tráiganos el reto, proyecto u oportunidad.'),
+    title: text("Let's Discuss What You're Building.", 'Hablemos de lo que está construyendo.'),
+    description: text("Whether you're developing a technical solution, planning a construction project, or strengthening a business function, let's explore how Gradum can support your objectives.", 'Ya sea que esté desarrollando una solución técnica, planificando un proyecto de construcción o fortaleciendo una función empresarial, exploremos cómo Gradum puede apoyar sus objetivos.'),
+    button: text('Discuss Your Project', 'Hablemos de su proyecto'),
   },
 };
 
