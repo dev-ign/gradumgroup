@@ -113,7 +113,7 @@ export function Home() {
             <Reveal><p>{l(homeContent.latam.introduction)}</p></Reveal>
             <Reveal><p>{l(homeContent.latam.detail)}</p></Reveal>
           </StaggerGroup>
-          <Reveal variant="image" className="latam-section__visual">
+          <Reveal variant="image" delay={motionTokens.stagger.standard * 3} className="latam-section__visual">
             <picture>
               <source
                 type="image/webp"
@@ -145,7 +145,7 @@ export function Home() {
             <Reveal><p>{l(homeContent.cta.description)}</p></Reveal>
             <Reveal><button className="pill-button" onClick={openModal}>{l(homeContent.cta.button)}</button></Reveal>
           </StaggerGroup>
-          <Reveal variant="image" className="home-cta__visual"><OptimizedImage src={homeContent.imagery.cta} alt={l(homeContent.imagery.ctaAlt)} loading="lazy" decoding="async" /></Reveal>
+          <Reveal variant="image" delay={motionTokens.stagger.standard * 3} className="home-cta__visual"><OptimizedImage src={homeContent.imagery.cta} alt={l(homeContent.imagery.ctaAlt)} loading="lazy" decoding="async" /></Reveal>
         </StaggerGroup>
       </article>
     </PageTransition>

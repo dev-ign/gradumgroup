@@ -561,9 +561,9 @@ button[aria-expanded="true"] > .mobile-nav__chevron { transform: rotate(180deg);
 }
 
 @media (max-width: 1100px) {
-  .home-hero { min-height: 0; grid-template-columns: minmax(0, 1fr); gap: 36px; padding-bottom: 60px; }
-  .home-hero__copy { padding-top: clamp(36px, 5vw, 64px); }
-  .home-hero__media { width: min(100%, 634px); height: clamp(340px, 42vw, 495px); margin-top: 0; }
+  .home-hero { min-height: 0; grid-template-columns: minmax(0, 1fr); gap: 48px; padding-bottom: 60px; }
+  .home-hero__copy { width: min(100%, 650px); margin-inline: auto; padding-top: clamp(36px, 5vw, 64px); }
+  .home-hero__media { width: min(100%, 634px); height: clamp(340px, 42vw, 495px); margin: 0 auto; }
   .engagement-timeline { max-width: 760px; }
   .engagement-timeline__track { left: 15px; }
   .engagement-timeline__step { min-height: 144px; grid-template-columns: 30px minmax(0, 1fr); gap: 22px; }
@@ -596,9 +596,16 @@ button[aria-expanded="true"] > .mobile-nav__chevron { transform: rotate(180deg);
   .latam-section__visual { grid-column: 1; grid-row: 2; width: min(100%, 520px); margin-left: 0; justify-self: center; }
   .latam-section__visual picture { -webkit-mask-image: none; mask-image: none; }
   .latam-section h2, .latam-section p { margin-inline: auto; }
+  .home-cta { grid-template-columns: 1fr; gap: 32px; padding-block: 64px 80px; text-align: center; }
+  .home-cta > div:first-child { width: min(100%, 620px); margin-inline: auto; }
+  .home-cta p { max-width: 550px; margin-inline: auto; }
+  .home-cta .pill-button { margin-inline: auto; }
+  .home-cta__visual { width: min(100%, 620px); justify-self: center; }
 }
 
 @media (max-width: 900px) and (min-width: 761px) {
+  .discipline-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .discipline-card-reveal:last-child { grid-column: 1 / -1; width: min(100%, calc((100% - var(--grid-gap)) / 2)); justify-self: center; }
   .landing-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
   .landing-card { flex-direction: row; }
   .landing-card-reveal:last-child { grid-column: 1 / -1; width: min(100%, 620px); justify-self: center; }
@@ -621,21 +628,23 @@ button[aria-expanded="true"] > .mobile-nav__chevron { transform: rotate(180deg);
   .eyebrow { font-size: .75rem; letter-spacing: 1.5px; }
 
   .discipline-grid, .landing-cards, .home-paths, .latam-section, .home-cta, .platform-statement__inner, .tools-section, .ventures-hero, .insights-hero, .article-grid { grid-template-columns: 1fr; }
-  .home-hero { gap: 30px; padding-bottom: 52px; }
+  .home-hero { gap: var(--section-md); padding-bottom: 52px; }
   .home-hero::before { top: -60px; left: calc(-1 * var(--page-gutter)); width: 560px; height: 1059px; }
-  .home-hero__copy { padding-top: 32px; }
+  .home-hero__copy { width: min(100%, 560px); padding-top: 32px; text-align: center; }
   .home-hero__copy h1 { width: auto; max-width: 100%; font-size: clamp(2rem, 6vw, 2.75rem); line-height: 1.16; letter-spacing: 0; }
-  .home-hero__description { margin-bottom: 28px; font-size: 1rem; line-height: 1.5; letter-spacing: 0; }
+  .home-hero__description { margin: 0 auto 28px; font-size: 1rem; line-height: 1.5; letter-spacing: 0; }
+  .home-hero__actions { justify-content: center; }
   .home-hero__cta { min-height: 64px; padding: 18px 28px; }
   .regional-support { margin-top: 32px; }
   .regional-support p { font-size: .75rem; line-height: 1.5; white-space: normal; }
-  .regional-support__carousel { max-width: 380px; margin-top: 16px; }
+  .regional-support__carousel { max-width: 380px; margin: 16px auto 0; }
   .regional-marquee { --regional-slot: calc(min(380px, calc(100vw - var(--page-gutter) * 2)) * .333333); --regional-cycle: 50s; }
   .regional-support__flag { width: clamp(42px, 12vw, 60px); height: clamp(42px, 12vw, 60px); flex-basis: clamp(42px, 12vw, 60px); }
   .home-hero__media { grid-template-rows: 1fr 1fr; gap: 12px; height: clamp(250px, 70vw, 340px); }
   .home-hero__image--portrait { height: 80%; }
   .home-hero__image, .home-hero__image--portrait, .home-hero__image--construction { border-radius: 18px; }
   .disciplines { padding-block: var(--section-xl); }
+  .discipline-grid { width: min(100%, 440px); margin-inline: auto; }
   .discipline-card { min-height: 260px; }
   .home-insight { padding-block: var(--section-lg); }
   .engagement-timeline { margin-top: 46px; }

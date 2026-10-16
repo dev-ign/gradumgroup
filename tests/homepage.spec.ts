@@ -340,7 +340,7 @@ test('expertise hover moves only the image and reduced motion removes the zoom',
 test('updated sections stay readable at the requested viewport widths', async ({ page }) => {
   await page.goto('/');
 
-  for (const width of [320, 375, 390, 768, 1024, 1280, 1440, 1920]) {
+  for (const width of [320, 375, 390, 430, 768, 900, 1024, 1101, 1280, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     await page.evaluate(() => document.fonts.ready);
     const layout = await page.evaluate(() => {
@@ -352,6 +352,7 @@ test('updated sections stay readable at the requested viewport widths', async ({
         headingOverflow: heading.scrollWidth > heading.clientWidth + 1,
         mosaicImages: document.querySelectorAll('.home-hero__media img').length,
         cardHeights: cards.map((card) => card.getBoundingClientRect().height),
+        cardCenters: cards.map((card) => { const rect = card.getBoundingClientRect(); return rect.left + rect.width / 2; }),
         ctaBottoms: ctas.map((cta) => cta.getBoundingClientRect().bottom),
         carouselVisible: !!document.querySelector('.regional-marquee__viewport'),
         mapBox: document.querySelector('.latam-section__visual img')!.getBoundingClientRect().toJSON(),
@@ -380,7 +381,10 @@ test('updated sections stay readable at the requested viewport widths', async ({
       expect(layout.visualBox.left + layout.visualBox.width * 0.93, `${width}px fade ends before copy`).toBeLessThanOrEqual(layout.copyBox.left + 2);
       expect(layout.maskImage, `${width}px horizontal map fade`).toContain('linear-gradient');
     }
-    if (width > 760) {
+    if (width > 760 && width <= 900) {
+      expect(Math.abs(layout.ctaBottoms[0] - layout.ctaBottoms[1]), `${width}px first-row card CTA alignment`).toBeLessThan(3);
+      expect(Math.abs(layout.cardCenters[2] - width / 2), `${width}px final card centered`).toBeLessThan(2);
+    } else if (width > 900) {
       expect(Math.max(...layout.ctaBottoms) - Math.min(...layout.ctaBottoms), `${width}px card CTA alignment`).toBeLessThan(3);
     }
   }
