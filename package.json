@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/verify-image-assets.mjs && tsc -b && vite build && node scripts/prune-source-images.mjs",
+    "build": "node scripts/verify-vercel-routing.mjs && node scripts/verify-image-assets.mjs && tsc -b && vite build && node scripts/prune-source-images.mjs",
     "images:build": "python3 scripts/optimize-images.py",
     "test:e2e": "npm run build && playwright test",
     "lint": "eslint .",

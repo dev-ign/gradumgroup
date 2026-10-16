@@ -11,7 +11,7 @@ export interface PlatformNavigationGroup extends NavigationItem {
 }
 
 // Temporarily excluded from the public launch. This shared configuration also
-// controls production route availability in vercel.mjs.
+// controls production route availability in vercel.json (checked at build time).
 export const siteFeatures = featureVisibility;
 
 interface RouteMatchOptions {
