@@ -311,22 +311,43 @@ export const homeContent = {
 };
 
 export const aboutContent = {
-  title: text('Built Around Execution.', 'Construido Alrededor de la Ejecución.'),
-  introBold: text('Gradum is a multidisciplinary consulting and execution company', 'Gradum es una empresa multidisciplinaria de consultoría y ejecución'),
-  intro: text(' created to solve complex technical, physical and business challenges.', ' creada para resolver retos técnicos, físicos y empresariales complejos.'),
-  whoTitle: text('Who We Are', 'Quiénes Somos'),
-  whoBody: text('We bring engineering, construction and business expertise together under one platform—giving clients access to the capabilities required to move from decision to execution.', 'Reunimos experiencia en ingeniería, construcción y negocios en una sola plataforma, dando a los clientes acceso a las capacidades necesarias para pasar de la decisión a la ejecución.'),
-  approachTitle: text('Our Approach', 'Nuestro Enfoque'),
-  approachBody: text('We begin with the problem. Then we assemble the right expertise, define a practical path forward and execute with clear ownership.', 'Comenzamos con el problema. Luego reunimos la experiencia adecuada, definimos un camino práctico y ejecutamos con responsabilidades claras.'),
-  principles: [
-    { code: '01', title: text('Clarity', 'Claridad'), description: text('Understand the problem and the decision that matters.', 'Comprender el problema y la decisión que importa.') },
-    { code: '02', title: text('Rigor', 'Rigor'), description: text('Apply technical, financial and commercial discipline.', 'Aplicar disciplina técnica, financiera y comercial.') },
-    { code: '03', title: text('Execution', 'Ejecución'), description: text('Turn recommendations into measurable action.', 'Convertir recomendaciones en acciones medibles.') },
+  titleLead: text('Built on Expertise.', 'Construido sobre experiencia.'),
+  titleAccent: text('Driven by Execution.', 'Impulsado por la ejecución.'),
+  intro: text(
+    'Gradum Group is a multidisciplinary professional services company bringing together engineering and technology consulting, architecture and construction, and specialized business services.',
+    'Gradum Group es una empresa multidisciplinaria de servicios profesionales que reúne consultoría en ingeniería y tecnología, arquitectura y construcción, y servicios empresariales especializados.',
+  ),
+  whoEyebrow: text('WHO WE ARE', 'QUIÉNES SOMOS'),
+  whoTitle: text('Different Disciplines. One Commitment to Delivery.', 'Diferentes disciplinas. Un mismo compromiso con la entrega.'),
+  whoParagraphs: [
+    text('Gradum was established to provide organizations with access to specialized expertise for technical projects, construction initiatives, and essential business functions.', 'Gradum se estableció para brindar a las organizaciones acceso a conocimientos especializados para proyectos técnicos, iniciativas de construcción y funciones empresariales esenciales.'),
+    text('Through dedicated operating divisions, we support clients with clearly defined services—from individual assignments to ongoing professional engagements and broader project delivery.', 'A través de divisiones operativas dedicadas, apoyamos a nuestros clientes con servicios claramente definidos: desde encargos individuales hasta relaciones profesionales continuas y la ejecución de proyectos más amplios.'),
+    text('Our focus is on understanding the work, defining the right scope, and delivering with professional accountability.', 'Nuestro enfoque consiste en comprender el trabajo, definir el alcance adecuado y cumplir con responsabilidad profesional.'),
   ],
-  teamTitle: text('Leadership & Team', 'Liderazgo y Equipo'),
-  teamBody: text('Our multidisciplinary team works across engineering, technology, architecture, finance, marketing and business operations. Teams are structured around the needs of each engagement.', 'Nuestro equipo multidisciplinario trabaja en ingeniería, tecnología, arquitectura, finanzas, marketing y operaciones. Los equipos se estructuran según las necesidades de cada proyecto.'),
-  regionalTitle: text('Regional understanding. Global perspective.', 'Entendimiento regional. Perspectiva global.'),
-  regionalBody: text('Gradum was built in Latin America, with an operating model designed to work across markets, disciplines and borders.', 'Gradum nació en América Latina, con un modelo operativo diseñado para trabajar a través de mercados, disciplinas y fronteras.'),
+  structureEyebrow: text('OUR STRUCTURE', 'NUESTRA ESTRUCTURA'),
+  structureTitle: text('Three Divisions. Distinct Capabilities.', 'Tres divisiones. Capacidades distintivas.'),
+  divisions: [
+    { title: text('Gradum Consulting', 'Gradum Consultoría'), description: text('Engineering analysis, modeling, simulation, technical software, and technology-focused solutions.', 'Análisis de ingeniería, modelado, simulación, software técnico y soluciones enfocadas en tecnología.'), image: '/assets/figma/Tech/woman-analyzing-data-flowchart-computer-office.jpg', imageAlt: text('Engineer analyzing technical data on multiple screens', 'Ingeniera analizando datos técnicos en varias pantallas') },
+    { title: text('Gradum Construction', 'Gradum Construcción'), description: text('Architecture, technical engineering, cost estimating, and construction execution.', 'Arquitectura, ingeniería técnica, estimación de costos y ejecución de obras de construcción.'), image: '/assets/figma/Construccio\u0301n/woman-studying-draft-construction-site.jpg', imageAlt: text('Construction professional reviewing plans at a building site', 'Profesional de la construcción revisando planos en una obra') },
+    { title: text('Gradum Services', 'Gradum Servicios'), description: text('Accounting and financial advisory, creative and digital production, and business legal counsel.', 'Asesoría contable y financiera, producción creativa y digital, y asesoría legal empresarial.'), image: '/assets/figma/Finanzas/middle-aged-hispanic-business-people (2).jpg', imageAlt: text('Business advisor reviewing information with a colleague', 'Asesora empresarial revisando información con un colega') },
+  ],
+  structureStatement: text('Each division operates within its area of expertise, allowing clients to engage the capabilities relevant to their needs.', 'Cada división opera dentro de su área de especialización, lo que permite a los clientes contratar las capacidades pertinentes a sus necesidades.'),
+  thinkingEyebrow: text('HOW WE THINK', 'CÓMO PENSAMOS'),
+  thinkingTitle: text('Clarity. Discipline. Execution.', 'Claridad. Disciplina. Ejecución.'),
+  principles: [
+    { title: text('Clarity', 'Claridad'), description: text('Understand the challenge, requirements, and expected deliverables before committing to a solution.', 'Comprender el desafío, los requisitos y los entregables esperados antes de comprometerse con una solución.') },
+    { title: text('Discipline', 'Disciplina'), description: text('Apply structured thinking, technical rigor, and responsible project management.', 'Aplicar pensamiento estructurado, rigor técnico y gestión responsable de proyectos.') },
+    { title: text('Execution', 'Ejecución'), description: text('Translate defined objectives into practical work, deliverables, and outcomes.', 'Traducir los objetivos definidos en trabajo práctico, entregables y resultados.') },
+  ],
+  presenceEyebrow: text('OUR PRESENCE', 'NUESTRA PRESENCIA'),
+  presenceTitle: text('Based in the Dominican Republic. Built for Broader Opportunities.', 'Con sede en la República Dominicana. Preparados para nuevas oportunidades.'),
+  presenceParagraphs: [
+    text('Gradum Group operates from the Dominican Republic, with a business presence in the United States.', 'Gradum Group opera desde la República Dominicana y tiene presencia empresarial en los Estados Unidos.'),
+    text('Our immediate focus is supporting clients in the Dominican market while developing opportunities across Latin America and North America where our expertise is relevant.', 'Nuestro enfoque inmediato es apoyar a clientes en el mercado dominicano mientras desarrollamos oportunidades en América Latina y América del Norte donde nuestra experiencia sea pertinente.'),
+  ],
+  ctaTitle: text("Let's Work on What Matters.", 'Trabajemos en lo que importa.'),
+  ctaDescription: text('Connect with Gradum to discuss a technical challenge, construction project, or professional business service.', 'Conecte con Gradum para conversar sobre un desafío técnico, un proyecto de construcción o un servicio profesional empresarial.'),
+  ctaButton: text('Discuss Your Project', 'Conversemos sobre su proyecto'),
 };
 
 export const venturesContent = {
