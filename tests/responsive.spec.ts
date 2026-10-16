@@ -5,7 +5,6 @@ const routes = [
   '/consulting/how-we-work', '/construction', '/construction/architecture',
   '/construction/engineering', '/construction/build', '/services',
   '/services/accounting-finance', '/services/marketing-media', '/services/admin-legal',
-  '/ventures', '/insights',
 ];
 const widths = [1280, 1024, 900, 768, 640, 320];
 

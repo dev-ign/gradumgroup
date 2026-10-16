@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { getActivePlatformGroupIndex, isRouteActive, platformNavigation } from '../../data/navigation';
+import { getActivePlatformGroupIndex, isRouteActive, platformNavigation, primaryNavigation, siteFeatures } from '../../data/navigation';
 import { useModal } from '../../context/ModalContext';
 import { useTranslation } from '../../i18n/useTranslation';
 import { BrandLogo } from '../ui/BrandLogo';
@@ -192,7 +192,7 @@ export function Navbar() {
       <div className="site-header__inner">
         <BrandLogo />
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <Link className={`desktop-nav__link${isRouteActive(pathname, '/about') ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, '/about') ? 'page' : undefined} to="/about">{t('nav.about')}</Link>
+          <Link className={`desktop-nav__link${isRouteActive(pathname, primaryNavigation[0].href) ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, primaryNavigation[0].href) ? 'page' : undefined} to={primaryNavigation[0].href}>{label(primaryNavigation[0].label)}</Link>
           <div className="platform-trigger" ref={platformRef} onMouseEnter={openMenu} onMouseLeave={scheduleClose} onBlur={() => {
             window.requestAnimationFrame(() => {
               if (!platformRef.current?.contains(document.activeElement)) setMenuOpen(false);
@@ -231,11 +231,12 @@ export function Navbar() {
               )}
             </AnimatePresence>
           </div>
-          <Link className={`desktop-nav__link${isRouteActive(pathname, '/ventures') ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, '/ventures') ? 'page' : undefined} to="/ventures">{t('nav.ventures')}</Link>
-          <Link className={`desktop-nav__link${isRouteActive(pathname, '/insights') ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, '/insights') ? 'page' : undefined} to="/insights">{t('nav.insights')}</Link>
+          {primaryNavigation.slice(1).map((item) => (
+            <Link key={item.href} className={`desktop-nav__link${isRouteActive(pathname, item.href) ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, item.href) ? 'page' : undefined} to={item.href}>{label(item.label)}</Link>
+          ))}
         </nav>
         <div className="header-actions">
-          <a className="client-link" href="#client-portal">{t('nav.clientPortal')}</a>
+          {siteFeatures.clientPortal && <a className="client-link" href="#client-portal">{t('nav.clientPortal')}</a>}
           <button className="pill-button pill-button--small" onClick={openModal}>{t('nav.startConversation')}</button>
         </div>
         <button ref={mobileToggleRef} className="mobile-toggle" type="button" aria-label={mobileOpen ? t('nav.closeMenu') : t('nav.openMenu')} aria-expanded={mobileOpen} aria-controls="mobile-navigation" onClick={toggleMobileMenu}>
@@ -246,7 +247,7 @@ export function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.nav id="mobile-navigation" className="mobile-nav" aria-label={t('nav.mobileNavigation')} initial={{ opacity: 0, y: reducedMotion ? 0 : -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reducedMotion ? 0 : -6 }} transition={motionTransition}>
-            <Link className={`mobile-nav__link${isRouteActive(pathname, '/about') ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, '/about') ? 'page' : undefined} onClick={closeForNavigation} to="/about">{t('nav.about')}</Link>
+            <Link className={`mobile-nav__link${isRouteActive(pathname, primaryNavigation[0].href) ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, primaryNavigation[0].href) ? 'page' : undefined} onClick={closeForNavigation} to={primaryNavigation[0].href}>{label(primaryNavigation[0].label)}</Link>
             <button className={`mobile-nav__parent${platformIsActive ? ' is-active' : ''}`} type="button" aria-expanded={mobilePlatformOpen} aria-controls="mobile-platform-navigation" onClick={() => setMobilePlatformOpen((value) => !value)}>
               {t('nav.platform')} <img className="mobile-nav__chevron" src="/assets/figma/nav-chevron.svg" alt="" width="24" height="24" />
             </button>
@@ -275,9 +276,10 @@ export function Navbar() {
                 </motion.div>
               )}
             </AnimatePresence>
-            <Link className={`mobile-nav__link${isRouteActive(pathname, '/ventures') ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, '/ventures') ? 'page' : undefined} onClick={closeForNavigation} to="/ventures">{t('nav.ventures')}</Link>
-            <Link className={`mobile-nav__link${isRouteActive(pathname, '/insights') ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, '/insights') ? 'page' : undefined} onClick={closeForNavigation} to="/insights">{t('nav.insights')}</Link>
-            <a className="mobile-nav__link" href="#client-portal" onClick={() => closeMobileMenu()}>{t('nav.clientPortal')}</a>
+            {primaryNavigation.slice(1).map((item) => (
+              <Link key={item.href} className={`mobile-nav__link${isRouteActive(pathname, item.href) ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, item.href) ? 'page' : undefined} onClick={closeForNavigation} to={item.href}>{label(item.label)}</Link>
+            ))}
+            {siteFeatures.clientPortal && <a className="mobile-nav__link" href="#client-portal" onClick={() => closeMobileMenu()}>{t('nav.clientPortal')}</a>}
             <button className="pill-button" onClick={() => { closeMobileMenu(); openModal(); }}>{t('nav.startConversation')}</button>
           </motion.nav>
         )}
