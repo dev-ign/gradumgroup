@@ -47,7 +47,7 @@ test('Construction follows the finalized six-section story and retains its detai
   const links = [
     ['Architecture', '/construction/architecture'],
     ['Engineering', '/construction/engineering'],
-    ['Execution', '/construction/build'],
+    ['Execution', '/construction/execution'],
   ] as const;
   for (const [title, href] of links) {
     await page.getByRole('link', { name: new RegExp(`Explore ${title}`) }).click();

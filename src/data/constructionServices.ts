@@ -89,7 +89,7 @@ export const constructionServices = {
       label: ctaLabel,
     },
   },
-  'construction-build': {
+  'construction-execution': {
     hero: {
       eyebrow,
       category: text('Execution', 'Ejecución'),
@@ -120,7 +120,7 @@ export const constructionServices = {
       label: ctaLabel,
     },
   },
-} satisfies Record<'construction-architecture' | 'construction-engineering' | 'construction-build', ConstructionServiceContent>;
+} satisfies Record<'construction-architecture' | 'construction-engineering' | 'construction-execution', ConstructionServiceContent>;
 
 export type ConstructionServiceKey = keyof typeof constructionServices;
 

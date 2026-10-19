@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { ModalProvider } from './context/ModalContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -12,7 +12,7 @@ import { Detail } from './pages/Detail';
 import { Ventures } from './pages/Ventures';
 import { Insights } from './pages/Insights';
 import { NotFound } from './pages/NotFound';
-import { siteFeatures } from './data/navigation';
+import { constructionExecutionPath, siteFeatures } from './data/navigation';
 
 export default function App() {
   return (
@@ -31,7 +31,8 @@ export default function App() {
               <Route path="construction" element={<Construction />} />
               <Route path="construction/architecture" element={<Detail page="construction-architecture" />} />
               <Route path="construction/engineering" element={<Detail page="construction-engineering" />} />
-              <Route path="construction/build" element={<Detail page="construction-build" />} />
+              <Route path={constructionExecutionPath.slice(1)} element={<Detail page="construction-execution" />} />
+              <Route path="construction/build" element={<Navigate to={constructionExecutionPath} replace />} />
               <Route path="services" element={<Services />} />
               <Route path="services/accounting-finance" element={<Detail page="services-accounting" />} />
               <Route path="services/marketing-media" element={<Detail page="services-marketing" />} />

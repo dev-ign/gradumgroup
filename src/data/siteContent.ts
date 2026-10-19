@@ -1,4 +1,5 @@
 import type { Language } from '../context/LanguageContext';
+import { constructionExecutionPath } from './navigation';
 
 export type ThemeFamily = 'consulting' | 'construction' | 'services' | 'brand';
 
@@ -151,7 +152,7 @@ export const platformLandings: Record<'consulting' | 'construction' | 'services'
     cards: [
       { code: '01', title: text('Architecture', 'Arquitectura'), subtitle: text('Design & Documentation', 'Diseño y documentación'), description: text('Architectural design, 3D visualization, construction drawings, and technical documentation that help translate project requirements into buildable plans.', 'Diseño arquitectónico, visualización 3D, planos de construcción y documentación técnica que ayudan a traducir los requisitos del proyecto en planes construibles.'), cta: text('Explore Architecture →', 'Explorar Arquitectura →'), image: '/assets/figma/Construccio\u0301n/detailed-view-interior-inspection-process-home.jpg', href: '/construction/architecture' },
       { code: '02', title: text('Engineering', 'Ingeniería'), subtitle: text('Technical & Cost Engineering', 'Ingeniería técnica y de costos'), description: text('Structural and building systems engineering, construction budgets, quantity takeoffs, and technical coordination to support informed project decisions.', 'Ingeniería estructural y de sistemas de edificación, presupuestos de construcción, cómputos de cantidades y coordinación técnica para apoyar decisiones informadas sobre el proyecto.'), cta: text('Explore Engineering →', 'Explorar Ingeniería →'), image: '/assets/figma/Construccio\u0301n/employee-working-project-side-view.jpg', href: '/construction/engineering' },
-      { code: '03', title: text('Execution', 'Ejecución'), subtitle: text('Construction & Project Delivery', 'Construcción y entrega de proyectos'), description: text('Construction execution, site supervision, and project coordination to turn approved plans into completed work.', 'Ejecución de obras, supervisión en obra y coordinación de proyectos para convertir los planes aprobados en trabajos terminados.'), cta: text('Explore Execution →', 'Explorar Ejecución →'), image: '/assets/figma/Construccio\u0301n/close-up-construction-worker-construction-site.jpg', href: '/construction/build' },
+      { code: '03', title: text('Execution', 'Ejecución'), subtitle: text('Construction & Project Delivery', 'Construcción y entrega de proyectos'), description: text('Construction execution, site supervision, and project coordination to turn approved plans into completed work.', 'Ejecución de obras, supervisión en obra y coordinación de proyectos para convertir los planes aprobados en trabajos terminados.'), cta: text('Explore Execution →', 'Explorar Ejecución →'), image: '/assets/figma/Construccio\u0301n/close-up-construction-worker-construction-site.jpg', href: constructionExecutionPath },
     ],
     constructionSections: {
       introduction: {

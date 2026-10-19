@@ -10,7 +10,7 @@ const labelKeys: Record<string, string> = {
   About: 'nav.about', Ventures: 'nav.ventures', Insights: 'nav.insights', Platform: 'nav.platform',
   Consulting: 'nav.consulting', Construction: 'nav.construction', Services: 'nav.services', Overview: 'nav.overview',
   Capabilities: 'nav.capabilities', Industries: 'nav.industries', 'How We Work': 'nav.howWeWork',
-  Architecture: 'nav.architecture', Engineering: 'nav.engineering', Build: 'nav.build',
+  Architecture: 'nav.architecture', Engineering: 'nav.engineering', Execution: 'nav.execution',
   'Accounting & Finance': 'nav.accountingFinance', 'Creative & Media': 'nav.marketingMedia', 'Legal & Corporate': 'nav.adminLegal',
 };
 

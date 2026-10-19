@@ -3,7 +3,7 @@ import { expect, test, type Page } from '@playwright/test';
 const routes = [
   '/', '/about', '/consulting', '/consulting/capabilities', '/consulting/industries',
   '/consulting/how-we-work', '/construction', '/construction/architecture',
-  '/construction/engineering', '/construction/build', '/services',
+  '/construction/engineering', '/construction/execution', '/services',
   '/services/accounting-finance', '/services/marketing-media', '/services/admin-legal',
 ];
 

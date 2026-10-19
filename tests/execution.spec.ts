@@ -1,6 +1,60 @@
 import { expect, test } from '@playwright/test';
 
-const route = '/construction/build';
+const route = '/construction/execution';
+
+test('Execution is canonical and reachable through shared navigation', async ({ page, request }) => {
+  await page.addInitScript(() => localStorage.setItem('lang', 'en'));
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto(route);
+  await expect(page.locator('main h1')).toHaveText('From Planning. To Built Reality.');
+  await expect(page.locator('head link[rel="canonical"]')).toHaveAttribute('href', `https://gradumgroup.com${route}`);
+  await expect(page.locator('head meta[property="og:url"]')).toHaveAttribute('content', `https://gradumgroup.com${route}`);
+  await page.reload();
+  await expect(page.locator('main h1')).toHaveText('From Planning. To Built Reality.');
+
+  const sitemap = await request.get('/sitemap.xml');
+  expect(sitemap.ok()).toBe(true);
+  const urls = await sitemap.text();
+  expect(urls).toContain(`<loc>https://gradumgroup.com${route}</loc>`);
+  expect(urls).not.toContain('/construction/build');
+
+  await page.goto('/construction');
+  await page.locator('.platform-trigger > button').click();
+  await page.getByRole('tab', { name: /Construction/ }).click();
+  await page.locator(`.platform-menu__children a[href="${route}"]`).click();
+  await expect(page).toHaveURL(new RegExp(`${route}$`));
+  await page.goBack();
+  await expect(page).toHaveURL(/\/construction$/);
+  await expect(page.locator('head link[rel="canonical"]')).toHaveCount(0);
+  await expect(page.locator('head meta[property="og:url"]')).toHaveCount(0);
+  await page.goForward();
+  await expect(page).toHaveURL(new RegExp(`${route}$`));
+
+  await page.goto('/about');
+  await page.locator(`.site-footer a[href="${route}"]`).click();
+  await expect(page).toHaveURL(new RegExp(`${route}$`));
+  await page.goto('/construction');
+  await page.locator(`.landing-expertise a[href="${route}"]`).click();
+  await expect(page).toHaveURL(new RegExp(`${route}$`));
+  await expect(page.locator(`.site-footer a[href="${route}"]`)).toHaveText('Execution');
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/about');
+  await page.locator('.mobile-toggle').click();
+  await page.locator('.mobile-nav__parent').click();
+  await page.locator('.mobile-platform button').filter({ hasText: 'Construction' }).click();
+  await expect(page.locator(`.mobile-platform__children a[href="${route}"]`)).toHaveText('Execution');
+  await page.locator(`.mobile-platform__children a[href="${route}"]`).click();
+  await expect(page).toHaveURL(new RegExp(`${route}$`));
+});
+
+test('legacy client-side route replaces the old history entry', async ({ page }) => {
+  await page.goto('/construction');
+  await page.evaluate(() => window.history.pushState({}, '', '/construction/build'));
+  await page.evaluate(() => window.dispatchEvent(new PopStateEvent('popstate')));
+  await expect(page).toHaveURL(new RegExp(`${route}$`));
+  await expect(page.locator('main h1')).toHaveText('From Planning. To Built Reality.');
+});
 
 test('Execution renders the approved four-section content and inquiry CTA', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('lang', 'en'));
