@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PageTransition } from '../components/ui/PageTransition';
 import { RegionalFlagCarousel } from '../components/ui/RegionalFlagCarousel';
+import { RegionalNetworkMap } from '../components/ui/RegionalNetworkMap';
 import { HowWeWorkTimeline } from '../components/sections/HowWeWorkTimeline';
 import { Reveal, StaggerGroup } from '../components/ui/Reveal';
 import { OptimizedImage } from '../components/ui/OptimizedImage';
@@ -114,21 +115,7 @@ export function Home() {
             <Reveal><p>{l(homeContent.latam.detail)}</p></Reveal>
           </StaggerGroup>
           <Reveal variant="image" delay={motionTokens.stagger.standard * 3} className="latam-section__visual">
-            <picture>
-              <source
-                type="image/webp"
-                srcSet="/assets/optimized/glowing-americas-network-hub-640.webp 640w, /assets/optimized/glowing-americas-network-hub-960.webp 960w"
-                sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 900px) 520px, (max-width: 1350px) 60vw, 700px"
-              />
-              <img
-                src="/Glowing%20Americas%20Network%20Hub.png"
-                alt={l(homeContent.imagery.networkMapAlt)}
-                width="1774"
-                height="887"
-                loading="lazy"
-                decoding="async"
-              />
-            </picture>
+            <RegionalNetworkMap alt={l(homeContent.imagery.networkMapAlt)} />
           </Reveal>
         </StaggerGroup>
 

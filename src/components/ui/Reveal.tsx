@@ -33,6 +33,7 @@ interface SharedMotionProps {
   style?: MotionStyle;
   as?: MotionTag;
   'aria-hidden'?: boolean;
+  'aria-label'?: string;
 }
 
 type RevealProps = SharedMotionProps & {
@@ -58,6 +59,7 @@ const renderMotionElement = (
     id?: string;
     style?: MotionStyle;
     'aria-hidden'?: boolean;
+    'aria-label'?: string;
     variants: ReturnType<typeof createRevealVariants>;
     initial?: false | string;
     animate?: string;
