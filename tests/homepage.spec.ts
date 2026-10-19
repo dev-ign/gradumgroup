@@ -64,16 +64,16 @@ test('approved English homepage copy and contact actions are present', async ({ 
     'Based in the Dominican Republic, Gradum Group supports organizations locally while pursuing selected opportunities across Latin America and North America.',
     'Our multidisciplinary structure allows us to address different types of technical, construction, and business needs through focused service divisions.',
   ]);
-  await expect(page.locator('.latam-section__visual img')).toHaveAttribute('alt', 'Network map showing connections from the Dominican Republic across the Americas.');
+  await expect(page.locator('.latam-section__visual img')).toHaveAttribute('alt', 'Map of the Americas with the Dominican Republic highlighted.');
   await expect(page.locator('.latam-section__visual img')).toHaveAttribute('loading', 'lazy');
   await expect(page.locator('.latam-section__visual img')).toHaveAttribute('decoding', 'async');
   await expect(page.locator('.latam-section__visual img')).toHaveAttribute('width', '1774');
   await expect(page.locator('.latam-section__visual img')).toHaveAttribute('height', '887');
-  await expect(page.locator('.latam-section__visual source')).toHaveAttribute('type', 'image/webp');
+  await expect(page.locator('.latam-section__visual source')).toHaveCount(0);
   await expect(page.locator('.latam-section img[src*="latam-flags"]')).toHaveCount(0);
   await page.locator('.latam-section__visual img').scrollIntoViewIfNeeded();
   await expect.poll(() => page.locator('.latam-section__visual img').evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
-  expect(await page.locator('.latam-section__visual img').evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('.webp');
+  expect(await page.locator('.latam-section__visual img').evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('/assets/glowing-americas-map-clean.png');
   await expect(page.locator('.home-cta h2')).toHaveText("Let's Discuss What You're Building.");
   await expect(page.locator('.home-cta p')).toHaveText("Whether you're developing a technical solution, planning a construction project, or strengthening a business function, let's explore how Gradum can support your objectives.");
   await expect(page.locator('.home-cta .pill-button')).toHaveText('Discuss Your Project');
@@ -96,7 +96,7 @@ test('Spanish homepage copy follows the same structure', async ({ page }) => {
   await expect(page.locator('#how-we-work-title')).toHaveText('La experiencia adecuada. Para el trabajo que importa.');
   await expect(page.locator('.engagement-timeline__content h3')).toHaveText(['Comprender el desafío', 'Definir el alcance', 'Entregar el trabajo']);
   await expect(page.locator('.latam-section h2')).toHaveText('Con raíces en la República Dominicana. Conectados con mercados más amplios.');
-  await expect(page.locator('.latam-section__visual img')).toHaveAttribute('alt', 'Mapa de conexiones desde la República Dominicana hacia el resto de las Américas.');
+  await expect(page.locator('.latam-section__visual img')).toHaveAttribute('alt', 'Mapa de las Américas con la República Dominicana destacada.');
   await expect(page.locator('.home-cta h2')).toHaveText('Hablemos de lo que está construyendo.');
 });
 
@@ -358,7 +358,7 @@ test('updated sections stay readable at the requested viewport widths', async ({
         mapBox: document.querySelector('.latam-section__visual img')!.getBoundingClientRect().toJSON(),
         visualBox: document.querySelector('.latam-section__visual')!.getBoundingClientRect().toJSON(),
         copyBox: document.querySelector('.latam-section__copy')!.getBoundingClientRect().toJSON(),
-        maskImage: getComputedStyle(document.querySelector('.latam-section__visual picture')!).maskImage,
+        maskImage: getComputedStyle(document.querySelector('.regional-network-map')!).maskImage,
         visualPointerEvents: getComputedStyle(document.querySelector('.latam-section__visual')!).pointerEvents,
         perspectiveCopyBottom: document.querySelector('.latam-section p:last-child')!.getBoundingClientRect().bottom,
       };
@@ -369,13 +369,16 @@ test('updated sections stay readable at the requested viewport widths', async ({
     expect(layout.cardHeights.every((height) => height >= 250)).toBe(true);
     expect(layout.carouselVisible).toBe(true);
     expect(layout.mapBox.width / layout.mapBox.height, `${width}px map aspect ratio`).toBeCloseTo(2, 1);
-    expect(layout.mapBox.left, `${width}px map left`).toBeGreaterThanOrEqual(0);
-    expect(layout.mapBox.right, `${width}px map right`).toBeLessThanOrEqual(width + 1);
     expect(layout.visualPointerEvents).toBe('none');
     if (width <= 900) {
       expect(layout.mapBox.top, `${width}px stacked map`).toBeGreaterThan(layout.perspectiveCopyBottom);
+      expect(layout.visualBox.left, `${width}px map viewport left`).toBeGreaterThanOrEqual(0);
+      expect(layout.visualBox.right, `${width}px map viewport right`).toBeLessThanOrEqual(width + 1);
+      expect(layout.mapBox.width, `${width}px enlarged map artwork`).toBeGreaterThan(layout.visualBox.width);
       expect(layout.maskImage, `${width}px full map visibility`).toBe('none');
     } else {
+      expect(layout.mapBox.left, `${width}px map left`).toBeGreaterThanOrEqual(0);
+      expect(layout.mapBox.right, `${width}px map right`).toBeLessThanOrEqual(width + 1);
       expect(layout.visualBox.left, `${width}px left map`).toBeLessThan(layout.copyBox.left);
       expect(layout.visualBox.right, `${width}px map reaches text column`).toBeGreaterThan(layout.copyBox.left);
       expect(layout.visualBox.left + layout.visualBox.width * 0.93, `${width}px fade ends before copy`).toBeLessThanOrEqual(layout.copyBox.left + 2);

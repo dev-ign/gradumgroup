@@ -11,7 +11,7 @@ const labelKeys: Record<string, string> = {
   Consulting: 'nav.consulting', Construction: 'nav.construction', Services: 'nav.services', Overview: 'nav.overview',
   Capabilities: 'nav.capabilities', Industries: 'nav.industries', 'How We Work': 'nav.howWeWork',
   Architecture: 'nav.architecture', Engineering: 'nav.engineering', Build: 'nav.build',
-  'Accounting & Finance': 'nav.accountingFinance', 'Marketing & Media': 'nav.marketingMedia', 'Admin & Legal': 'nav.adminLegal',
+  'Accounting & Finance': 'nav.accountingFinance', 'Creative & Media': 'nav.marketingMedia', 'Legal & Corporate': 'nav.adminLegal',
 };
 
 export function Navbar() {

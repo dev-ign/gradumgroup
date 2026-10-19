@@ -183,29 +183,6 @@
     ],
     "fallback": "/assets/optimized/construccion/steel-bar-site-construction-8c8fc667-1600.jpg"
   },
-  "/assets/figma/Construcción/unfinished-gray-building-construction-exterior.jpg": {
-    "width": 2596,
-    "height": 3888,
-    "webp": [
-      {
-        "width": 160,
-        "src": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-160.webp"
-      },
-      {
-        "width": 480,
-        "src": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-480.webp"
-      },
-      {
-        "width": 960,
-        "src": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-960.webp"
-      },
-      {
-        "width": 1600,
-        "src": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-1600.webp"
-      }
-    ],
-    "fallback": "/assets/optimized/construccion/unfinished-gray-building-construction-exte-c48fa412-1600.jpg"
-  },
   "/assets/figma/Construcción/woman-studying-draft-construction-site.jpg": {
     "width": 6016,
     "height": 4016,
@@ -486,29 +463,6 @@
     ],
     "fallback": "/assets/optimized/finanzas/side-view-woman-working-as-economist-f5154481-1920.jpg"
   },
-  "/assets/figma/Finanzas/tablet-label-shipping-with-man-warehouse-logistics-route-tracking-code-cargo-box-inventory-checklist-ecommerce-delivery-with-person-factory-supplier-distribution-depot.jpg": {
-    "width": 4096,
-    "height": 2160,
-    "webp": [
-      {
-        "width": 160,
-        "src": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-160.webp"
-      },
-      {
-        "width": 480,
-        "src": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-480.webp"
-      },
-      {
-        "width": 960,
-        "src": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-960.webp"
-      },
-      {
-        "width": 1600,
-        "src": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-1600.webp"
-      }
-    ],
-    "fallback": "/assets/optimized/finanzas/tablet-label-shipping-with-man-warehouse-l-8d88d05a-1600.jpg"
-  },
   "/assets/figma/Personas/authentic-small-youthful-marketing-agency (2).jpg": {
     "width": 6753,
     "height": 4502,
@@ -693,9 +647,13 @@
       {
         "width": 1600,
         "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-792ea7a9-1600.webp"
+      },
+      {
+        "width": 1920,
+        "src": "/assets/optimized/personas/middle-aged-hispanic-business-people-792ea7a9-1920.webp"
       }
     ],
-    "fallback": "/assets/optimized/personas/middle-aged-hispanic-business-people-792ea7a9-1600.jpg"
+    "fallback": "/assets/optimized/personas/middle-aged-hispanic-business-people-792ea7a9-1920.jpg"
   },
   "/assets/figma/Personas/middle-aged-hispanic-business-person (1).jpg": {
     "width": 7999,
@@ -762,13 +720,9 @@
       {
         "width": 1600,
         "src": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-1600.webp"
-      },
-      {
-        "width": 1920,
-        "src": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-1920.webp"
       }
     ],
-    "fallback": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-1920.jpg"
+    "fallback": "/assets/optimized/tech/colleagues-collaborating-laptop-office-edd99f98-1600.jpg"
   },
   "/assets/figma/Tech/forecast-expert-ceo-analyzing-investment-insights-negotiations-details.jpg": {
     "width": 7300,
@@ -793,6 +747,98 @@
     ],
     "fallback": "/assets/optimized/tech/forecast-expert-ceo-analyzing-investment-i-18ef56fe-1600.jpg"
   },
+  "/assets/figma/Tech/industry-agtech-tractor.png": {
+    "width": 1254,
+    "height": 1254,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/industry-agtech-tractor-c55ff279-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/industry-agtech-tractor-c55ff279-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/industry-agtech-tractor-c55ff279-960.webp"
+      },
+      {
+        "width": 1254,
+        "src": "/assets/optimized/tech/industry-agtech-tractor-c55ff279-1254.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/industry-agtech-tractor-c55ff279-1254.jpg"
+  },
+  "/assets/figma/Tech/industry-energy-substation.png": {
+    "width": 1254,
+    "height": 1254,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/industry-energy-substation-ba8d5e25-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/industry-energy-substation-ba8d5e25-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/industry-energy-substation-ba8d5e25-960.webp"
+      },
+      {
+        "width": 1254,
+        "src": "/assets/optimized/tech/industry-energy-substation-ba8d5e25-1254.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/industry-energy-substation-ba8d5e25-1254.jpg"
+  },
+  "/assets/figma/Tech/industry-manufacturing-robot.png": {
+    "width": 1254,
+    "height": 1254,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/industry-manufacturing-robot-2006e4c6-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/industry-manufacturing-robot-2006e4c6-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/industry-manufacturing-robot-2006e4c6-960.webp"
+      },
+      {
+        "width": 1254,
+        "src": "/assets/optimized/tech/industry-manufacturing-robot-2006e4c6-1254.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/industry-manufacturing-robot-2006e4c6-1254.jpg"
+  },
+  "/assets/figma/Tech/industry-medical-device.png": {
+    "width": 1254,
+    "height": 1254,
+    "webp": [
+      {
+        "width": 160,
+        "src": "/assets/optimized/tech/industry-medical-device-8ada33ff-160.webp"
+      },
+      {
+        "width": 480,
+        "src": "/assets/optimized/tech/industry-medical-device-8ada33ff-480.webp"
+      },
+      {
+        "width": 960,
+        "src": "/assets/optimized/tech/industry-medical-device-8ada33ff-960.webp"
+      },
+      {
+        "width": 1254,
+        "src": "/assets/optimized/tech/industry-medical-device-8ada33ff-1254.webp"
+      }
+    ],
+    "fallback": "/assets/optimized/tech/industry-medical-device-8ada33ff-1254.jpg"
+  },
   "/assets/figma/Tech/magnific_recrea-esta-imagen-mejora_SyAMSTJUb8.jpeg": {
     "width": 3712,
     "height": 4608,
@@ -816,29 +862,6 @@
     ],
     "fallback": "/assets/optimized/tech/magnific-recrea-esta-imagen-mejora-syamstj-d23769d3-1600.jpg"
   },
-  "/assets/figma/Tech/medium-shot-latin-friends-hanging-out (1).jpg": {
-    "width": 8000,
-    "height": 5333,
-    "webp": [
-      {
-        "width": 160,
-        "src": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-160.webp"
-      },
-      {
-        "width": 480,
-        "src": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-480.webp"
-      },
-      {
-        "width": 960,
-        "src": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-960.webp"
-      },
-      {
-        "width": 1600,
-        "src": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-1600.webp"
-      }
-    ],
-    "fallback": "/assets/optimized/tech/medium-shot-latin-friends-hanging-out-1-6036da39-1600.jpg"
-  },
   "/assets/figma/Tech/woman-analyzing-data-flowchart-computer-office.jpg": {
     "width": 7000,
     "height": 3907,
@@ -861,29 +884,6 @@
       }
     ],
     "fallback": "/assets/optimized/tech/woman-analyzing-data-flowchart-computer-of-7053fe5d-1600.jpg"
-  },
-  "/assets/figma/Tech/woman-working-mobile-app-interface-desk.jpg": {
-    "width": 3072,
-    "height": 5504,
-    "webp": [
-      {
-        "width": 160,
-        "src": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-160.webp"
-      },
-      {
-        "width": 480,
-        "src": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-480.webp"
-      },
-      {
-        "width": 960,
-        "src": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-960.webp"
-      },
-      {
-        "width": 1600,
-        "src": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-1600.webp"
-      }
-    ],
-    "fallback": "/assets/optimized/tech/woman-working-mobile-app-interface-desk-c2136360-1600.jpg"
   },
   "/assets/figma/home-hero-portrait.png": {
     "width": 319,

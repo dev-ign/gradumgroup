@@ -7,33 +7,20 @@ import {
 
 const Flag = ({
   region,
-  duplicate,
   countryName,
 }: {
   region: SupportedRegion;
-  duplicate: boolean;
   countryName: string;
 }) => {
-  if (region.flagSrc) {
-    return (
-      <img
-        src={region.flagSrc}
-        alt={duplicate ? '' : countryName}
-        width="60"
-        height="60"
-        loading="eager"
-      />
-    );
-  }
-
   return (
-    <span
-      className="regional-marquee__emoji"
-      role={duplicate ? undefined : 'img'}
-      aria-label={duplicate ? undefined : countryName}
-    >
-      {region.flagEmoji}
-    </span>
+    <img
+      src={region.flagSrc}
+      alt={countryName}
+      width="60"
+      height="60"
+      loading="eager"
+      draggable={false}
+    />
   );
 };
 
@@ -66,7 +53,6 @@ export const RegionalFlagCarousel = ({ lang = 'en' }: { lang?: 'en' | 'es' }) =>
             <span className="regional-support__flag" title={countryName}>
               <Flag
                 region={region}
-                duplicate={duplicate}
                 countryName={countryName}
               />
             </span>

@@ -60,8 +60,8 @@ export const platformNavigation: PlatformNavigationGroup[] = [
     children: [
       { label: 'Overview', href: '/services' },
       { label: 'Accounting & Finance', href: '/services/accounting-finance' },
-      { label: 'Marketing & Media', href: '/services/marketing-media' },
-      { label: 'Admin & Legal', href: '/services/admin-legal' },
+      { label: 'Creative & Media', href: '/services/marketing-media' },
+      { label: 'Legal & Corporate', href: '/services/admin-legal' },
     ],
   },
 ];
