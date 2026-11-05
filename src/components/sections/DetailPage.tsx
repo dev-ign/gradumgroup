@@ -5,7 +5,7 @@ import { Reveal, StaggerGroup } from '../ui/Reveal';
 import { OptimizedImage } from '../ui/OptimizedImage';
 import { imageSizes } from '../../data/imageSizes';
 import { useLanguage } from '../../context/LanguageContext';
-import { useModal } from '../../context/ModalContext';
+import { useStartConversation } from '../../hooks/useStartConversation';
 import { localize, type DetailPageContent } from '../../data/siteContent';
 import { motionTokens } from '../../motion/presets';
 
@@ -15,7 +15,7 @@ interface DetailPageProps {
 
 export function DetailPage({ content }: DetailPageProps) {
   const { lang } = useLanguage();
-  const { openModal } = useModal();
+  const startConversation = useStartConversation();
   const l = (value: Parameters<typeof localize>[0]) => localize(value, lang);
   const heroSplit = content.heroLayout === 'split' || content.layout === 'split' || content.layout === 'cards';
   const refinedService = content.family === 'services' && Boolean(content.variant);
@@ -52,7 +52,7 @@ export function DetailPage({ content }: DetailPageProps) {
   const finalCtaReveals = content.finalCtaTitle && <>
     <Reveal><h2>{l(content.finalCtaTitle)}</h2></Reveal>
     {content.finalCtaDescription && <Reveal><p>{l(content.finalCtaDescription)}</p></Reveal>}
-    <Reveal><button className="pill-button" onClick={openModal}>{l(content.cta)}</button></Reveal>
+    <Reveal><button className="pill-button" onClick={startConversation}>{l(content.cta)}</button></Reveal>
   </>;
 
   return (
@@ -69,7 +69,7 @@ export function DetailPage({ content }: DetailPageProps) {
             ) : <Reveal className="hero-eyebrow-anchor"><p className="eyebrow platform-eyebrow">{l(content.eyebrow)}</p></Reveal>}
             <Reveal><h1>{l(content.title)}</h1></Reveal>
             <Reveal><p className="detail-hero__description">{l(content.description)}</p></Reveal>
-            {content.heroCta && <Reveal><button className="pill-button" onClick={openModal}>{l(content.heroCta)}</button></Reveal>}
+            {content.heroCta && <Reveal><button className="pill-button" onClick={startConversation}>{l(content.heroCta)}</button></Reveal>}
           </StaggerGroup>
           {content.image && <Reveal trigger="mount" variant="image" delay={content.heroLayout === 'split' ? 0.44 : 0.22} className="detail-hero__image-frame"><OptimizedImage className="detail-hero__image" src={content.image} alt={content.imageAlt ? l(content.imageAlt) : ''} sizes={content.heroLayout === 'split' ? imageSizes.splitHero : imageSizes.hero} decoding="async" loading="eager" fetchPriority="high" /></Reveal>}
         </section>
@@ -101,14 +101,14 @@ export function DetailPage({ content }: DetailPageProps) {
                 {content.statementEyebrow && <Reveal><p className="eyebrow">{l(content.statementEyebrow)}</p></Reveal>}
                 <Reveal><h2>{l(content.statement)}</h2></Reveal>
                 {content.approachBody?.map((paragraph, index) => <Reveal key={index}><p>{l(paragraph)}</p></Reveal>)}
-                {!content.finalCtaTitle && <Reveal><button className="pill-button" onClick={openModal}>{l(content.cta)}</button></Reveal>}
+                {!content.finalCtaTitle && <Reveal><button className="pill-button" onClick={startConversation}>{l(content.cta)}</button></Reveal>}
               </StaggerGroup>
             </StaggerGroup>
           </section>
         )}
 
         {!content.statement && (
-          <Reveal as="section" trigger="viewport" className="simple-cta"><button className="pill-button" onClick={openModal}>{l(content.cta)}</button></Reveal>
+          <Reveal as="section" trigger="viewport" className="simple-cta"><button className="pill-button" onClick={startConversation}>{l(content.cta)}</button></Reveal>
         )}
 
         {content.finalCtaTitle && (refinedService

@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test } from '@playwright/test';
 
 const route = '/construction/engineering';
@@ -50,8 +51,7 @@ test('Engineering uses the Construction service structure and approved copy', as
   for (const button of [page.locator('.detail-hero .pill-button'), page.locator('.explore-band--cta .pill-button')]) {
     await expect(button).toHaveText('Discuss Your Project');
     await button.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.keyboard.press('Escape');
+    await expectIntakeEntry(page);
   }
 });
 

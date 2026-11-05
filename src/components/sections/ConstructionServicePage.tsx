@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
-import { useModal } from '../../context/ModalContext';
+import { useStartConversation } from '../../hooks/useStartConversation';
 import { imageSizes } from '../../data/imageSizes';
 import { localize } from '../../data/siteContent';
 import type { ConstructionServiceContent } from '../../data/constructionServices';
@@ -11,7 +11,7 @@ import { Reveal, StaggerGroup } from '../ui/Reveal';
 
 export function ConstructionServicePage({ content }: { content: ConstructionServiceContent }) {
   const { lang } = useLanguage();
-  const { openModal } = useModal();
+  const startConversation = useStartConversation();
   const l = (value: Parameters<typeof localize>[0]) => localize(value, lang);
 
   return (
@@ -26,7 +26,7 @@ export function ConstructionServicePage({ content }: { content: ConstructionServ
             </div></Reveal>
             <Reveal><h1>{l(content.hero.title)}</h1></Reveal>
             <Reveal><p className="detail-hero__description">{l(content.hero.description)}</p></Reveal>
-            <Reveal><button className="pill-button" onClick={openModal}>{l(content.cta.label)}</button></Reveal>
+            <Reveal><button className="pill-button" onClick={startConversation}>{l(content.cta.label)}</button></Reveal>
           </StaggerGroup>
           <Reveal trigger="mount" variant="image" delay={0.44} className="detail-hero__image-frame">
             <OptimizedImage className="detail-hero__image" src={content.hero.image} alt={l(content.hero.imageAlt)} sizes={imageSizes.splitHero} decoding="async" loading="eager" fetchPriority="high" />
@@ -60,7 +60,7 @@ export function ConstructionServicePage({ content }: { content: ConstructionServ
           <StaggerGroup trigger="viewport" amount={0.2} className="explore-band__content">
             <Reveal><h2>{l(content.cta.title)}</h2></Reveal>
             <Reveal><p>{l(content.cta.description)}</p></Reveal>
-            <Reveal><button className="pill-button" onClick={openModal}>{l(content.cta.label)}</button></Reveal>
+            <Reveal><button className="pill-button" onClick={startConversation}>{l(content.cta.label)}</button></Reveal>
           </StaggerGroup>
         </section>
       </article>

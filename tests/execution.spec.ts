@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test } from '@playwright/test';
 
 const route = '/construction/execution';
@@ -103,9 +104,7 @@ test('Execution renders the approved four-section content and inquiry CTA', asyn
   for (const button of [page.locator('.detail-hero .pill-button'), page.locator('.explore-band--cta .pill-button')]) {
     await expect(button).toHaveText('Discuss Your Project');
     await button.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await expect(page.locator('input#name')).toBeFocused();
-    await page.keyboard.press('Escape');
+    await expectIntakeEntry(page);
   }
 });
 

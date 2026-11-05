@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test } from '@playwright/test';
 
 const route = '/services/accounting-finance';
@@ -34,8 +35,7 @@ test('Accounting keeps its page identity and approved copy without section label
 
   for (const button of [page.locator('.detail-hero__copy .pill-button'), page.locator('.service-final-cta .pill-button')]) {
     await button.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.keyboard.press('Escape');
+    await expectIntakeEntry(page);
   }
 
   await page.goto('/services/admin-legal');

@@ -1,4 +1,5 @@
 import type { Language } from '../context/LanguageContext';
+import { intakeTranslations } from './intake';
 
 /**
  * Get a value from a nested object by dot path (e.g. "home.hero.tagline" or "home.divisions.0.name").
@@ -24,6 +25,7 @@ export function getByPath(obj: Record<string, unknown>, path: string): unknown {
 }
 
 const en = {
+  intake: intakeTranslations.en,
   common: {
     requestConsultation: 'Request Consultation',
     consultation: 'Consultation',
@@ -583,6 +585,7 @@ const en = {
 };
 
 const es: typeof en = {
+  intake: intakeTranslations.es,
   common: {
     requestConsultation: 'Solicitar Consultoría',
     consultation: 'Consultación',

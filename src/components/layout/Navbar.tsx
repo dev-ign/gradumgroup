@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { getActivePlatformGroupIndex, isRouteActive, platformNavigation, primaryNavigation, siteFeatures } from '../../data/navigation';
-import { useModal } from '../../context/ModalContext';
+import { useStartConversation } from '../../hooks/useStartConversation';
 import { useTranslation } from '../../i18n/useTranslation';
 import { BrandLogo } from '../ui/BrandLogo';
 
@@ -16,7 +16,7 @@ const labelKeys: Record<string, string> = {
 
 export function Navbar() {
   const { pathname } = useLocation();
-  const { openModal } = useModal();
+  const startConversation = useStartConversation('navigation');
   const { t } = useTranslation();
   const reducedMotion = useReducedMotion();
   const activePlatformIndex = getActivePlatformGroupIndex(pathname);
@@ -237,7 +237,7 @@ export function Navbar() {
         </nav>
         <div className="header-actions">
           {siteFeatures.clientPortal && <a className="client-link" href="#client-portal">{t('nav.clientPortal')}</a>}
-          <button className="pill-button pill-button--small" onClick={openModal}>{t('nav.startConversation')}</button>
+          <button className="pill-button pill-button--small" onClick={startConversation}>{t('nav.startConversation')}</button>
         </div>
         <button ref={mobileToggleRef} className="mobile-toggle" type="button" aria-label={mobileOpen ? t('nav.closeMenu') : t('nav.openMenu')} aria-expanded={mobileOpen} aria-controls="mobile-navigation" onClick={toggleMobileMenu}>
           <span /><span /><span />
@@ -280,7 +280,7 @@ export function Navbar() {
               <Link key={item.href} className={`mobile-nav__link${isRouteActive(pathname, item.href) ? ' is-active' : ''}`} aria-current={isRouteActive(pathname, item.href) ? 'page' : undefined} onClick={closeForNavigation} to={item.href}>{label(item.label)}</Link>
             ))}
             {siteFeatures.clientPortal && <a className="mobile-nav__link" href="#client-portal" onClick={() => closeMobileMenu()}>{t('nav.clientPortal')}</a>}
-            <button className="pill-button" onClick={() => { closeMobileMenu(); openModal(); }}>{t('nav.startConversation')}</button>
+            <button className="pill-button" onClick={() => { closeMobileMenu(); startConversation(); }}>{t('nav.startConversation')}</button>
           </motion.nav>
         )}
       </AnimatePresence>

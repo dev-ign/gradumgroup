@@ -5,7 +5,7 @@ import { Reveal, StaggerGroup } from '../ui/Reveal';
 import { OptimizedImage } from '../ui/OptimizedImage';
 import { imageSizes } from '../../data/imageSizes';
 import { useLanguage } from '../../context/LanguageContext';
-import { useModal } from '../../context/ModalContext';
+import { useStartConversation } from '../../hooks/useStartConversation';
 import { localize, type PlatformLandingContent } from '../../data/siteContent';
 import { scrollToSection } from '../../lib/lenis';
 import { motionTokens } from '../../motion/presets';
@@ -17,7 +17,7 @@ interface PlatformLandingPageProps {
 
 export function PlatformLandingPage({ content }: PlatformLandingPageProps) {
   const { lang } = useLanguage();
-  const { openModal } = useModal();
+  const startConversation = useStartConversation();
   const l = (value: Parameters<typeof localize>[0]) => localize(value, lang);
   const hasExpertiseHeading = Boolean(content.expertiseTitle);
   const constructionSections = content.constructionSections;
@@ -52,7 +52,7 @@ export function PlatformLandingPage({ content }: PlatformLandingPageProps) {
     {content.statementBody && <Reveal><p className="platform-statement__body">{l(content.statementBody)}</p></Reveal>}
     {content.statementBodyExtra && <Reveal><p className="platform-statement__body">{l(content.statementBodyExtra)}</p></Reveal>}
   </>;
-  const primaryAction = <button className="pill-button" onClick={openModal}>{l(content.primaryCta)}</button>;
+  const primaryAction = <button className="pill-button" onClick={startConversation}>{l(content.primaryCta)}</button>;
   const secondaryAction = content.secondaryCta && (content.secondaryHref
     ? <Link className="outline-button" to={content.secondaryHref}>{l(content.secondaryCta)}</Link>
     : content.family === 'services'
@@ -135,14 +135,14 @@ export function PlatformLandingPage({ content }: PlatformLandingPageProps) {
             <StaggerGroup trigger="viewport" amount={0.9} className="explore-band__content">
               <Reveal><h2>{l(content.finalCtaTitle)}</h2></Reveal>
               {content.finalCtaDescription && <Reveal><p>{l(content.finalCtaDescription)}</p></Reveal>}
-              <Reveal><button className="pill-button" onClick={openModal}>{l(content.primaryCta)}</button></Reveal>
+              <Reveal><button className="pill-button" onClick={startConversation}>{l(content.primaryCta)}</button></Reveal>
             </StaggerGroup>
           </section>
         ) : (
           <StaggerGroup as="section" trigger="viewport" className="explore-band">
             <Reveal><h2>{content.eyebrow ? `${lang === 'es' ? 'Explorar' : 'Explore'} ${l(content.eyebrow).replace('Gradum ', '')}` : (lang === 'es' ? 'Explorar' : 'Explore')}</h2></Reveal>
             <Reveal><div className="explore-band__links">{content.cards.map((card) => <Link key={card.href} to={card.href}>{l(card.title)} →</Link>)}</div></Reveal>
-            <Reveal><button className="pill-button" onClick={openModal}>{l(content.primaryCta)}</button></Reveal>
+            <Reveal><button className="pill-button" onClick={startConversation}>{l(content.primaryCta)}</button></Reveal>
           </StaggerGroup>
         )}
       </article>

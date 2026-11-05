@@ -1,5 +1,11 @@
 # React + TypeScript + Vite
 
+## Gradum conversational intake
+
+The `/start` route implements the Figma-based client/partner conversation. Start with the [engineering and stakeholder walkthrough](docs/intake.md), [discovery notes](docs/intake-discovery.md), and [verification record](docs/intake-verification.md).
+
+`npm run test:intake` runs the pure engine tests without a browser. `npm run test:e2e` builds and runs the main regression suite. Separate `test:intake:failure` and `test:intake:mobile` scripts cover mock retry and mobile WebKit; the latter requires the matching Playwright WebKit runtime. Submission is explicitly mocked and does not deliver inquiries.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

@@ -1,4 +1,4 @@
-import { useModal } from '../../context/ModalContext';
+import { useStartConversation } from '../../hooks/useStartConversation';
 import { useLanguage } from '../../context/LanguageContext';
 import { imageSizes } from '../../data/imageSizes';
 import { localize, type LocalizedText } from '../../data/siteContent';
@@ -25,7 +25,7 @@ function ConsultingHero({ hero, split, l }: { hero: ConsultingDetailContent['her
   );
 }
 
-function ConsultingCapabilities({ content, l, openModal }: { content: Extract<ConsultingDetailContent, { layout: 'capabilities' }>; l: Localizer; openModal: () => void }) {
+function ConsultingCapabilities({ content, l, startConversation }: { content: Extract<ConsultingDetailContent, { layout: 'capabilities' }>; l: Localizer; startConversation: () => void }) {
   return <>
     <section className="detail-features section-shell detail-features--wide consulting-capabilities" aria-label={l(content.hero.label)}>
       {content.items.map((item, index) => (
@@ -41,7 +41,7 @@ function ConsultingCapabilities({ content, l, openModal }: { content: Extract<Co
       <StaggerGroup trigger="viewport" className="approach-band__inner">
         <Reveal><h2>{l(content.approach.title)}</h2></Reveal>
         <Reveal><p>{l(content.approach.description)}</p></Reveal>
-        <Reveal><button className="pill-button" onClick={openModal}>{l(content.approach.label)}</button></Reveal>
+        <Reveal><button className="pill-button" onClick={startConversation}>{l(content.approach.label)}</button></Reveal>
       </StaggerGroup>
     </section>
   </>;
@@ -84,13 +84,13 @@ function ConsultingProcess({ content, l }: { content: Extract<ConsultingDetailCo
   </>;
 }
 
-function ConsultingFinalCta({ content, l, openModal }: { content: Extract<ConsultingDetailContent, { layout: 'industries' | 'process' }>['cta']; l: Localizer; openModal: () => void }) {
+function ConsultingFinalCta({ content, l, startConversation }: { content: Extract<ConsultingDetailContent, { layout: 'industries' | 'process' }>['cta']; l: Localizer; startConversation: () => void }) {
   return (
     <section className="explore-band explore-band--cta consulting-final-cta">
       <StaggerGroup trigger="viewport" amount={0.2} className="explore-band__content">
         <Reveal><h2>{l(content.title)}</h2></Reveal>
         <Reveal><p>{l(content.description)}</p></Reveal>
-        <Reveal><button className="pill-button" onClick={openModal}>{l(content.label)}</button></Reveal>
+        <Reveal><button className="pill-button" onClick={startConversation}>{l(content.label)}</button></Reveal>
       </StaggerGroup>
     </section>
   );
@@ -98,17 +98,17 @@ function ConsultingFinalCta({ content, l, openModal }: { content: Extract<Consul
 
 export function ConsultingDetailPage({ content }: { content: ConsultingDetailContent }) {
   const { lang } = useLanguage();
-  const { openModal } = useModal();
+  const startConversation = useStartConversation();
   const l: Localizer = (value) => localize(value, lang);
 
   return (
     <PageTransition>
       <article className={`marketing-page detail-page family-consulting consulting-detail consulting-detail--${content.layout}`}>
         <ConsultingHero hero={content.hero} split={content.layout === 'process'} l={l} />
-        {content.layout === 'capabilities' && <ConsultingCapabilities content={content} l={l} openModal={openModal} />}
+        {content.layout === 'capabilities' && <ConsultingCapabilities content={content} l={l} startConversation={startConversation} />}
         {content.layout === 'industries' && <ConsultingIndustries content={content} l={l} />}
         {content.layout === 'process' && <ConsultingProcess content={content} l={l} />}
-        {content.layout !== 'capabilities' && <ConsultingFinalCta content={content.cta} l={l} openModal={openModal} />}
+        {content.layout !== 'capabilities' && <ConsultingFinalCta content={content.cta} l={l} startConversation={startConversation} />}
       </article>
     </PageTransition>
   );

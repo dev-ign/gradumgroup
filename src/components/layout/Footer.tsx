@@ -33,6 +33,7 @@ export function Footer() {
           <Reveal>
             <span className="site-footer__heading">{t('nav.company')}</span>
             {primaryNavigation.map((item) => <Link key={item.href} to={item.href}>{label(item.label)}</Link>)}
+            <Link to="/start?source=footer">{t('nav.startConversation')}</Link>
             {siteFeatures.clientPortal && <a href="#client-portal">{t('nav.clientPortal')}</a>}
           </Reveal>
         </StaggerGroup>
