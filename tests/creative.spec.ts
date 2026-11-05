@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test, type Locator } from '@playwright/test';
 
 const route = '/services/marketing-media';
@@ -40,8 +41,7 @@ test('Creative copy, imagery, contact path, and section labels match the approve
   for (const button of [page.locator('.detail-hero__copy .pill-button'), page.locator('.service-final-cta .pill-button')]) {
     await expect(button).toHaveText('Discuss Your Creative Project');
     await button.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.keyboard.press('Escape');
+    await expectIntakeEntry(page);
   }
 });
 

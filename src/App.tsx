@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import { ModalProvider } from './context/ModalContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -14,6 +15,8 @@ import { Insights } from './pages/Insights';
 import { NotFound } from './pages/NotFound';
 import { constructionExecutionPath, siteFeatures } from './data/navigation';
 
+const IntakePage = lazy(() => import('./features/intake/pages/IntakePage'));
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -21,6 +24,7 @@ export default function App() {
       <ThemeProvider>
         <ModalProvider>
           <Routes>
+            <Route path="start" element={<Suspense fallback={null}><IntakePage /></Suspense>} />
             <Route element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="about" element={<About />} />

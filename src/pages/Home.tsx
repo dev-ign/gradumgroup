@@ -9,7 +9,7 @@ import { Reveal, StaggerGroup } from '../components/ui/Reveal';
 import { OptimizedImage } from '../components/ui/OptimizedImage';
 import { imageSizes } from '../data/imageSizes';
 import { useLanguage } from '../context/LanguageContext';
-import { useModal } from '../context/ModalContext';
+import { useStartConversation } from '../hooks/useStartConversation';
 import { homeContent, localize } from '../data/siteContent';
 import { siteFeatures } from '../data/navigation';
 import { scrollToSection } from '../lib/lenis';
@@ -17,7 +17,7 @@ import { createStaggerVariants, motionTokens } from '../motion/presets';
 
 export function Home() {
   const { lang } = useLanguage();
-  const { openModal } = useModal();
+  const startConversation = useStartConversation();
   const [stackedExpertise, setStackedExpertise] = useState(() => window.matchMedia('(max-width: 760px)').matches);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export function Home() {
               <p className="home-hero__description">{l(homeContent.hero.description)}</p>
             </Reveal>
             <Reveal><div className="button-row home-hero__actions">
-              <button className="pill-button home-hero__cta" onClick={openModal}>{l(homeContent.hero.primaryCta)}</button>
+              <button className="pill-button home-hero__cta" onClick={startConversation}>{l(homeContent.hero.primaryCta)}</button>
               <button className="outline-button home-hero__cta" onClick={() => scrollToSection('#expertise')}>{l(homeContent.hero.secondaryCta)}</button>
             </div></Reveal>
             <motion.div
@@ -130,7 +130,7 @@ export function Home() {
           <StaggerGroup trigger="inherit">
             <Reveal><h2>{l(homeContent.cta.title)}</h2></Reveal>
             <Reveal><p>{l(homeContent.cta.description)}</p></Reveal>
-            <Reveal><button className="pill-button" onClick={openModal}>{l(homeContent.cta.button)}</button></Reveal>
+            <Reveal><button className="pill-button" onClick={startConversation}>{l(homeContent.cta.button)}</button></Reveal>
           </StaggerGroup>
           <Reveal variant="image" delay={motionTokens.stagger.standard * 3} className="home-cta__visual"><OptimizedImage src={homeContent.imagery.cta} alt={l(homeContent.imagery.ctaAlt)} loading="lazy" decoding="async" /></Reveal>
         </StaggerGroup>

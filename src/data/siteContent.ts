@@ -265,7 +265,7 @@ export const homeContent = {
   hero: {
     title: text('Specialized Expertise. Real-World Impact.', 'Experiencia especializada. Impacto en el mundo real.'),
     description: text('Engineering, construction, and professional business services for organizations navigating technical, operational, and commercial challenges.', 'Ingeniería, construcción y servicios empresariales profesionales para organizaciones que afrontan desafíos técnicos, operativos y comerciales.'),
-    primaryCta: text('Discuss Your Project', 'Hablemos de su proyecto'),
+    primaryCta: text('Start a Conversation', 'Iniciar una conversación'),
     secondaryCta: text('Explore Our Expertise', 'Explore nuestra experiencia'),
     regional: text('Supporting Organizations Across North America and Latin America', 'Apoyando organizaciones en Norteamérica y América Latina'),
   },
@@ -320,7 +320,7 @@ export const homeContent = {
   cta: {
     title: text("Let's Discuss What You're Building.", 'Hablemos de lo que está construyendo.'),
     description: text("Whether you're developing a technical solution, planning a construction project, or strengthening a business function, let's explore how Gradum can support your objectives.", 'Ya sea que esté desarrollando una solución técnica, planificando un proyecto de construcción o fortaleciendo una función empresarial, exploremos cómo Gradum puede apoyar sus objetivos.'),
-    button: text('Discuss Your Project', 'Hablemos de su proyecto'),
+    button: text('Start a Conversation', 'Iniciar una conversación'),
   },
 };
 

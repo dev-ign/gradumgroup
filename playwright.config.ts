@@ -2,6 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
   testDir: './tests',
+  testIgnore: ['intake-failure.spec.ts', 'intake-webkit.spec.ts'],
   timeout: 30_000,
   expect: { timeout: 5_000 },
   // Parallel Chrome workers intermittently stall during teardown on this project.

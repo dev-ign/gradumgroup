@@ -4,13 +4,13 @@ import { Reveal, StaggerGroup } from '../components/ui/Reveal';
 import { Button } from '../components/ui/Button';
 import { OptimizedImage } from '../components/ui/OptimizedImage';
 import { useLanguage } from '../context/LanguageContext';
-import { useModal } from '../context/ModalContext';
+import { useStartConversation } from '../hooks/useStartConversation';
 import { aboutContent, localize } from '../data/siteContent';
 import { motionTokens } from '../motion/presets';
 
 export function About() {
   const { lang } = useLanguage();
-  const { openModal } = useModal();
+  const startConversation = useStartConversation();
   const l = (value: Parameters<typeof localize>[0]) => localize(value, lang);
   const [stackedDivisions, setStackedDivisions] = useState(() => window.matchMedia('(max-width: 900px)').matches);
 
@@ -107,7 +107,7 @@ export function About() {
           <StaggerGroup trigger="viewport" className="about-final__inner section-shell">
             <Reveal><h2 id="about-final-title">{l(aboutContent.ctaTitle)}</h2></Reveal>
             <Reveal><p>{l(aboutContent.ctaDescription)}</p></Reveal>
-            <Reveal><Button variant="primary" onClick={openModal}>{l(aboutContent.ctaButton)}</Button></Reveal>
+            <Reveal><Button variant="primary" onClick={startConversation}>{l(aboutContent.ctaButton)}</Button></Reveal>
           </StaggerGroup>
         </section>
       </article>

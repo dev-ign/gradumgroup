@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test, type Page } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
@@ -27,7 +28,7 @@ test('Capabilities keeps its wide image, four skills, and photographic contact s
   await expect(page.locator('.consulting-approach .pill-button')).toBeFocused();
   expect(await page.locator('.consulting-approach .pill-button').evaluate((button) => getComputedStyle(button).outlineStyle)).not.toBe('none');
   await page.locator('.consulting-approach .pill-button').click();
-  await expect(page.getByRole('dialog')).toBeVisible();
+  await expectIntakeEntry(page);
 });
 
 test('Industries renders six distinct relevant image rows and its final CTA', async ({ page }) => {
@@ -77,7 +78,7 @@ test('How We Work keeps six numbered steps, Flexible Engagements, and completed 
   await expect(page.locator('.consulting-final-cta h2')).toHaveText("Let's Define Your Next Step.");
   await expect(page.locator('.consulting-final-cta p')).toHaveText("Tell us about your technical challenge. We'll explore the right approach and next steps for your project.");
   await page.locator('.consulting-final-cta .pill-button').click();
-  await expect(page.getByRole('dialog')).toBeVisible();
+  await expectIntakeEntry(page);
 });
 
 test('all Consulting detail layouts fit requested widths in English and Spanish', async ({ page }) => {

@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test } from '@playwright/test';
 
 test('Services landing navigates to each offering and its CTA opens contact', async ({ page }) => {
@@ -27,7 +28,7 @@ test('Services landing navigates to each offering and its CTA opens contact', as
   }
 
   await page.getByRole('button', { name: 'Discuss Your Business Needs' }).last().click();
-  await expect(page.getByRole('dialog')).toBeVisible();
+  await expectIntakeEntry(page);
 });
 
 test('Services cards reflow evenly and the model chart never overlaps its copy', async ({ page }) => {
@@ -98,8 +99,7 @@ test('Services detail pages retain their routes, capabilities, and contact path'
     await expect(page.locator('.detail-hero__breadcrumb a')).toHaveAttribute('href', '/services');
     await expect(page.locator('.service-final-cta .pill-button')).toHaveText(item.cta);
     await page.locator('.detail-hero__copy .pill-button').click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await page.keyboard.press('Escape');
+    await expectIntakeEntry(page);
     await page.locator('.detail-hero__breadcrumb a').click();
     await expect(page).toHaveURL(/\/services$/);
   }

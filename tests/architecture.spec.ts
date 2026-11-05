@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test } from '@playwright/test';
 
 const route = '/construction/architecture';
@@ -56,9 +57,7 @@ test('Architecture uses the approved four-section story and text-only expertise 
   for (const button of [page.locator('.detail-hero .pill-button'), page.locator('.explore-band--cta .pill-button')]) {
     await expect(button).toHaveText('Discuss Your Project');
     await button.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await expect(page.locator('input#name')).toBeFocused();
-    await page.keyboard.press('Escape');
+    await expectIntakeEntry(page);
   }
   await page.locator('.detail-hero__breadcrumb a').click();
   await expect(page).toHaveURL(/\/construction$/);

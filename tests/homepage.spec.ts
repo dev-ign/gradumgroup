@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test, type Page } from '@playwright/test';
 
 const fillRatio = (page: Page) => page.locator('.engagement-timeline__fill').evaluate((fill) => {
@@ -31,7 +32,7 @@ test('approved English homepage copy and contact actions are present', async ({ 
   await expect(page.locator('.home-hero .eyebrow')).toHaveCount(0);
   await expect(page.locator('.home-hero h1')).toHaveText('Specialized Expertise. Real-World Impact.');
   await expect(page.locator('.home-hero__description')).toHaveText('Engineering, construction, and professional business services for organizations navigating technical, operational, and commercial challenges.');
-  await expect(page.locator('.home-hero__actions button')).toHaveText(['Discuss Your Project', 'Explore Our Expertise']);
+  await expect(page.locator('.home-hero__actions button')).toHaveText(['Start a Conversation', 'Explore Our Expertise']);
 
   await expect(page.locator('#expertise h2')).toHaveText('Three Disciplines. Focused Expertise.');
   await expect(page.locator('#expertise .section-heading p')).toHaveText([
@@ -76,13 +77,12 @@ test('approved English homepage copy and contact actions are present', async ({ 
   expect(await page.locator('.latam-section__visual img').evaluate((image: HTMLImageElement) => image.currentSrc)).toContain('/assets/glowing-americas-map-clean.png');
   await expect(page.locator('.home-cta h2')).toHaveText("Let's Discuss What You're Building.");
   await expect(page.locator('.home-cta p')).toHaveText("Whether you're developing a technical solution, planning a construction project, or strengthening a business function, let's explore how Gradum can support your objectives.");
-  await expect(page.locator('.home-cta .pill-button')).toHaveText('Discuss Your Project');
+  await expect(page.locator('.home-cta .pill-button')).toHaveText('Start a Conversation');
 
   await page.locator('.home-hero__actions .pill-button').click();
-  await expect(page.getByRole('dialog')).toBeVisible();
-  await page.keyboard.press('Escape');
+  await expectIntakeEntry(page);
   await page.locator('.home-cta .pill-button').click();
-  await expect(page.getByRole('dialog')).toBeVisible();
+  await expectIntakeEntry(page);
 });
 
 test('Spanish homepage copy follows the same structure', async ({ page }) => {
@@ -90,7 +90,7 @@ test('Spanish homepage copy follows the same structure', async ({ page }) => {
   await page.goto('/');
 
   await expect(page.locator('.home-hero h1')).toHaveText('Experiencia especializada. Impacto en el mundo real.');
-  await expect(page.locator('.home-hero__actions button')).toHaveText(['Hablemos de su proyecto', 'Explore nuestra experiencia']);
+  await expect(page.locator('.home-hero__actions button')).toHaveText(['Iniciar una conversación', 'Explore nuestra experiencia']);
   await expect(page.locator('#expertise h2')).toHaveText('Tres disciplinas. Experiencia especializada.');
   await expect(page.locator('.discipline-card__category')).toHaveText(['Ingeniería y tecnología', 'Arquitectura, ingeniería y ejecución', 'Finanzas, creatividad y asuntos legales']);
   await expect(page.locator('#how-we-work-title')).toHaveText('La experiencia adecuada. Para el trabajo que importa.');

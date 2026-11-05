@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test, type Locator } from '@playwright/test';
 
 const route = '/services/admin-legal';
@@ -43,9 +44,7 @@ test('Legal page keeps approved copy, page identity, imagery, and contact path',
   for (const button of [page.locator('.detail-hero__copy .pill-button'), page.locator('.service-final-cta .pill-button')]) {
     await expect(button).toHaveText('Discuss Your Legal Needs');
     await button.click();
-    await expect(page.getByRole('dialog')).toBeVisible();
-    await expect(page.locator('input#name')).toBeFocused();
-    await page.keyboard.press('Escape');
+    await expectIntakeEntry(page);
   }
 });
 

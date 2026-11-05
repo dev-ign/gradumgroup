@@ -1,3 +1,4 @@
+import { expectIntakeEntry } from './helpers/intake-entry';
 import { expect, test } from '@playwright/test';
 
 test.beforeEach(async ({ page }) => {
@@ -39,8 +40,7 @@ test('Consulting overview uses approved copy and distinct conversion paths', asy
   await expect(page.locator('.explore-band--cta p')).toHaveText("Tell us about your project. We'll explore how Gradum Consulting can support your team.");
 
   await heroActions.first().click();
-  await expect(page.getByRole('dialog')).toBeVisible();
-  await page.keyboard.press('Escape');
+  await expectIntakeEntry(page);
   await heroActions.last().click();
   await expect(page).toHaveURL(/\/consulting\/capabilities$/);
 });
@@ -76,7 +76,7 @@ test('Consulting composition fits the requested widths and keeps keyboard access
   await expect(page.locator('.tools-section__link')).toBeFocused();
   expect(await page.locator('.tools-section__link').evaluate((link) => getComputedStyle(link).outlineStyle)).not.toBe('none');
   await page.locator('.explore-band--cta .pill-button').click();
-  await expect(page.getByRole('dialog')).toBeVisible();
+  await expectIntakeEntry(page);
 });
 
 test('Consulting scroll reveals settle once and reduced motion remains visible', async ({ page }) => {
